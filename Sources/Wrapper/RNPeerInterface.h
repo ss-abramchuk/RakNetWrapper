@@ -23,8 +23,10 @@
 /// Return the total number of connections we are allowed.
 @property (readonly, nonatomic) unsigned int maximumNumberOfPeers;
 
+/// Maximum number of incoming connections allowed.
+@property (nonatomic) unsigned short maximumIncomingConnections;
+
 /// Returns if the network thread is running.
-/// @return YES if the network thread is running, NO otherwise.
 @property (readonly, nonatomic) BOOL active;
 
 #pragma mark Initializers
@@ -36,7 +38,7 @@
 /**
  *  Starts the network threads, opens the listen port
  *
- *  @warning Call setMaximumIncomingConnections: if you want to accept incoming connections.
+ *  @warning Set maximumIncomingConnections if you want to accept incoming connections.
  *
  *  @param maxConnections The maximum number of connections between this instance of RakPeer and another instance of RakPeer. Required so the network can preallocate and for thread safety. A pure client would set this to 1. A pure server would set it to the number of allowed clients. A hybrid would set it to the sum of both types of connections.
  *  @param socketDescriptor Represents one unique socket. Used to force RakNet to listen on a particular IP address or port (or both).
@@ -50,7 +52,7 @@
 /**
  *  Starts the network threads, opens the listen ports
  *
- *  @warning Call setMaximumIncomingConnections: if you want to accept incoming connections.
+ *  @warning Set maximumIncomingConnections if you want to accept incoming connections.
  *
  *  @param maxConnections The maximum number of connections between this instance of RakPeer and another instance of RakPeer. Required so the network can preallocate and for thread safety. A pure client would set this to 1. A pure server would set it to the number of allowed clients. A hybrid would set it to the sum of both types of connections.
  *  @param descriptors    Represents array of unique sockets. Used to force RakNet to listen on a particular IP addresses and ports.
@@ -65,16 +67,6 @@
 /// @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.
 - (void)shutdownWithDuration:(unsigned int)blockDuration
     NS_SWIFT_NAME(shutdown(duration:));
-
-/// Sets how many incoming connections are allowed. If this is less than the number of players currently connected,
-/// no more players will be allowed to connect.  If this is greater than the maximum number of peers allowed,
-/// it will be reduced to the maximum number of peers allowed.
-/// @param numberAllowed Maximum number of incoming connections allowed.
-- (void)setMaximumIncomingConnections:(unsigned short)numberAllowed;
-
-/// Returns the value passed to SetMaximumIncomingConnections()
-/// @return the maximum number of incoming connections, which is always <= maxConnections
-- (unsigned short)getMaximumIncomingConnections;
 
 /// Connect to the specified host (ip or domain name) and server port.
 /// @param host Either a dotted IP address or a domain name.

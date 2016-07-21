@@ -39,6 +39,14 @@ using namespace RakNet;
     return self.peer->GetMaximumNumberOfPeers();
 }
 
+- (unsigned short)maximumIncomingConnections {
+    return self.peer->GetMaximumIncomingConnections();
+}
+
+- (void)setMaximumIncomingConnections:(unsigned short)numberAllowed {
+    self.peer->SetMaximumIncomingConnections(numberAllowed);
+}
+
 - (BOOL)active {
     return self.peer->IsActive();
 }
@@ -188,14 +196,6 @@ using namespace RakNet;
 
 - (void)shutdownWithDuration:(unsigned int)blockDuration {
     self.peer->Shutdown(blockDuration);
-}
-
-- (void)setMaximumIncomingConnections:(unsigned short)numberAllowed {
-    self.peer->SetMaximumIncomingConnections(numberAllowed);
-}
-
-- (unsigned short)getMaximumIncomingConnections {
-    return self.peer->GetMaximumIncomingConnections();
 }
 
 - (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error {

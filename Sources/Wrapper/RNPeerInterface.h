@@ -20,20 +20,23 @@
 
 #pragma mark Properties
 
+/// Returns if the network thread is running.
+@property (readonly, nonatomic) BOOL active;
+
 /// Return the total number of connections we are allowed.
 @property (readonly, nonatomic) unsigned int maximumNumberOfPeers;
 
 /// Maximum number of incoming connections allowed.
 @property (nonatomic) unsigned short maximumIncomingConnections;
 
-/// Returns if the network thread is running.
-@property (readonly, nonatomic) BOOL active;
+/// Returns how many open connections there are at this time.
+@property (readonly, nonatomic) unsigned short numberOfConnections;
 
 #pragma mark Initializers
 
 - (nullable instancetype)init;
 
-#pragma mark Configuration of Connections
+#pragma mark Handling of Connections
 
 /**
  *  Starts the network threads, opens the listen ports

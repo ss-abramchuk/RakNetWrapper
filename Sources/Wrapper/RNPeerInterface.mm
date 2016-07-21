@@ -35,6 +35,10 @@ using namespace RakNet;
 
 #pragma mark Computed Properties Implementation
 
+- (BOOL)active {
+    return self.peer->IsActive();
+}
+
 - (unsigned int)maximumNumberOfPeers {
     return self.peer->GetMaximumNumberOfPeers();
 }
@@ -47,8 +51,8 @@ using namespace RakNet;
     self.peer->SetMaximumIncomingConnections(numberAllowed);
 }
 
-- (BOOL)active {
-    return self.peer->IsActive();
+- (unsigned short)numberOfConnections {
+    return self.peer->NumberOfConnections();
 }
 
 #pragma mark Initializers
@@ -67,7 +71,7 @@ using namespace RakNet;
     return self;
 }
 
-#pragma mark Configuration of Connections
+#pragma mark Handling of Connections
 
 - (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors error:(out NSError * __nullable * __nullable)error {
     SocketDescriptor *socketDescriptors = new SocketDescriptor[descriptors.count];
@@ -251,10 +255,6 @@ using namespace RakNet;
     } else {
         return [NSString stringWithUTF8String:address];
     }
-}
-
-- (unsigned short)numberOfConnections {
-    return self.peer->NumberOfConnections();
 }
 
 - (void)setOfflinePingResponse:(nullable NSData *)data {

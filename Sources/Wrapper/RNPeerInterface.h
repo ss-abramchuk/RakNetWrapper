@@ -96,7 +96,8 @@
 
 // TODO: Add full description for getGuidFromSystemAddress:port:
 /// Given a connected system, give us the unique GUID representing that instance of RakPeer.
-- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address;
+- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address
+    NS_SWIFT_NAME(getGUID(from:));
 
 /// Returns the number of IP addresses this system has internally. Get the actual addresses from getLocalIP:
 - (unsigned int)getNumberOfAddresses;

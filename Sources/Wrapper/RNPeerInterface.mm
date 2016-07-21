@@ -55,6 +55,11 @@ using namespace RakNet;
     return self.peer->NumberOfConnections();
 }
 
+- (unsigned long long)myGUID {
+    RakNetGUID guid = self.peer->GetMyGUID();
+    return (unsigned long long)guid.g;
+}
+
 #pragma mark Initializers
 
 - (instancetype)init
@@ -219,11 +224,6 @@ using namespace RakNet;
     delete [] systems;
     
     return array;
-}
-
-- (unsigned long long)getMyGUID {
-    RakNetGUID guid = self.peer->GetMyGUID();
-    return (unsigned long long)guid.g;
 }
 
 - (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid; {

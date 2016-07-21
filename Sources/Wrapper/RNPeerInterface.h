@@ -32,6 +32,9 @@
 /// Returns how many open connections there are at this time.
 @property (readonly, nonatomic) unsigned short numberOfConnections;
 
+/// Return own GUID
+@property (readonly, nonatomic) unsigned long long myGUID;
+
 #pragma mark Initializers
 
 - (nullable instancetype)init;
@@ -84,9 +87,6 @@
 
 /// Returns an array with the RNSystemAddress of all the systems we are connected to
 - (nonnull NSArray *)getConnectionListWithNumberOfSystems:(unsigned short)numberOfSystems;
-
-/// Return my own GUID
-- (unsigned long long)getMyGUID;
 
 // TODO: Add full description for getSystemAddressFromGUID:
 /// Given the GUID of a connected system, give us the system address of that system.

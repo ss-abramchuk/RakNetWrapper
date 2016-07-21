@@ -29,6 +29,7 @@
 #pragma mark Initializers
 
 - (nonnull instancetype)init;
-- (nonnull instancetype)initWithPort:(unsigned short)port andAddress:(nullable NSString *)address;
+- (nonnull instancetype)initWithPort:(unsigned short)port andAddress:(nullable NSString *)address
+    NS_SWIFT_NAME(init(port:address:));
 
 @end

@@ -35,7 +35,7 @@ using namespace RakNet;
 
 #pragma mark Computed Properties Implementation
 
-- (BOOL)active {
+- (BOOL)isActive {
     return self.peer->IsActive();
 }
 

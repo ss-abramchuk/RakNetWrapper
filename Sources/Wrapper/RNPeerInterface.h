@@ -21,7 +21,7 @@
 #pragma mark Properties
 
 /// Returns if the network thread is running.
-@property (readonly, nonatomic) BOOL active;
+@property (readonly, nonatomic) BOOL isActive;
 
 /// Return the total number of connections we are allowed.
 @property (readonly, nonatomic) unsigned int maximumNumberOfPeers;

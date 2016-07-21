@@ -58,7 +58,7 @@
  *
  *  @return YES if sturtup succeeded, NO otherwise.
  */
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray *)descriptors error:(out NSError * __nullable * __nullable)error
+- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors error:(out NSError * __nullable * __nullable)error
     NS_SWIFT_NAME(startup(maxConnections:socketDescriptors:));
 
 /// Stops the network threads and closes all connections.

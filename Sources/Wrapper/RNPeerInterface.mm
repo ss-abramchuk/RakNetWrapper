@@ -119,20 +119,17 @@ using namespace RakNet;
     }
 }
 
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray *)descriptors error:(out NSError * __nullable * __nullable)error {
+- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors error:(out NSError * __nullable * __nullable)error {
     SocketDescriptor *socketDescriptors = new SocketDescriptor[descriptors.count];
     
     for (int i = 0; i < descriptors.count; i++) {
-        if ([descriptors[i] isKindOfClass:[RNSocketDescriptor class]]) {
-            socketDescriptors[i] = *((RNSocketDescriptor *)descriptors[i]).socketDescriptor;
-        } else {
-            NSString *errorDescription = [NSString stringWithFormat:@"Value at index %i of descriptors array is not RNSocketDescriptor", i];
-            *error = [NSError errorWithDomain:RNWrapperErrorDomain code:12 userInfo:@{ NSLocalizedDescriptionKey : errorDescription }];
-            return NO;
-        }
+        socketDescriptors[i] = *(descriptors[i].socketDescriptor);
     }
     
     StartupResult result = self.peer->Startup(maxConnections, socketDescriptors, descriptors.count);
+    
+    delete [] socketDescriptors;
+    
     if (result == RAKNET_STARTED) {
         return YES;
     } else {

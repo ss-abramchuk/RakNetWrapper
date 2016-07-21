@@ -33,6 +33,12 @@ using namespace RakNet;
 
 @implementation RNPeerInterface
 
+#pragma mark Computed Properties Implementation
+
+- (unsigned int)maximumNumberOfPeers {
+    return self.peer->GetMaximumNumberOfPeers();
+}
+
 #pragma mark Initializers
 
 - (instancetype)init
@@ -306,10 +312,6 @@ using namespace RakNet;
     } else {
         return [NSString stringWithUTF8String:address];
     }
-}
-
-- (unsigned int)getMaximumNumberOfPeers {
-    return self.peer->GetMaximumNumberOfPeers();
 }
 
 - (unsigned short)numberOfConnections {

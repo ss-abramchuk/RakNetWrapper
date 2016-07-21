@@ -20,6 +20,8 @@
 
 #pragma mark Properties
 
+/// Return the total number of connections we are allowed.
+@property (readonly, nonatomic) unsigned int maximumNumberOfPeers;
 
 #pragma mark Initializers
 
@@ -38,7 +40,8 @@
  *
  *  @return YES if sturtup succeeded, NO otherwise.
  */
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptor:(nonnull RNSocketDescriptor *)descriptor error:(out NSError * __nullable * __nullable)error;
+- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptor:(nonnull RNSocketDescriptor *)descriptor error:(out NSError * __nullable * __nullable)error
+    NS_SWIFT_NAME(startup(maxConnections:socketDescriptor:));
 
 /**
  *  <#Description#>
@@ -57,7 +60,8 @@
 
 /// Stops the network threads and closes all connections.
 /// @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.
-- (void)shutdownWithDuration:(unsigned int)blockDuration;
+- (void)shutdownWithDuration:(unsigned int)blockDuration
+    NS_SWIFT_NAME(shutdown(duration:));
 
 /// Sets how many incoming connections are allowed. If this is less than the number of players currently connected,
 /// no more players will be allowed to connect.  If this is greater than the maximum number of peers allowed,
@@ -117,9 +121,6 @@
 /// @param index Index into the list of IP addresses.
 /// @return The local IP address at this index.
 - (nullable NSString *)getLocalIPWithIndex:(unsigned int)index;
-
-/// Return the total number of connections we are allowed.
-- (unsigned int)getMaximumNumberOfPeers;
 
 /// Returns how many open connections there are at this time.
 - (unsigned short)numberOfConnections;

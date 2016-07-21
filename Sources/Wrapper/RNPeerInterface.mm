@@ -67,65 +67,7 @@ using namespace RakNet;
     return self;
 }
 
-#pragma mark ---
-
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptor:(RNSocketDescriptor *)descriptor error:(out NSError **)error {
-    StartupResult result = self.peer->Startup(maxConnections, descriptor.socketDescriptor, 1);
-    if (result == RAKNET_STARTED) {
-        return YES;
-    } else {
-        NSDictionary *errorDictionary;
-        
-        switch (result) {
-            case RAKNET_ALREADY_STARTED:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Raknet already started." };
-                break;
-                
-            case INVALID_SOCKET_DESCRIPTORS:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Invalid socket descriptors." };
-                break;
-                
-            case INVALID_MAX_CONNECTIONS:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Invalid max connections." };
-                break;
-                
-            case SOCKET_FAMILY_NOT_SUPPORTED:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Socket family not supported." };
-                break;
-                
-            case SOCKET_PORT_ALREADY_IN_USE:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Socket port already in use." };
-                break;
-                
-            case SOCKET_FAILED_TO_BIND:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Socket failed to bind." };
-                break;
-                
-            case SOCKET_FAILED_TEST_SEND:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Socket failed test send." };
-                break;
-                
-            case PORT_CANNOT_BE_ZERO:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Port cannot be zero." };
-                break;
-                
-            case FAILED_TO_CREATE_NETWORK_THREAD:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Failed to create network thread." };
-                break;
-                
-            case COULD_NOT_GENERATE_GUID:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Could not generate guid." };
-                break;
-                
-            default:
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Startup other failure." };
-                break;
-        }
-        
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
-        return NO;
-    }
-}
+#pragma mark Configuration of Connections
 
 - (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors error:(out NSError * __nullable * __nullable)error {
     SocketDescriptor *socketDescriptors = new SocketDescriptor[descriptors.count];

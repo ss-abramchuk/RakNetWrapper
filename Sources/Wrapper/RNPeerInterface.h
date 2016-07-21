@@ -36,26 +36,12 @@
 #pragma mark Configuration of Connections
 
 /**
- *  Starts the network threads, opens the listen port
- *
- *  @warning Set maximumIncomingConnections if you want to accept incoming connections.
- *
- *  @param maxConnections The maximum number of connections between this instance of RakPeer and another instance of RakPeer. Required so the network can preallocate and for thread safety. A pure client would set this to 1. A pure server would set it to the number of allowed clients. A hybrid would set it to the sum of both types of connections.
- *  @param socketDescriptor Represents one unique socket. Used to force RakNet to listen on a particular IP address or port (or both).
- *  @param error Pointer to NSError object, where error information is stored in case if function fails. You can pass nil if you don't want that information.
- *
- *  @return YES if sturtup succeeded, NO otherwise.
- */
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptor:(nonnull RNSocketDescriptor *)descriptor error:(out NSError * __nullable * __nullable)error
-    NS_SWIFT_NAME(startup(maxConnections:socketDescriptor:));
-
-/**
  *  Starts the network threads, opens the listen ports
  *
  *  @warning Set maximumIncomingConnections if you want to accept incoming connections.
  *
  *  @param maxConnections The maximum number of connections between this instance of RakPeer and another instance of RakPeer. Required so the network can preallocate and for thread safety. A pure client would set this to 1. A pure server would set it to the number of allowed clients. A hybrid would set it to the sum of both types of connections.
- *  @param descriptors    Represents array of unique sockets. Used to force RakNet to listen on a particular IP addresses and ports.
+ *  @param descriptors    An array of RNSocketDescriptor structures to force RakNet to listen on a particular IP address or port (or both). Each RNSocketDescriptor will represent one unique socket.
  *  @param error          Pointer to NSError object, where error information is stored in case if function fails. You can pass nil if you don't want that information.
  *
  *  @return YES if sturtup succeeded, NO otherwise.

@@ -683,7 +683,7 @@
 				C9DD30F61D40D5AF009EFDA5 /* Utils */,
 				C9DD30F71D40D5B4009EFDA5 /* Network */,
 			);
-			name = Wrapper;
+			path = Wrapper;
 			sourceTree = "<group>";
 		};
 		C9DD2EE21D40D51F009EFDA5 /* Vendors */ = {

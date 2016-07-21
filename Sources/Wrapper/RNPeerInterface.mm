@@ -39,6 +39,10 @@ using namespace RakNet;
     return self.peer->GetMaximumNumberOfPeers();
 }
 
+- (BOOL)active {
+    return self.peer->IsActive();
+}
+
 #pragma mark Initializers
 
 - (instancetype)init
@@ -183,10 +187,6 @@ using namespace RakNet;
         *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
         return NO;
     }
-}
-
-- (BOOL)isActive {
-    return self.peer->IsActive();
 }
 
 - (void)shutdownWithDuration:(unsigned int)blockDuration {

@@ -23,6 +23,10 @@
 /// Return the total number of connections we are allowed.
 @property (readonly, nonatomic) unsigned int maximumNumberOfPeers;
 
+/// Returns if the network thread is running.
+/// @return YES if the network thread is running, NO otherwise.
+@property (readonly, nonatomic) BOOL active;
+
 #pragma mark Initializers
 
 - (nullable instancetype)init;
@@ -53,10 +57,6 @@
  *  @return <#return value description#>
  */
 - (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray *)descriptors error:(out NSError * __nullable * __nullable)error;
-
-/// Returns if the network thread is running.
-/// @return YES if the network thread is running, NO otherwise.
-- (BOOL)isActive;
 
 /// Stops the network threads and closes all connections.
 /// @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.

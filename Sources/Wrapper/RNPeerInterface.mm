@@ -104,7 +104,7 @@ using namespace RakNet;
                 break;
         }
         
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
         return NO;
     }
 }
@@ -117,7 +117,8 @@ using namespace RakNet;
             socketDescriptors[i] = *((RNSocketDescriptor *)descriptors[i]).socketDescriptor;
         } else {
             NSString *errorDescription = [NSString stringWithFormat:@"Value at index %i of descriptors array is not RNSocketDescriptor", i];
-            *error = [NSError errorWithDomain:RNWrapperErrorDomain code:12 userInfo:@{ NSLocalizedDescriptionKey : errorDescription }];
+            
+            if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:12 userInfo:@{ NSLocalizedDescriptionKey : errorDescription }];
             return NO;
         }
     }
@@ -174,7 +175,7 @@ using namespace RakNet;
                 break;
         }
         
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
         return NO;
     }
 }
@@ -229,7 +230,7 @@ using namespace RakNet;
                 break;
         }
         
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
         return NO;
     }
 }

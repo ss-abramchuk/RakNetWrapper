@@ -60,7 +60,13 @@ using namespace RakNet;
 }
 
 - (NSString *)address {
-    return [NSString stringWithUTF8String:self.socketDescriptor->hostAddress];
+    NSString *result = [NSString stringWithUTF8String:self.socketDescriptor->hostAddress];
+    
+    if (result.length == 0) {
+        result = nil;
+    }
+    
+    return result;
 }
 
 - (void)setAddress:(NSString *)address {

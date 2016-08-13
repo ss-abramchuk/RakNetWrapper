@@ -188,6 +188,18 @@ using namespace RakNet;
     self.peer->DisableSecurity();
 }
 
+- (void)addToSecurityExceptionList:(NSString *)ipAddress {
+    self.peer->AddToSecurityExceptionList([ipAddress UTF8String]);
+}
+
+- (void)removeFromSecurityExceptionList:(NSString *)ipAddress {
+    self.peer->RemoveFromSecurityExceptionList([ipAddress UTF8String]);
+}
+
+- (BOOL)isInSecurityExceptionList:(NSString *)ipAddress {
+    return self.peer->IsInSecurityExceptionList([ipAddress UTF8String]);
+}
+
 - (BOOL)isActive {
     return self.peer->IsActive();
 }

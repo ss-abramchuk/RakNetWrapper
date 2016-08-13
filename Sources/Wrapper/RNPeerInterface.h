@@ -78,6 +78,31 @@
  */
 - (void)disableSecurity;
 
+/**
+ *  If secure connections are on, do not use secure connections for a specific IP address. This is useful if you have a fixed-address internal server behind a LAN.
+ *
+ *  @note Secure connections are determined by the recipient of an incoming connection. This has no effect if called on the system attempting to connect.
+ *
+ *  @param ipAddress IP address to add. * wildcards are supported.
+ */
+- (void)addToSecurityExceptionList:(nonnull NSString *)ipAddress;
+
+/**
+ *  Remove a specific connection previously added via addToSecurityExceptionList:
+ *
+ *  @param ipAddress IP address to remove. Pass 0 to remove all IP addresses. * wildcards are supported.
+ */
+- (void)removeFromSecurityExceptionList:(nonnull NSString *)ipAddress;
+
+/**
+ *  Checks to see if a given IP is in the security exception list.
+ *
+ *  @param ipAddress IP address to check.
+ *
+ *  @return YES if address in the list, NO otherwise.
+ */
+- (BOOL)isInSecurityExceptionList:(nonnull NSString *)ipAddress;
+
 /// Returns if the network thread is running.
 /// @return YES if the network thread is running, NO otherwise.
 - (BOOL)isActive;

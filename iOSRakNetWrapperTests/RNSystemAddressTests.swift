@@ -21,28 +21,28 @@ class RNSystemAddressTests: XCTestCase {
         super.tearDown()
     }
     
-    func testRNSystemAddressInitialization() {
-        let unassignedSystemAddress = RNSystemAddress()
-        XCTAssert(unassignedSystemAddress.address == "UNASSIGNED_SYSTEM_ADDRESS")
-        
-        let localhost = "127.0.0.1"
-        let localPort: UInt16 = 19132
-        
-        let assignedSystemAddress = RNSystemAddress(address: localhost)
-        XCTAssert(assignedSystemAddress.address == localhost, "Local address \(localhost) is not equal to returned value: \(assignedSystemAddress.address)")
-        
-        let assignedSystemAddressWithPort = RNSystemAddress(address: localhost, andPort: localPort)
-        XCTAssert(assignedSystemAddressWithPort.address == localhost && assignedSystemAddressWithPort.port == localPort, "Local address \(localhost) or local port \(localPort) is not equal to returned values: \(assignedSystemAddressWithPort.address):\(assignedSystemAddressWithPort.port)")
-    }
-    
-    func testEqualityOfSystemAddresses() {
-        let localhost = "127.0.0.1"
-        let localPort: UInt16 = 19132
-        
-        let firstAddress = RNSystemAddress(address: localhost, andPort: localPort)
-        let secondAddress = RNSystemAddress(address: localhost, andPort: localPort)
-        
-        XCTAssert(firstAddress == secondAddress, "Values are not equal")
-    }
+//    func testRNSystemAddressInitialization() {
+//        let unassignedSystemAddress = RNSystemAddress()
+//        XCTAssert(unassignedSystemAddress.address == "UNASSIGNED_SYSTEM_ADDRESS")
+//        
+//        let localhost = "127.0.0.1"
+//        let localPort: UInt16 = 19132
+//        
+//        let assignedSystemAddress = RNSystemAddress(address: localhost)
+//        XCTAssert(assignedSystemAddress.address == localhost, "Local address \(localhost) is not equal to returned value: \(assignedSystemAddress.address)")
+//        
+//        let assignedSystemAddressWithPort = RNSystemAddress(address: localhost, andPort: localPort)
+//        XCTAssert(assignedSystemAddressWithPort.address == localhost && assignedSystemAddressWithPort.port == localPort, "Local address \(localhost) or local port \(localPort) is not equal to returned values: \(assignedSystemAddressWithPort.address):\(assignedSystemAddressWithPort.port)")
+//    }
+//    
+//    func testEqualityOfSystemAddresses() {
+//        let localhost = "127.0.0.1"
+//        let localPort: UInt16 = 19132
+//        
+//        let firstAddress = RNSystemAddress(address: localhost, andPort: localPort)
+//        let secondAddress = RNSystemAddress(address: localhost, andPort: localPort)
+//        
+//        XCTAssert(firstAddress == secondAddress, "Values are not equal")
+//    }
     
 }

@@ -140,9 +140,29 @@ using namespace RakNet;
                 break;
         }
         
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
         return NO;
     }
+}
+
+- (BOOL)initializeSecurityWithPublicKey:(NSString *)publicKey privateKey:(NSString *)privateKey requireClientKey:(BOOL)requireClientKey {
+    return self.peer->InitializeSecurity([publicKey UTF8String], [privateKey UTF8String], requireClientKey);
+}
+
+- (void)disableSecurity {
+    self.peer->DisableSecurity();
+}
+
+- (void)addToSecurityExceptionList:(NSString *)ipAddress {
+    self.peer->AddToSecurityExceptionList([ipAddress UTF8String]);
+}
+
+- (void)removeFromSecurityExceptionList:(NSString *)ipAddress {
+    self.peer->RemoveFromSecurityExceptionList([ipAddress UTF8String]);
+}
+
+- (BOOL)isInSecurityExceptionList:(NSString *)ipAddress {
+    return self.peer->IsInSecurityExceptionList([ipAddress UTF8String]);
 }
 
 - (void)shutdownWithDuration:(unsigned int)blockDuration {
@@ -183,7 +203,7 @@ using namespace RakNet;
                 break;
         }
         
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:result userInfo:errorDictionary];
         return NO;
     }
 }
@@ -311,6 +331,22 @@ using namespace RakNet;
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
     
     return self.peer->Send(bytes, length, packetPriority, packetReliability, 0, rakNetGUID, broadcast);
+}
+
+- (void)addToBanList:(NSString *)ipAddress duration:(NSTimeInterval)duration {
+    self.peer->AddToBanList([ipAddress UTF8String], duration);
+}
+
+- (void)removeFromBanList:(NSString *)ipAddress {
+    self.peer->RemoveFromBanList([ipAddress UTF8String]);
+}
+
+- (void)clearBanList {
+    self.peer->ClearBanList();
+}
+
+- (BOOL)isBanned:(NSString *)ipAddress {
+    return self.peer->IsBanned([ipAddress UTF8String]);
 }
 
 - (nullable RNPacket *)receive {

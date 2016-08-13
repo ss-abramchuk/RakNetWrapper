@@ -152,6 +152,35 @@
 // TODO: Add full description for sendData:priority:reliability:guid:
 - (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability guid:(unsigned long long)guid broadcast:(BOOL)broadcast;
 
+/**
+ *  Bans an IP from connecting. Banned IPs persist between connections but are not saved on shutdown nor loaded on startup.
+ *
+ *  @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will ban all IP addresses starting with 128.0.0.
+ *  @param duration How many seconds for a temporary ban. Use 0 for a permanent ban.
+ */
+- (void)addToBanList:(nonnull NSString *)ipAddress duration:(NSTimeInterval)duration;
+
+/**
+ *  Allows a previously banned IP to connect.
+ *
+ *  @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will unban all IP addresses starting with 128.0.0.
+ */
+- (void)removeFromBanList:(nonnull NSString *)ipAddress;
+
+/**
+ *  Allows all previously banned IPs to connect.
+ */
+- (void)clearBanList;
+
+/**
+ *  Returns YES or NO indicating if a particular IP is banned.
+ *
+ *  @param ipAddress Dotted IP address.
+ *
+ *  @return YES if IP matches any IPs in the ban list, accounting for any wildcards. NO otherwise.
+ */
+- (BOOL)isBanned:(nonnull NSString *)ipAddress;
+
 /// Gets a message from the incoming message queue.
 /// @return nil if no packets are waiting to be handled, otherwise a pointer to a packet.
 - (nullable RNPacket *)receive;

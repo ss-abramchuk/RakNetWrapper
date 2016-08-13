@@ -373,6 +373,22 @@ using namespace RakNet;
     return self.peer->Send(bytes, length, packetPriority, packetReliability, 0, rakNetGUID, broadcast);
 }
 
+- (void)addToBanList:(NSString *)ipAddress duration:(NSTimeInterval)duration {
+    self.peer->AddToBanList([ipAddress UTF8String], duration);
+}
+
+- (void)removeFromBanList:(NSString *)ipAddress {
+    self.peer->RemoveFromBanList([ipAddress UTF8String]);
+}
+
+- (void)clearBanList {
+    self.peer->ClearBanList();
+}
+
+- (BOOL)isBanned:(NSString *)ipAddress {
+    return self.peer->IsBanned([ipAddress UTF8String]);
+}
+
 - (nullable RNPacket *)receive {
     Packet *rakNetPacket = self.peer->Receive();
     if (rakNetPacket == nil) {

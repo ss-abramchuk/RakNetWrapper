@@ -28,7 +28,7 @@
 #pragma mark Configuration of Connections
 
 /**
- *  Starts the network threads, opens the listen port
+ *  Starts the network threads, opens the listen port.
  *
  *  @warning Call setMaximumIncomingConnections: if you want to accept incoming connections.
  *
@@ -38,18 +38,45 @@
  *
  *  @return YES if sturtup succeeded, NO otherwise.
  */
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptor:(nonnull RNSocketDescriptor *)descriptor error:(out NSError * __nullable * __nullable)error;
+- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections
+                        socketDescriptor:(nonnull RNSocketDescriptor *)descriptor
+                                   error:(out NSError * __nullable * __nullable)error;
 
 /**
- *  <#Description#>
+ *  Starts the network threads, opens the listen port.
  *
- *  @param maxConnections <#maxConnections description#>
+ *  @param maxConnections The maximum number of connections between this instance of RakPeer and another instance of RakPeer. Required so the network can preallocate and for thread safety. A pure client would set this to 1. A pure server would set it to the number of allowed clients. A hybrid would set it to the sum of both types of connections.
  *  @param descriptors    <#descriptors description#>
- *  @param error          <#error description#>
+ *  @param error          A pointer to NSError object, where error information is stored in case if function fails. You can pass nil if you don't want that information.
  *
- *  @return <#return value description#>
+ *  @return YES if sturtup succeeded, NO otherwise.
  */
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray *)descriptors error:(out NSError * __nullable * __nullable)error;
+- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections
+                       socketDescriptors:(nonnull NSArray *)descriptors
+                                   error:(out NSError * __nullable * __nullable)error;
+
+/**
+ *  If you accept connections, you must call this or else security will not be enabled for incoming connections. This feature requires more round trips, bandwidth, and CPU time for the connection handshake x64 builds require under 25% of the CPU time of other builds.
+ *
+ *  @pre Must be called while offline.
+ *  @pre LIBCAT_SECURITY must be defined to 1 in NativeFeatureIncludes.h for this function to have any effect.
+ *
+ *  @param publicKey        A pointer to the public key for accepting new connections.
+ *  @param privateKey       A pointer to the private key for accepting new connections.
+ *  @param requireClientKey Should be set to false for most servers. Allows the server to accept a public key from connecting clients as a proof of identity but eats twice as much CPU time as a normal connection.
+ *
+ *  @return YES if security was initialized, NO otherwise.
+ */
+- (BOOL)initializeSecurityWithPublicKey:(nonnull NSString *)publicKey
+                             privateKey:(nonnull NSString *)privateKey
+                       requireClientKey:(BOOL)requireClientKey;
+
+/**
+ *  Disables security for incoming connections.
+ *
+ *	@note Must be called while offline.
+ */
+- (void)disableSecurity;
 
 /// Returns if the network thread is running.
 /// @return YES if the network thread is running, NO otherwise.

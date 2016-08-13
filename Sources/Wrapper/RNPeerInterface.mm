@@ -180,6 +180,14 @@ using namespace RakNet;
     }
 }
 
+- (BOOL)initializeSecurityWithPublicKey:(NSString *)publicKey privateKey:(NSString *)privateKey requireClientKey:(BOOL)requireClientKey {
+    return self.peer->InitializeSecurity([publicKey UTF8String], [privateKey UTF8String], requireClientKey);
+}
+
+- (void)disableSecurity {
+    self.peer->DisableSecurity();
+}
+
 - (BOOL)isActive {
     return self.peer->IsActive();
 }

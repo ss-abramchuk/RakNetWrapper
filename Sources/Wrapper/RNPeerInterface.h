@@ -174,7 +174,7 @@ NS_SWIFT_NAME(connect(remoteHost:remotePort:));
  */
 - (void)closeConnectionWithGUID:(unsigned long long)guid
                sendNotification:(BOOL)sendNotification
-NS_SWIFT_NAME(closeConnection(remoteGUID:notify:));
+NS_SWIFT_NAME(disconnect(remoteGUID:notify:));
 
 /**
  Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).
@@ -184,7 +184,7 @@ NS_SWIFT_NAME(closeConnection(remoteGUID:notify:));
  */
 - (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address
                   sendNotification:(BOOL)sendNotification
-NS_SWIFT_NAME(closeConnection(remoteAddress:notify:));
+NS_SWIFT_NAME(disconnect(remoteAddress:notify:));
 
 /**
  Returns if a system is connected, disconnected, connecting in progress, or various other states.
@@ -275,19 +275,21 @@ onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections;
                 priority:(RNPacketPriority)priority
              reliability:(RNPacketReliability)reliability
                  address:(nonnull RNSystemAddress *)address
-               broadcast:(BOOL)broadcast;
+               broadcast:(BOOL)broadcast
+NS_SWIFT_NAME(send(data:priority:reliability:address:broadcast:));
 
 // TODO: Add full description for sendData:priority:reliability:guid:
 - (unsigned int)sendData:(nonnull NSData *)data
                 priority:(RNPacketPriority)priority
              reliability:(RNPacketReliability)reliability
                     guid:(unsigned long long)guid
-               broadcast:(BOOL)broadcast;
+               broadcast:(BOOL)broadcast
+NS_SWIFT_NAME(send(data:priority:reliability:guid:broadcast:));
 
 /**
  Gets a message from the incoming message queue.
 
- @return nil if no packets are waiting to be handled, otherwise a packet.
+ @return nil if no packets are waiting to be handled, otherwise a recieved packet.
  */
 - (nullable RNPacket *)receive;
 

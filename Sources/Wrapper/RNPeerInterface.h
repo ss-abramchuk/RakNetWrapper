@@ -126,7 +126,9 @@ NS_SWIFT_NAME(shutdown(duration:));
 
  @return YES on successful initiation, NO otherwise.
  */
-- (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error
+- (BOOL)connectToHost:(nonnull NSString *)host
+           remotePort:(unsigned short)remotePort
+                error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(connect(remoteHost:remotePort:));
 
 /**
@@ -135,7 +137,8 @@ NS_SWIFT_NAME(connect(remoteHost:remotePort:));
  @param guid             The GUID of the system we are checking to see if we are connected to.
  @param sendNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
  */
-- (void)closeConnectionWithGUID:(unsigned long long)guid sendNotification:(BOOL)sendNotification
+- (void)closeConnectionWithGUID:(unsigned long long)guid
+               sendNotification:(BOOL)sendNotification
 NS_SWIFT_NAME(closeConnection(remoteGUID:notify:));
 
 /**
@@ -144,7 +147,8 @@ NS_SWIFT_NAME(closeConnection(remoteGUID:notify:));
  @param address          Address of the system to close the connection to.
  @param sendNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
  */
-- (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address sendNotification:(BOOL)sendNotification
+- (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address
+                  sendNotification:(BOOL)sendNotification
 NS_SWIFT_NAME(closeConnection(remoteAddress:notify:));
 
 /**
@@ -195,7 +199,9 @@ NS_SWIFT_NAME(getGUID(from:));
 
 // TODO: Add full description for pingAddress:remotePort:onlyReplyOnAcceptingConnections:
 /// Send a ping to the specified unconnected system.
-- (BOOL)pingAddress:(nonnull NSString *)address remotePort:(unsigned short)remotePort onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections;
+- (BOOL)pingAddress:(nonnull NSString *)address
+         remotePort:(unsigned short)remotePort
+onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections;
 
 // TODO: Add full description for pingAddress:
 /// Send a ping to the specified connected system.
@@ -208,10 +214,18 @@ NS_SWIFT_NAME(getGUID(from:));
 - (int)getLastPingForAddress:(nonnull RNSystemAddress *)address;;
 
 // TODO: Add full description for sendData:priority:reliability:address:
-- (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability address:(nonnull RNSystemAddress *)address broadcast:(BOOL)broadcast;
+- (unsigned int)sendData:(nonnull NSData *)data
+                priority:(RNPacketPriority)priority
+             reliability:(RNPacketReliability)reliability
+                 address:(nonnull RNSystemAddress *)address
+               broadcast:(BOOL)broadcast;
 
 // TODO: Add full description for sendData:priority:reliability:guid:
-- (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability guid:(unsigned long long)guid broadcast:(BOOL)broadcast;
+- (unsigned int)sendData:(nonnull NSData *)data
+                priority:(RNPacketPriority)priority
+             reliability:(RNPacketReliability)reliability
+                    guid:(unsigned long long)guid
+               broadcast:(BOOL)broadcast;
 
 /**
  Bans an IP from connecting. Banned IPs persist between connections but are not saved on shutdown nor loaded on startup.
@@ -219,7 +233,8 @@ NS_SWIFT_NAME(getGUID(from:));
  @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will ban all IP addresses starting with 128.0.0.
  @param duration How many seconds for a temporary ban. Use 0 for a permanent ban.
  */
-- (void)addToBanList:(nonnull NSString *)ipAddress duration:(NSTimeInterval)duration;
+- (void)addToBanList:(nonnull NSString *)ipAddress
+            duration:(NSTimeInterval)duration;
 
 /**
  Allows a previously banned IP to connect.

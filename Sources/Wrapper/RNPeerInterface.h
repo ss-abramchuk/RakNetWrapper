@@ -129,21 +129,35 @@ NS_SWIFT_NAME(shutdown(duration:));
 - (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(connect(remoteHost:remotePort:));
 
-/// Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).
-/// @param guid The GUID of the system we are checking to see if we are connected to
-/// @param sendDisconnectionNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
+/**
+ Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).
+
+ @param guid             The GUID of the system we are checking to see if we are connected to.
+ @param sendNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
+ */
 - (void)closeConnectionWithGUID:(unsigned long long)guid sendNotification:(BOOL)sendNotification
 NS_SWIFT_NAME(closeConnection(remoteGUID:notify:));
 
-/// Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).
-/// @param address Which system to close the connection to
-/// @param sendDisconnectionNotification True to send .DisconnectionNotification to the recipient. False to close it silently.
+/**
+ Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).
+
+ @param address          Address of the system to close the connection to.
+ @param sendNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
+ */
 - (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address sendNotification:(BOOL)sendNotification
 NS_SWIFT_NAME(closeConnection(remoteAddress:notify:));
 
-// TODO: Add full description for getConnectionStateWithGUID:
-/// Returns if a system is connected, disconnected, connecting in progress, or various other states.
-- (RNConnectionState)getConnectionStateWithGUID:(unsigned long long)guid;
+/**
+ Returns if a system is connected, disconnected, connecting in progress, or various other states.
+ 
+ @note This locks a mutex, do not call too frequently during connection attempts or the attempt will take longer and possibly even timeout.
+ 
+ @param guid The GUID of the system we are referring to.
+
+ @return What state the remote system is in.
+ */
+- (RNConnectionState)getConnectionStateWithGUID:(unsigned long long)guid
+NS_SWIFT_NAME(connectionState(remoteGUID:));
 
 // TODO: Add full description for getConnectionStateWithAddress:port
 /// Returns if a system is connected, disconnected, connecting in progress, or various other states.

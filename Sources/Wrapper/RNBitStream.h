@@ -37,43 +37,49 @@
 #pragma mark Initializers
 
 /**
- *  Initialize the bitstream.
- *
- *  @return RNBitStream instance
+ Initialize the bitstream.
+
+ @return RNBitStream instance
  */
 - (nonnull instancetype)init;
 
 /**
- *  Initialize the bitstream with existing data.
- *
- *  @param data <#data description#>
- *  @param copy true or false to make a copy of data or not.
- *
- *  @return RNBitStream instance
+ Initialize the bitstream with existing data.
+
+ @param data <#data description#>
+ @param copy YES or NO to make a copy of data or not.
+
+ @return RNBitStream instance
  */
 - (nonnull instancetype)initWithData:(nonnull NSData *)data copy:(BOOL)copy;
 
+
+#pragma mark Pointers
+
 /**
- *  Resets the bitstream for reuse.
+ Resets the bitstream for reuse.
  */
 - (void)reset;
 
 /**
- *  Ignore data we don't intend to read.
- *
- *  @param numberOfBytes The number of bytes to ignore.
+ Ignore data we don't intend to read.
+ 
+ @param numberOfBytes The number of bytes to ignore.
  */
 - (void)ignoreBytes:(NSUInteger)numberOfBytes;
 
 /**
- *  Sets the read pointer back to the beginning of your data.
+ Sets the read pointer back to the beginning of your data.
  */
 - (void)resetReadPointer;
 
 /**
- *  Sets the write pointer back to the beginning of your data.
+ Sets the write pointer back to the beginning of your data.
  */
 - (void)resetWritePointer;
+
+
+#pragma mark Read / Write
 
 /**
  *  <#Description#>

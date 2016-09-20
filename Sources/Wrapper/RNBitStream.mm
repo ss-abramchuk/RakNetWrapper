@@ -78,6 +78,9 @@
     return self;
 }
 
+
+#pragma mark Pointers
+
 - (void)reset {
     _bitStream->Reset();
 }
@@ -93,6 +96,9 @@
 - (void)resetWritePointer {
     _bitStream->ResetWritePointer();
 }
+
+
+#pragma mark Read / Write
 
 - (void)writeNumericValue:(nonnull NSNumber *)value ofType:(RNBitStreamType)type {
     switch (type) {

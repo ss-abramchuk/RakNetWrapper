@@ -20,7 +20,7 @@
 
 #pragma mark Properties
 
-/// Returns if the network thread is running.
+/// Returns YES if the network thread is running, otherwise NO.
 @property (readonly, nonatomic) BOOL isActive;
 
 /// Return the total number of connections we are allowed.

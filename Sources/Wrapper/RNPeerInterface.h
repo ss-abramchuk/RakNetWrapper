@@ -20,25 +20,39 @@
 
 #pragma mark Properties
 
-/// Returns YES if the network thread is running, otherwise NO.
+/**
+ Returns YES if the network thread is running, otherwise NO.
+ */
 @property (readonly, nonatomic) BOOL isActive;
 
-/// Return the total number of connections we are allowed.
+/**
+ Return the total number of connections we are allowed.
+ */
 @property (readonly, nonatomic) unsigned int maximumNumberOfPeers;
 
-/// Maximum number of incoming connections allowed.
+/**
+ Maximum number of incoming connections allowed.
+ */
 @property (nonatomic) unsigned short maximumIncomingConnections;
 
-/// Returns how many open connections there are at this time.
+/**
+ Returns how many open connections there are at this time.
+ */
 @property (readonly, nonatomic) unsigned short numberOfConnections;
 
-/// Return own GUID.
+/**
+ Return own GUID.
+ */
 @property (readonly, nonatomic) unsigned long long myGUID;
 
-/// Returns an array of IP addresses this system has internally.
+/**
+ Returns an array of IP addresses this system has internally.
+ */
 @property (readonly, nonatomic) NSArray<NSString *> * _Nonnull localAddresses;
 
-/// The array with the RNSystemAddress of all the systems we are connected to.
+/**
+ The array with the RNSystemAddress of all the systems we are connected to.
+ */
 @property (readonly, nonatomic) NSArray<RNSystemAddress *> * _Nonnull connectionList;
 
 /**
@@ -47,6 +61,7 @@
  @warning Length of data should be under 400 bytes, as a security measure against flood attacks.
  */
 @property NSData * _Nullable offlinePingResponse;
+
 
 #pragma mark Initializers
 

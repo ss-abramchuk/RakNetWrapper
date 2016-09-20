@@ -165,7 +165,19 @@ NS_SWIFT_NAME(connectionState(remoteGUID:));
 
 // TODO: Add full description for getConnectionStateWithAddress:port
 /// Returns if a system is connected, disconnected, connecting in progress, or various other states.
-- (RNConnectionState)getConnectionStateWithAddress:(nonnull RNSystemAddress *)address;
+
+
+/**
+ Returns if a system is connected, disconnected, connecting in progress, or various other states.
+ 
+ @note This locks a mutex, do not call too frequently during connection attempts or the attempt will take longer and possibly even timeout.
+ 
+ @param address Address of the system we are referring to.
+
+ @return What state the remote system is in.
+ */
+- (RNConnectionState)getConnectionStateWithAddress:(nonnull RNSystemAddress *)address
+NS_SWIFT_NAME(connectionState(remoteAddress:));
 
 /// Returns an array with the RNSystemAddress of all the systems we are connected to
 - (nonnull NSArray *)getConnectionListWithNumberOfSystems:(unsigned short)numberOfSystems;

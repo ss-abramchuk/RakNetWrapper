@@ -129,7 +129,7 @@ NS_SWIFT_NAME(initializeSecurity(publicKey:privateKey:requireClientKey:));
  @param ipAddress IP address to add. * wildcards are supported.
  */
 - (void)addToSecurityExceptionList:(nonnull NSString *)ipAddress
-NS_SWIFT_NAME(securityExceptionList(add:));
+NS_SWIFT_NAME(securityExceptionList(addAddress:));
 
 /**
  Remove a specific connection previously added via addToSecurityExceptionList:
@@ -137,7 +137,7 @@ NS_SWIFT_NAME(securityExceptionList(add:));
  @param ipAddress IP address to remove. Pass 0 to remove all IP addresses. * wildcards are supported.
  */
 - (void)removeFromSecurityExceptionList:(nonnull NSString *)ipAddress
-NS_SWIFT_NAME(securityExceptionList(remove:));
+NS_SWIFT_NAME(securityExceptionList(removeAddress:));
 
 /**
  Checks to see if a given IP is in the security exception list.
@@ -147,7 +147,7 @@ NS_SWIFT_NAME(securityExceptionList(remove:));
  @return YES if address in the list, NO otherwise.
  */
 - (BOOL)isInSecurityExceptionList:(nonnull NSString *)ipAddress
-NS_SWIFT_NAME(securityExceptionList(has:));
+NS_SWIFT_NAME(securityExceptionList(hasAddress:));
 
 
 #pragma mark Connection
@@ -219,18 +219,22 @@ NS_SWIFT_NAME(connectionState(remoteAddress:));
  @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will ban all IP addresses starting with 128.0.0.
  @param duration How many seconds for a temporary ban. Use 0 for a permanent ban.
  */
-- (void)addToBanList:(nonnull NSString *)ipAddress
-            duration:(NSTimeInterval)duration;
+- (void)ban:(nonnull NSString *)ipAddress
+            duration:(NSTimeInterval)duration
+NS_SWIFT_NAME(ban(address:duration:));
 
 /**
  Allows a previously banned IP to connect.
  
  @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will unban all IP addresses starting with 128.0.0.
  */
-- (void)removeFromBanList:(nonnull NSString *)ipAddress;
+- (void)unban:(nonnull NSString *)ipAddress
+NS_SWIFT_NAME(unban(address:));
 
-/// Allows all previously banned IPs to connect.
-- (void)clearBanList;
+/**
+ Allows all previously banned IPs to connect.
+ */
+- (void)unbanAll;
 
 /**
  Returns YES or NO indicating if a particular IP is banned.

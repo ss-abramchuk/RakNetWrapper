@@ -227,6 +227,9 @@ using namespace RakNet;
     return self.peer->IsInSecurityExceptionList([ipAddress UTF8String]);
 }
 
+
+# pragma mark Connection
+
 - (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error {
     int result = self.peer->Connect([host UTF8String], remotePort, 0, 0);
     
@@ -288,22 +291,27 @@ using namespace RakNet;
     return [self getConnectionStateFromValue:result];
 }
 
-- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid; {
-    RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
-    SystemAddress systemAddress = self.peer->GetSystemAddressFromGuid(rakNetGUID);
-    
-    return [[RNSystemAddress alloc] initWithSystemAddress:systemAddress];
+
+# pragma mark Ban
+
+- (void)ban:(NSString *)ipAddress duration:(NSTimeInterval)duration {
+    self.peer->AddToBanList([ipAddress UTF8String], duration);
 }
 
-- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address {
-    RakNetGUID result = self.peer->GetGuidFromSystemAddress(*address.systemAddress);
-    
-    if (result == UNASSIGNED_RAKNET_GUID) {
-        return 0;
-    } else {
-        return result.g;
-    }
+- (void)unban:(NSString *)ipAddress {
+    self.peer->RemoveFromBanList([ipAddress UTF8String]);
 }
+
+- (void)unbanAll {
+    self.peer->ClearBanList();
+}
+
+- (BOOL)isBanned:(NSString *)ipAddress {
+    return self.peer->IsBanned([ipAddress UTF8String]);
+}
+
+
+# pragma mark Ping
 
 - (BOOL)pingAddress:(nonnull NSString *)address remotePort:(unsigned short)remotePort onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections {
     return self.peer->Ping([address UTF8String], remotePort, onlyReplyOnAcceptingConnections);
@@ -321,6 +329,9 @@ using namespace RakNet;
 - (int)getLastPingForAddress:(RNSystemAddress *)address {
     return self.peer->GetLastPing(*(address.systemAddress));
 }
+
+
+# pragma mark Data
 
 - (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability address:(nonnull RNSystemAddress *)address broadcast:(BOOL)broadcast {
     unsigned int length =[data length];
@@ -341,22 +352,6 @@ using namespace RakNet;
     return self.peer->Send(bytes, length, packetPriority, packetReliability, 0, rakNetGUID, broadcast);
 }
 
-- (void)addToBanList:(NSString *)ipAddress duration:(NSTimeInterval)duration {
-    self.peer->AddToBanList([ipAddress UTF8String], duration);
-}
-
-- (void)removeFromBanList:(NSString *)ipAddress {
-    self.peer->RemoveFromBanList([ipAddress UTF8String]);
-}
-
-- (void)clearBanList {
-    self.peer->ClearBanList();
-}
-
-- (BOOL)isBanned:(NSString *)ipAddress {
-    return self.peer->IsBanned([ipAddress UTF8String]);
-}
-
 - (nullable RNPacket *)receive {
     Packet *rakNetPacket = self.peer->Receive();
     if (rakNetPacket == nil) {
@@ -367,6 +362,27 @@ using namespace RakNet;
         return packet;
     }
 }
+
+
+# pragma mark Utils
+
+- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid; {
+    RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
+    SystemAddress systemAddress = self.peer->GetSystemAddressFromGuid(rakNetGUID);
+    
+    return [[RNSystemAddress alloc] initWithSystemAddress:systemAddress];
+}
+
+- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address {
+    RakNetGUID result = self.peer->GetGuidFromSystemAddress(*address.systemAddress);
+    
+    if (result == UNASSIGNED_RAKNET_GUID) {
+        return 0;
+    } else {
+        return result.g;
+    }
+}
+
 
 #pragma mark Private Utility Methods
 

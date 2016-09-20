@@ -229,7 +229,7 @@ using namespace RakNet;
 }
 
 
-# pragma mark Connection
+#pragma mark Connection
 
 - (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error {
     int result = self.peer->Connect([host UTF8String], remotePort, 0, 0);
@@ -293,7 +293,7 @@ using namespace RakNet;
 }
 
 
-# pragma mark Ban
+#pragma mark Ban
 
 - (void)ban:(NSString *)ipAddress duration:(NSTimeInterval)duration {
     self.peer->AddToBanList([ipAddress UTF8String], duration);
@@ -312,7 +312,7 @@ using namespace RakNet;
 }
 
 
-# pragma mark Ping
+#pragma mark Ping
 
 - (BOOL)pingAddress:(nonnull NSString *)address remotePort:(unsigned short)remotePort onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections {
     return self.peer->Ping([address UTF8String], remotePort, onlyReplyOnAcceptingConnections);
@@ -332,7 +332,7 @@ using namespace RakNet;
 }
 
 
-# pragma mark Data
+#pragma mark Data
 
 - (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability address:(nonnull RNSystemAddress *)address broadcast:(BOOL)broadcast {
     unsigned int length =[data length];
@@ -365,7 +365,7 @@ using namespace RakNet;
 }
 
 
-# pragma mark Utils
+#pragma mark Utils
 
 - (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid; {
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];

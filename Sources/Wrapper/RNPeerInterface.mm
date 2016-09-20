@@ -76,6 +76,25 @@ using namespace RakNet;
     return [NSArray arrayWithArray:addresses];
 }
 
+- (NSArray<RNSystemAddress *> * _Nonnull)connectionList {
+    unsigned short connectionsCount = self.peer->NumberOfConnections();
+    
+    SystemAddress *systems = new SystemAddress[connectionsCount];
+    self.peer->GetConnectionList(systems, &connectionsCount);
+    
+    NSMutableArray *connections = [NSMutableArray arrayWithCapacity:connectionsCount];
+    
+    for (int i = 0; i < connectionsCount; i++) {
+        SystemAddress address = systems[i];
+        [connections addObject:[[RNSystemAddress alloc] initWithSystemAddress:address]];
+    }
+    
+    delete [] systems;
+    
+    return [NSArray arrayWithArray:connections];
+}
+
+
 #pragma mark Initializers
 
 - (instancetype)init
@@ -92,7 +111,8 @@ using namespace RakNet;
     return self;
 }
 
-#pragma mark Handling of Connections
+
+#pragma mark Startup and Shutdown
 
 - (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors error:(out NSError * __nullable * __nullable)error {
     SocketDescriptor *socketDescriptors = new SocketDescriptor[descriptors.count];
@@ -161,6 +181,13 @@ using namespace RakNet;
     }
 }
 
+- (void)shutdownWithDuration:(unsigned int)blockDuration {
+    self.peer->Shutdown(blockDuration);
+}
+
+
+#pragma mark Security
+
 - (BOOL)initializeSecurityWithPublicKey:(NSString *)publicKey privateKey:(NSString *)privateKey requireClientKey:(BOOL)requireClientKey {
     return self.peer->InitializeSecurity([publicKey UTF8String], [privateKey UTF8String], requireClientKey);
 }
@@ -179,10 +206,6 @@ using namespace RakNet;
 
 - (BOOL)isInSecurityExceptionList:(NSString *)ipAddress {
     return self.peer->IsInSecurityExceptionList([ipAddress UTF8String]);
-}
-
-- (void)shutdownWithDuration:(unsigned int)blockDuration {
-    self.peer->Shutdown(blockDuration);
 }
 
 - (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error {
@@ -244,22 +267,6 @@ using namespace RakNet;
 - (RNConnectionState)getConnectionStateWithAddress:(nonnull RNSystemAddress *)address {
     int result = self.peer->GetConnectionState(*address.systemAddress);
     return [self getConnectionStateFromValue:result];
-}
-
-- (nonnull NSArray *)getConnectionListWithNumberOfSystems:(unsigned short)numberOfSystems {
-    SystemAddress *systems = new SystemAddress[numberOfSystems];
-    self.peer->GetConnectionList(systems, &numberOfSystems);
-    
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:numberOfSystems];
-    
-    for (int i = 0; i < numberOfSystems; i++) {
-        SystemAddress address = systems[i];
-        [array addObject:[[RNSystemAddress alloc] initWithSystemAddress:address]];
-    }
-    
-    delete [] systems;
-    
-    return array;
 }
 
 - (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid; {

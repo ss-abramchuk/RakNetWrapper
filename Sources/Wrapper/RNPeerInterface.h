@@ -38,6 +38,9 @@
 /// Returns an array of IP addresses this system has internally.
 @property (readonly, nonatomic) NSArray<NSString *> * _Nonnull localAddresses;
 
+/// The array with the RNSystemAddress of all the systems we are connected to.
+@property (readonly, nonatomic) NSArray<RNSystemAddress *> * _Nonnull connectionList;
+
 
 #pragma mark Initializers
 
@@ -69,6 +72,7 @@ NS_SWIFT_NAME(startup(maxConnections:socketDescriptors:));
  */
 - (void)shutdownWithDuration:(unsigned int)blockDuration
 NS_SWIFT_NAME(shutdown(duration:));
+
 
 #pragma mark Security
 
@@ -123,6 +127,7 @@ NS_SWIFT_NAME(securityExceptionList(remove:));
  */
 - (BOOL)isInSecurityExceptionList:(nonnull NSString *)ipAddress
 NS_SWIFT_NAME(securityExceptionList(has:));
+
 
 #pragma mark Connection
 
@@ -183,9 +188,6 @@ NS_SWIFT_NAME(connectionState(remoteGUID:));
  */
 - (RNConnectionState)getConnectionStateWithAddress:(nonnull RNSystemAddress *)address
 NS_SWIFT_NAME(connectionState(remoteAddress:));
-
-/// Returns an array with the RNSystemAddress of all the systems we are connected to
-- (nonnull NSArray *)getConnectionListWithNumberOfSystems:(unsigned short)numberOfSystems;
 
 // TODO: Add full description for getSystemAddressFromGUID:
 /// Given the GUID of a connected system, give us the system address of that system.

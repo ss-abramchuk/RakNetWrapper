@@ -28,6 +28,11 @@
  */
 @property (nonatomic) NSUInteger readOffset;
 
+/**
+ The number of bytes into the stream that we have written.
+ */
+@property (nonatomic) NSUInteger writeOffset;
+
 
 #pragma mark Initializers
 
@@ -69,16 +74,6 @@
  *  Sets the write pointer back to the beginning of your data.
  */
 - (void)resetWritePointer;
-
-
-/**
- *  <#Description#>
- *
- *  @return <#return value description#>
- */
-- (NSUInteger)getWriteOffset;
-
-- (void)setWriteOffset:(NSUInteger)offset;
 
 /**
  *  <#Description#>

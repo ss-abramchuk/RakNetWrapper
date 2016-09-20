@@ -60,6 +60,22 @@ using namespace RakNet;
     return (unsigned long long)guid.g;
 }
 
+- (NSArray<NSString *> * _Nonnull)localAddresses {
+    unsigned int addressCount = self.peer->GetNumberOfAddresses();
+    
+    NSMutableArray *addresses = [[NSMutableArray alloc] init];
+    
+    for (unsigned int i = 0; i < addressCount; i++) {
+        const char *address = self.peer->GetLocalIP(i);
+        
+        if (strcmp(address, UNASSIGNED_SYSTEM_ADDRESS.ToString()) != 0) {
+            [addresses addObject:[NSString stringWithUTF8String:address]];
+        }
+    }
+    
+    return [NSArray arrayWithArray:addresses];
+}
+
 #pragma mark Initializers
 
 - (instancetype)init
@@ -260,20 +276,6 @@ using namespace RakNet;
         return 0;
     } else {
         return result.g;
-    }
-}
-
-- (unsigned int)getNumberOfAddresses {
-    return self.peer->GetNumberOfAddresses();
-}
-
-- (nullable NSString *)getLocalIPWithIndex:(unsigned int)index {
-    const char *address = self.peer->GetLocalIP(index);
-
-    if (strcmp(address, UNASSIGNED_SYSTEM_ADDRESS.ToString()) == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithUTF8String:address];
     }
 }
 

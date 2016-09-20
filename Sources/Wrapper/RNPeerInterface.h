@@ -32,14 +32,19 @@
 /// Returns how many open connections there are at this time.
 @property (readonly, nonatomic) unsigned short numberOfConnections;
 
-/// Return own GUID
+/// Return own GUID.
 @property (readonly, nonatomic) unsigned long long myGUID;
+
+/// Returns an array of IP addresses this system has internally.
+@property (readonly, nonatomic) NSArray<NSString *> * _Nonnull localAddresses;
+
 
 #pragma mark Initializers
 
 - (nullable instancetype)init;
 
-#pragma mark Handling of Connections
+
+#pragma mark Startup and Shutdown
 
 /**
  Starts the network threads, opens the listen ports.
@@ -56,6 +61,16 @@
                        socketDescriptors:(nonnull NSArray *)descriptors
                                    error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(startup(maxConnections:socketDescriptors:));
+
+/**
+ Stops the network threads and closes all connections.
+ 
+ @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.
+ */
+- (void)shutdownWithDuration:(unsigned int)blockDuration
+NS_SWIFT_NAME(shutdown(duration:));
+
+#pragma mark Security
 
 /**
  If you accept connections, you must call this or else security will not be enabled for incoming connections. This feature requires more round trips, bandwidth, and CPU time for the connection handshake x64 builds require under 25% of the CPU time of other builds.
@@ -109,13 +124,7 @@ NS_SWIFT_NAME(securityExceptionList(remove:));
 - (BOOL)isInSecurityExceptionList:(nonnull NSString *)ipAddress
 NS_SWIFT_NAME(securityExceptionList(has:));
 
-/**
- Stops the network threads and closes all connections.
-
- @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.
- */
-- (void)shutdownWithDuration:(unsigned int)blockDuration
-NS_SWIFT_NAME(shutdown(duration:));
+#pragma mark Connection
 
 /**
  Connect to the specified host (ip or domain name) and server port.
@@ -163,10 +172,6 @@ NS_SWIFT_NAME(closeConnection(remoteAddress:notify:));
 - (RNConnectionState)getConnectionStateWithGUID:(unsigned long long)guid
 NS_SWIFT_NAME(connectionState(remoteGUID:));
 
-// TODO: Add full description for getConnectionStateWithAddress:port
-/// Returns if a system is connected, disconnected, connecting in progress, or various other states.
-
-
 /**
  Returns if a system is connected, disconnected, connecting in progress, or various other states.
  
@@ -192,14 +197,6 @@ NS_SWIFT_NAME(connectionState(remoteAddress:));
 /// Given a connected system, give us the unique GUID representing that instance of RakPeer.
 - (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address
 NS_SWIFT_NAME(getGUID(from:));
-
-/// Returns the number of IP addresses this system has internally. Get the actual addresses from getLocalIP:
-- (unsigned int)getNumberOfAddresses;
-
-/// Returns an IP address at index 0 to GetNumberOfAddresses - 1.
-/// @param index Index into the list of IP addresses.
-/// @return The local IP address at this index.
-- (nullable NSString *)getLocalIPWithIndex:(unsigned int)index;
 
 /// Sets the data to send along with a LAN server discovery or offline ping reply.
 /// @warning Length of data should be under 400 bytes, as a security measure against flood attacks

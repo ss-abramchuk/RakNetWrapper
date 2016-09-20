@@ -122,17 +122,20 @@ NS_SWIFT_NAME(shutdown(duration:));
 /// @param remotePort Which port to connect to on the remote machine.
 /// @param error Pointer to NSError object, where error information is stored in case function fails. You can pass nil if you don't want that information.
 /// @return YES on successful initiation, NO otherwise.
-- (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error;
+- (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(connect(remoteHost:remotePort:));
 
 /// Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).
 /// @param guid The GUID of the system we are checking to see if we are connected to
 /// @param sendDisconnectionNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
-- (void)closeConnectionWithGUID:(unsigned long long)guid sendNotification:(BOOL)sendNotification;
+- (void)closeConnectionWithGUID:(unsigned long long)guid sendNotification:(BOOL)sendNotification
+NS_SWIFT_NAME(closeConnection(remoteGUID:notify:));
 
 /// Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).
 /// @param address Which system to close the connection to
 /// @param sendDisconnectionNotification True to send .DisconnectionNotification to the recipient. False to close it silently.
-- (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address sendNotification:(BOOL)sendNotification;
+- (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address sendNotification:(BOOL)sendNotification
+NS_SWIFT_NAME(closeConnection(remoteAddress:notify:));
 
 // TODO: Add full description for getConnectionStateWithGUID:
 /// Returns if a system is connected, disconnected, connecting in progress, or various other states.

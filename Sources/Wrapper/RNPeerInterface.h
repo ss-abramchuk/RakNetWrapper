@@ -88,14 +88,16 @@ NS_SWIFT_NAME(initializeSecurity(publicKey:privateKey:requireClientKey:));
  *
  *  @param ipAddress IP address to add. * wildcards are supported.
  */
-- (void)addToSecurityExceptionList:(nonnull NSString *)ipAddress;
+- (void)addToSecurityExceptionList:(nonnull NSString *)ipAddress
+NS_SWIFT_NAME(securityExceptionList(add:));
 
 /**
  *  Remove a specific connection previously added via addToSecurityExceptionList:
  *
  *  @param ipAddress IP address to remove. Pass 0 to remove all IP addresses. * wildcards are supported.
  */
-- (void)removeFromSecurityExceptionList:(nonnull NSString *)ipAddress;
+- (void)removeFromSecurityExceptionList:(nonnull NSString *)ipAddress
+NS_SWIFT_NAME(securityExceptionList(remove:));
 
 /**
  *  Checks to see if a given IP is in the security exception list.
@@ -104,7 +106,8 @@ NS_SWIFT_NAME(initializeSecurity(publicKey:privateKey:requireClientKey:));
  *
  *  @return YES if address in the list, NO otherwise.
  */
-- (BOOL)isInSecurityExceptionList:(nonnull NSString *)ipAddress;
+- (BOOL)isInSecurityExceptionList:(nonnull NSString *)ipAddress
+NS_SWIFT_NAME(securityExceptionList(has:));
 
 /// Stops the network threads and closes all connections.
 /// @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.

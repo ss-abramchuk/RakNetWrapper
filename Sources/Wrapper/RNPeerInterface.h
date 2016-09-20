@@ -109,8 +109,11 @@ NS_SWIFT_NAME(securityExceptionList(remove:));
 - (BOOL)isInSecurityExceptionList:(nonnull NSString *)ipAddress
 NS_SWIFT_NAME(securityExceptionList(has:));
 
-/// Stops the network threads and closes all connections.
-/// @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.
+/**
+ *  Stops the network threads and closes all connections.
+ *
+ *  @param blockDuration How long, in milliseconds, you should wait for all remaining messages to go out, including RNMessageIdentifierDisconnectionNotification. If 0, it doesn't wait at all.
+ */
 - (void)shutdownWithDuration:(unsigned int)blockDuration
 NS_SWIFT_NAME(shutdown(duration:));
 

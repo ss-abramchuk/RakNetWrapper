@@ -41,6 +41,12 @@
 /// The array with the RNSystemAddress of all the systems we are connected to.
 @property (readonly, nonatomic) NSArray<RNSystemAddress *> * _Nonnull connectionList;
 
+/**
+ The data to send along with a LAN server discovery or offline ping reply.
+ 
+ @warning Length of data should be under 400 bytes, as a security measure against flood attacks.
+ */
+@property NSData * _Nullable offlinePingResponse;
 
 #pragma mark Initializers
 
@@ -189,24 +195,8 @@ NS_SWIFT_NAME(connectionState(remoteGUID:));
 - (RNConnectionState)getConnectionStateWithAddress:(nonnull RNSystemAddress *)address
 NS_SWIFT_NAME(connectionState(remoteAddress:));
 
-// TODO: Add full description for getSystemAddressFromGUID:
-/// Given the GUID of a connected system, give us the system address of that system.
-/// @param guid The GUID of the system we are converting to address.
-/// @return
-- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid;
 
-// TODO: Add full description for getGuidFromSystemAddress:port:
-/// Given a connected system, give us the unique GUID representing that instance of RakPeer.
-- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address
-NS_SWIFT_NAME(getGUID(from:));
-
-/// Sets the data to send along with a LAN server discovery or offline ping reply.
-/// @warning Length of data should be under 400 bytes, as a security measure against flood attacks
-/// @param data A block of data to store, or nil for none
-- (void)setOfflinePingResponse:(nullable NSData *)data;
-
-/// Returns a copy of the data passed to SetOfflinePingResponse.
-- (nullable NSData *)getOfflinePingResponse;
+#pragma mark Ping
 
 // TODO: Add full description for pingAddress:remotePort:onlyReplyOnAcceptingConnections:
 /// Send a ping to the specified unconnected system.
@@ -223,6 +213,20 @@ onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections;
 
 // TODO: Add full description for getLastPingForAddress:
 - (int)getLastPingForAddress:(nonnull RNSystemAddress *)address;;
+
+
+#pragma mark Utils
+
+// TODO: Add full description for getSystemAddressFromGUID:
+/// Given the GUID of a connected system, give us the system address of that system.
+/// @param guid The GUID of the system we are converting to address.
+/// @return
+- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid;
+
+// TODO: Add full description for getGuidFromSystemAddress:port:
+/// Given a connected system, give us the unique GUID representing that instance of RakPeer.
+- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address
+NS_SWIFT_NAME(getGUID(from:));
 
 // TODO: Add full description for sendData:priority:reliability:address:
 - (unsigned int)sendData:(nonnull NSData *)data

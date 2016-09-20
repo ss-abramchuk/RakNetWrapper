@@ -94,6 +94,25 @@ using namespace RakNet;
     return [NSArray arrayWithArray:connections];
 }
 
+- (NSData * _Nullable)offlinePingResponse {
+    char *data = 0;
+    unsigned int length = 0;
+    
+    self.peer->GetOfflinePingResponse(&data, &length);
+    
+    if (data == NULL) {
+        return nil;
+    } else {
+        return [NSData dataWithBytes:data length:length];
+    }
+}
+
+- (void)setOfflinePingResponse:(NSData * _Nullable)data {
+    unsigned int length = data != nil ? [data length] : 0;
+    const char *bytes = (const char *)[data bytes];
+    
+    self.peer->SetOfflinePingResponse(bytes, length);
+}
 
 #pragma mark Initializers
 
@@ -283,26 +302,6 @@ using namespace RakNet;
         return 0;
     } else {
         return result.g;
-    }
-}
-
-- (void)setOfflinePingResponse:(nullable NSData *)data {
-    unsigned int length = data != nil ? [data length] : 0;
-    const char *bytes = (const char *)[data bytes];
-    
-    self.peer->SetOfflinePingResponse(bytes, length);
-}
-
-- (nullable NSData *)getOfflinePingResponse {
-    char *data = 0;
-    unsigned int length = 0;
-    
-    self.peer->GetOfflinePingResponse(&data, &length);
-    
-    if (data == 0) {
-        return nil;
-    } else {
-        return [NSData dataWithBytes:data length:length];
     }
 }
 

@@ -16,10 +16,20 @@
  */
 @interface RNBitStream : NSObject
 
+#pragma mark Properties
+
 /**
- *  Gets the data that RNBitStream is writing to / reading from.
+ Gets the data that RNBitStream is writing to / reading from.
  */
 @property (readonly, nonnull) NSData *data;
+
+/**
+ The number of bytes into the stream that we have read.
+ */
+@property (nonatomic) NSUInteger readOffset;
+
+
+#pragma mark Initializers
 
 /**
  *  Initialize the bitstream.
@@ -60,12 +70,6 @@
  */
 - (void)resetWritePointer;
 
-/**
- *  Returns the number of bytes into the stream that we have read
- *
- *  @return the number of bytes
- */
-- (NSUInteger)getReadOffset;
 
 /**
  *  <#Description#>
@@ -73,8 +77,6 @@
  *  @return <#return value description#>
  */
 - (NSUInteger)getWriteOffset;
-
-- (void)setReadOffset:(NSUInteger)newoffset;
 
 - (void)setWriteOffset:(NSUInteger)offset;
 

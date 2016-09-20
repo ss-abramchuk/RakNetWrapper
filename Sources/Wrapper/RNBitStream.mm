@@ -25,12 +25,27 @@
 
 @implementation RNBitStream
 
+#pragma mark Properties
+
 - (NSData *)data {
     unsigned char * data = _bitStream->GetData();
     NSUInteger length = _bitStream->GetNumberOfBytesUsed();
     
     return [NSData dataWithBytes:data length:length];
 }
+
+- (NSUInteger)readOffset {
+    BitSize_t offset = _bitStream->GetReadOffset();
+    return BITS_TO_BYTES(offset);
+}
+
+- (void)setReadOffset:(NSUInteger)offset {
+    BitSize_t newOffset = BYTES_TO_BITS(offset);
+    _bitStream->SetReadOffset(newOffset);
+}
+
+
+#pragma mark Initializers
 
 - (instancetype)init
 {
@@ -69,19 +84,9 @@
     _bitStream->ResetWritePointer();
 }
 
-- (NSUInteger)getReadOffset {
-    BitSize_t offset = _bitStream->GetReadOffset();
-    return BITS_TO_BYTES(offset);
-}
-
 - (NSUInteger)getWriteOffset {
     BitSize_t offset = _bitStream->GetWriteOffset();
     return BITS_TO_BYTES(offset);
-}
-
-- (void)setReadOffset:(NSUInteger)offset {
-    BitSize_t newOffset = BYTES_TO_BITS(offset);
-    _bitStream->SetReadOffset(newOffset);
 }
 
 - (void)setWriteOffset:(NSUInteger)offset {

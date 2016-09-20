@@ -157,9 +157,6 @@ NS_SWIFT_NAME(getGUID(from:));
 /// @return The local IP address at this index.
 - (nullable NSString *)getLocalIPWithIndex:(unsigned int)index;
 
-/// Returns how many open connections there are at this time.
-- (unsigned short)numberOfConnections;
-
 /// Sets the data to send along with a LAN server discovery or offline ping reply.
 /// @warning Length of data should be under 400 bytes, as a security measure against flood attacks
 /// @param data A block of data to store, or nil for none

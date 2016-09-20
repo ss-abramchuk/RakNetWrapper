@@ -211,6 +211,37 @@ NS_SWIFT_NAME(connectionState(remoteGUID:));
 NS_SWIFT_NAME(connectionState(remoteAddress:));
 
 
+#pragma mark Ban
+
+/**
+ Bans an IP from connecting. Banned IPs persist between connections but are not saved on shutdown nor loaded on startup.
+ 
+ @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will ban all IP addresses starting with 128.0.0.
+ @param duration How many seconds for a temporary ban. Use 0 for a permanent ban.
+ */
+- (void)addToBanList:(nonnull NSString *)ipAddress
+            duration:(NSTimeInterval)duration;
+
+/**
+ Allows a previously banned IP to connect.
+ 
+ @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will unban all IP addresses starting with 128.0.0.
+ */
+- (void)removeFromBanList:(nonnull NSString *)ipAddress;
+
+/// Allows all previously banned IPs to connect.
+- (void)clearBanList;
+
+/**
+ Returns YES or NO indicating if a particular IP is banned.
+ 
+ @param ipAddress Dotted IP address.
+ 
+ @return YES if IP matches any IPs in the ban list, accounting for any wildcards. NO otherwise.
+ */
+- (BOOL)isBanned:(nonnull NSString *)ipAddress;
+
+
 #pragma mark Ping
 
 // TODO: Add full description for pingAddress:remotePort:onlyReplyOnAcceptingConnections:
@@ -219,8 +250,11 @@ NS_SWIFT_NAME(connectionState(remoteAddress:));
          remotePort:(unsigned short)remotePort
 onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections;
 
-// TODO: Add full description for pingAddress:
-/// Send a ping to the specified connected system.
+/**
+ Send a ping to the specified connected system.
+
+ @param address Address of the connected system.
+ */
 - (void)pingAddress:(nonnull RNSystemAddress *)address;
 
 // TODO: Add full description for getLastPingForGUID:
@@ -230,18 +264,7 @@ onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections;
 - (int)getLastPingForAddress:(nonnull RNSystemAddress *)address;;
 
 
-#pragma mark Utils
-
-// TODO: Add full description for getSystemAddressFromGUID:
-/// Given the GUID of a connected system, give us the system address of that system.
-/// @param guid The GUID of the system we are converting to address.
-/// @return
-- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid;
-
-// TODO: Add full description for getGuidFromSystemAddress:port:
-/// Given a connected system, give us the unique GUID representing that instance of RakPeer.
-- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address
-NS_SWIFT_NAME(getGUID(from:));
+#pragma mark Data
 
 // TODO: Add full description for sendData:priority:reliability:address:
 - (unsigned int)sendData:(nonnull NSData *)data
@@ -258,35 +281,33 @@ NS_SWIFT_NAME(getGUID(from:));
                broadcast:(BOOL)broadcast;
 
 /**
- Bans an IP from connecting. Banned IPs persist between connections but are not saved on shutdown nor loaded on startup.
+ Gets a message from the incoming message queue.
 
- @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will ban all IP addresses starting with 128.0.0.
- @param duration How many seconds for a temporary ban. Use 0 for a permanent ban.
+ @return nil if no packets are waiting to be handled, otherwise a packet.
  */
-- (void)addToBanList:(nonnull NSString *)ipAddress
-            duration:(NSTimeInterval)duration;
-
-/**
- Allows a previously banned IP to connect.
-
- @param ipAddress Dotted IP address. Can use * as a wildcard, such as 128.0.0.* will unban all IP addresses starting with 128.0.0.
- */
-- (void)removeFromBanList:(nonnull NSString *)ipAddress;
-
-/// Allows all previously banned IPs to connect.
-- (void)clearBanList;
-
-/**
- Returns YES or NO indicating if a particular IP is banned.
-
- @param ipAddress Dotted IP address.
-
- @return YES if IP matches any IPs in the ban list, accounting for any wildcards. NO otherwise.
- */
-- (BOOL)isBanned:(nonnull NSString *)ipAddress;
-
-/// Gets a message from the incoming message queue.
-/// @return nil if no packets are waiting to be handled, otherwise a pointer to a packet.
 - (nullable RNPacket *)receive;
+
+
+#pragma mark Utils
+
+/**
+ Given the GUID of a connected system, give us the system address of that system.
+
+ @param guid The GUID of the system we are converting to address.
+
+ @return Address of the system
+ */
+- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid
+NS_SWIFT_NAME(getAddress(fromGUID:));
+
+/**
+ Given a connected system, give us the unique GUID representing that instance of RakPeer.
+
+ @param address The address of the system we are converting to GUID.
+
+ @return The GUID of the system
+ */
+- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address
+NS_SWIFT_NAME(getGUID(fromAddress:));
 
 @end

@@ -71,7 +71,8 @@ NS_SWIFT_NAME(startup(maxConnections:socketDescriptors:));
  */
 - (BOOL)initializeSecurityWithPublicKey:(nonnull NSString *)publicKey
                              privateKey:(nonnull NSString *)privateKey
-                       requireClientKey:(BOOL)requireClientKey;
+                       requireClientKey:(BOOL)requireClientKey
+NS_SWIFT_NAME(initializeSecurity(publicKey:privateKey:requireClientKey:));
 
 /**
  *  Disables security for incoming connections.

@@ -172,7 +172,7 @@ NS_SWIFT_NAME(connect(remoteHost:remotePort:));
  @param guid             The GUID of the system we are checking to see if we are connected to.
  @param sendNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
  */
-- (void)closeConnectionWithGUID:(unsigned long long)guid
+- (void)disconnectRemoteGUID:(unsigned long long)guid
                sendNotification:(BOOL)sendNotification
 NS_SWIFT_NAME(disconnect(remoteGUID:notify:));
 
@@ -182,7 +182,7 @@ NS_SWIFT_NAME(disconnect(remoteGUID:notify:));
  @param address          Address of the system to close the connection to.
  @param sendNotification YES to send .DisconnectionNotification to the recipient. NO to close it silently.
  */
-- (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address
+- (void)disconnectRemoteAddress:(nonnull RNSystemAddress *)address
                   sendNotification:(BOOL)sendNotification
 NS_SWIFT_NAME(disconnect(remoteAddress:notify:));
 

@@ -270,12 +270,12 @@ using namespace RakNet;
     }
 }
 
-- (void)closeConnectionWithGUID:(unsigned long long)guid sendNotification:(BOOL)sendNotification {
+- (void)disconnectRemoteGUID:(unsigned long long)guid sendNotification:(BOOL)sendNotification {
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
     self.peer->CloseConnection(rakNetGUID, sendNotification);
 }
 
-- (void)closeConnectionWithAddress:(nonnull RNSystemAddress *)address sendNotification:(BOOL)sendNotification {
+- (void)disconnectRemoteAddress:(nonnull RNSystemAddress *)address sendNotification:(BOOL)sendNotification {
     self.peer->CloseConnection(*address.systemAddress, sendNotification);
 }
 

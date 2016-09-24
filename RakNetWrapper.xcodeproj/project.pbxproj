@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C907CA861D96CE4000B942FA /* iOS-Tests.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C907CA851D96CE4000B942FA /* iOS-Tests.xcconfig */; };
+		C907CA881D96CEB700B942FA /* Info-Tests.plist in Resources */ = {isa = PBXBuildFile; fileRef = C907CA871D96CEB700B942FA /* Info-Tests.plist */; };
+		C907CA921D96CFA200B942FA /* RakNetWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */; };
+		C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */; };
 		C99C02A71D60FE1A00DBA190 /* RNSocketFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FA1D40D5D6009EFDA5 /* RNSocketFamily.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02A81D60FE1A00DBA190 /* RNConnectionState.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FB1D40D5D6009EFDA5 /* RNConnectionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02A91D60FE1A00DBA190 /* RNMessageIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FC1D40D5D6009EFDA5 /* RNMessageIdentifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -295,7 +299,25 @@
 		C99C03E71D61041600DBA190 /* RNBitStream.mm in Sources */ = {isa = PBXBuildFile; fileRef = C9DD311A1D40D5DF009EFDA5 /* RNBitStream.mm */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C907CA931D96CFA200B942FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9DD2C351D40C8AC009EFDA5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C99C02961D60FAE900DBA190;
+			remoteInfo = iOSRakNetWrapper;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		C907CA801D96CC7700B942FA /* RNBitStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNBitStreamTests.swift; sourceTree = "<group>"; };
+		C907CA811D96CC7700B942FA /* RNPeerInterfaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNPeerInterfaceTests.swift; sourceTree = "<group>"; };
+		C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSocketDescriptorTests.swift; sourceTree = "<group>"; };
+		C907CA831D96CC7700B942FA /* RNSystemAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSystemAddressTests.swift; sourceTree = "<group>"; };
+		C907CA841D96CDC500B942FA /* Tests.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Tests.xcconfig; sourceTree = "<group>"; };
+		C907CA851D96CE4000B942FA /* iOS-Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Tests.xcconfig"; sourceTree = "<group>"; };
+		C907CA871D96CEB700B942FA /* Info-Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
+		C907CA8D1D96CFA200B942FA /* iOSRakNetWrapperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRakNetWrapperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99C02911D60F9E800DBA190 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = iOS.xcconfig; sourceTree = "<group>"; };
 		C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RakNetWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99C029F1D60FBF100DBA190 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
@@ -593,6 +615,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C907CA8A1D96CFA200B942FA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C907CA921D96CFA200B942FA /* RakNetWrapper.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C99C02931D60FAE900DBA190 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -603,6 +633,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C907CA7F1D96CC7700B942FA /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C907CA801D96CC7700B942FA /* RNBitStreamTests.swift */,
+				C907CA811D96CC7700B942FA /* RNPeerInterfaceTests.swift */,
+				C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */,
+				C907CA831D96CC7700B942FA /* RNSystemAddressTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		C99C02901D60F9BB00DBA190 /* Build Configurations */ = {
 			isa = PBXGroup;
 			children = (
@@ -612,7 +653,10 @@
 				C99C02911D60F9E800DBA190 /* iOS.xcconfig */,
 				C99C02A31D60FC6600DBA190 /* iOS-Debug.xcconfig */,
 				C99C02A61D60FD8700DBA190 /* iOS-Release.xcconfig */,
+				C907CA841D96CDC500B942FA /* Tests.xcconfig */,
+				C907CA851D96CE4000B942FA /* iOS-Tests.xcconfig */,
 				C99C02A51D60FCED00DBA190 /* Info-Framework.plist */,
+				C907CA871D96CEB700B942FA /* Info-Tests.plist */,
 			);
 			path = "Build Configurations";
 			sourceTree = "<group>";
@@ -621,6 +665,7 @@
 			isa = PBXGroup;
 			children = (
 				C9DD2E9B1D40D193009EFDA5 /* Sources */,
+				C907CA7F1D96CC7700B942FA /* Tests */,
 				C99C02901D60F9BB00DBA190 /* Build Configurations */,
 				C9DD2D4B1D40CA0E009EFDA5 /* Products */,
 			);
@@ -630,6 +675,7 @@
 			isa = PBXGroup;
 			children = (
 				C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */,
+				C907CA8D1D96CFA200B942FA /* iOSRakNetWrapperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1167,6 +1213,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C907CA8C1D96CFA200B942FA /* iOSRakNetWrapperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C907CA951D96CFA200B942FA /* Build configuration list for PBXNativeTarget "iOSRakNetWrapperTests" */;
+			buildPhases = (
+				C907CA891D96CFA200B942FA /* Sources */,
+				C907CA8A1D96CFA200B942FA /* Frameworks */,
+				C907CA8B1D96CFA200B942FA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C907CA941D96CFA200B942FA /* PBXTargetDependency */,
+			);
+			name = iOSRakNetWrapperTests;
+			productName = iOSRakNetWrapperTests;
+			productReference = C907CA8D1D96CFA200B942FA /* iOSRakNetWrapperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C99C02961D60FAE900DBA190 /* iOSRakNetWrapper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C99C029C1D60FAE900DBA190 /* Build configuration list for PBXNativeTarget "iOSRakNetWrapper" */;
@@ -1191,9 +1255,13 @@
 		C9DD2C351D40C8AC009EFDA5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				TargetAttributes = {
+					C907CA8C1D96CFA200B942FA = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Manual;
+					};
 					C99C02961D60FAE900DBA190 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
@@ -1212,21 +1280,39 @@
 			projectRoot = "";
 			targets = (
 				C99C02961D60FAE900DBA190 /* iOSRakNetWrapper */,
+				C907CA8C1D96CFA200B942FA /* iOSRakNetWrapperTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C99C02951D60FAE900DBA190 /* Resources */ = {
+		C907CA8B1D96CFA200B942FA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C99C02951D60FAE900DBA190 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C907CA881D96CEB700B942FA /* Info-Tests.plist in Resources */,
+				C907CA861D96CE4000B942FA /* iOS-Tests.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C907CA891D96CFA200B942FA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C99C02921D60FAE900DBA190 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1351,7 +1437,90 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C907CA941D96CFA200B942FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C99C02961D60FAE900DBA190 /* iOSRakNetWrapper */;
+			targetProxy = C907CA931D96CFA200B942FA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		C907CA961D96CFA200B942FA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C907CA851D96CE4000B942FA /* iOS-Tests.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Build Configurations/Info-Tests.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.ss-abramchuk.iOSRakNetWrapperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C907CA971D96CFA200B942FA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C907CA851D96CE4000B942FA /* iOS-Tests.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Build Configurations/Info-Tests.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "me.ss-abramchuk.iOSRakNetWrapperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		C99C029D1D60FAE900DBA190 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C99C02A31D60FC6600DBA190 /* iOS-Debug.xcconfig */;
@@ -1518,6 +1687,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C907CA951D96CFA200B942FA /* Build configuration list for PBXNativeTarget "iOSRakNetWrapperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C907CA961D96CFA200B942FA /* Debug */,
+				C907CA971D96CFA200B942FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C99C029C1D60FAE900DBA190 /* Build configuration list for PBXNativeTarget "iOSRakNetWrapper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

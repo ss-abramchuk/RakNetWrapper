@@ -8,7 +8,7 @@
 
 import XCTest
 import Darwin
-import iOSRakNetWrapper
+import RakNetWrapper
 
 class RNPeerInterfaceTests: XCTestCase {
     

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import iOSRakNetWrapper
+import RakNetWrapper
 
 class RNSocketDescriptorTests: XCTestCase {
     

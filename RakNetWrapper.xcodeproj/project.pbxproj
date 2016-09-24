@@ -11,6 +11,7 @@
 		C907CA881D96CEB700B942FA /* Info-Tests.plist in Resources */ = {isa = PBXBuildFile; fileRef = C907CA871D96CEB700B942FA /* Info-Tests.plist */; };
 		C907CA921D96CFA200B942FA /* RakNetWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */; };
 		C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */; };
+		C907CA9A1D96D3B700B942FA /* RNBitStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA801D96CC7700B942FA /* RNBitStreamTests.swift */; };
 		C99C02A71D60FE1A00DBA190 /* RNSocketFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FA1D40D5D6009EFDA5 /* RNSocketFamily.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02A81D60FE1A00DBA190 /* RNConnectionState.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FB1D40D5D6009EFDA5 /* RNConnectionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02A91D60FE1A00DBA190 /* RNMessageIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FC1D40D5D6009EFDA5 /* RNMessageIdentifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1310,6 +1311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */,
+				C907CA9A1D96D3B700B942FA /* RNBitStreamTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,26 +41,26 @@ class RNBitStreamTests: XCTestCase {
         }
     }
     
-//    func testReadWriteCharValue() {
-//        let charValue: CChar = 12
-//        
-//        let bitStream = RNBitStream()
-//        bitStream.writeNumericValue(NSNumber(char: charValue), ofType: .Char)
-//        
-//        let data = bitStream.data
-//        XCTAssert(data.length == sizeof(charValue.dynamicType), "Length of data is not equal to size of char value")
-//        
-//        do {
-//            var result: NSNumber? = nil
-//            try bitStream.readNumericValue(&result, ofType: .Char)
-//            
-//            XCTAssertNotNil(result, "Result is nil")
-//            XCTAssert(result?.int8Value == charValue, "Result is not equal to initial char value")
-//        } catch let error as NSError {
-//            XCTFail("Failed with error: \(error.localizedDescription)")
-//        }
-//    }
-//    
+    func testReadWriteCharValue() {
+        let charValue: CChar = 12
+        
+        let bitStream = RNBitStream()
+        bitStream.writeNumericValue(NSNumber(value: charValue), of: .char)
+        
+        let data = bitStream.data
+        XCTAssert(data.count == MemoryLayout<CChar>.size, "Length of data is not equal to size of char value")
+        
+        do {
+            var result: NSNumber? = nil
+            try bitStream.readNumericValue(&result, of: .char)
+            
+            XCTAssertNotNil(result, "Result is nil")
+            XCTAssert(result?.int8Value == charValue, "Result is not equal to initial char value")
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+    }
+    
 //    func testReadWriteUnsignedCharValue() {
 //        let unsignedCharValue: CUnsignedChar = 124
 //        

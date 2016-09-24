@@ -249,17 +249,27 @@ NS_SWIFT_NAME(unban(address:));
 #pragma mark Ping
 
 // TODO: Add full description for pingAddress:remotePort:onlyReplyOnAcceptingConnections:
-/// Send a ping to the specified unconnected system.
+/**
+ Send a ping to the specified unconnected system.
+
+ @param address                         Either a dotted IP address or a domain name.  Can be 255.255.255.255 for LAN broadcast.
+ @param remotePort                      Which port to connect to on the remote machine.
+ @param onlyReplyOnAcceptingConnections Only request a reply if the remote system is accepting connections.
+
+ @return YES on success, NO on failure (unknown hostname)
+ */
 - (BOOL)pingAddress:(nonnull NSString *)address
          remotePort:(unsigned short)remotePort
-onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections;
+onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections
+NS_SWIFT_NAME(ping(address:port:replyOnAcceptingConnections:));
 
 /**
  Send a ping to the specified connected system.
 
  @param address Address of the connected system.
  */
-- (void)pingAddress:(nonnull RNSystemAddress *)address;
+- (void)pingAddress:(nonnull RNSystemAddress *)address
+NS_SWIFT_NAME(ping(address:));
 
 // TODO: Add full description for getLastPingForGUID:
 - (int)getLastPingForGUID:(unsigned long long)guid;

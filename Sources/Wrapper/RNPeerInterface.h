@@ -293,7 +293,20 @@ NS_SWIFT_NAME(getLastPing(forAddress:));
 
 #pragma mark Data
 
-// TODO: Add full description for sendData:priority:reliability:address:
+/**
+ Sends a block of data to the specified system that you are connected to.
+ 
+ @note This function only works while connected.
+ @note The first byte should be a message identifier starting at RNMessageIdentifierUserPacketEnum.
+
+ @param data        The block of data to send.
+ @param priority    Desirable priority level for sending this data.
+ @param reliability Desirable reliability for sending this data.
+ @param address     Who to send this packet to, or in the case of broadcasting who not to send it to.
+ @param broadcast   YES to send this packet to all connected systems. If YES, then address specifies who not to send the packet to.
+
+ @return 0 on bad input. Otherwise a number that identifies this message. If \a reliability is a type that returns a receipt, on a later call to receive: you will get RNMessageIdentifierSndReceiptAcked or RNMessageIdentifierSndReceiptLoss with bytes 1-4 inclusive containing this number.
+ */
 - (unsigned int)sendData:(nonnull NSData *)data
                 priority:(RNPacketPriority)priority
              reliability:(RNPacketReliability)reliability
@@ -301,7 +314,20 @@ NS_SWIFT_NAME(getLastPing(forAddress:));
                broadcast:(BOOL)broadcast
 NS_SWIFT_NAME(send(data:priority:reliability:address:broadcast:));
 
-// TODO: Add full description for sendData:priority:reliability:guid:
+/**
+ Sends a block of data to the specified system that you are connected to.
+ 
+ @note This function only works while connected.
+ @note The first byte should be a message identifier starting at RNMessageIdentifierUserPacketEnum.
+ 
+ @param data        The block of data to send.
+ @param priority    Desirable priority level for sending this data.
+ @param reliability Desirable reliability for sending this data.
+ @param guid        Who to send this packet to, or in the case of broadcasting who not to send it to.
+ @param broadcast   YES to send this packet to all connected systems. If YES, then address specifies who not to send the packet to.
+ 
+ @return 0 on bad input. Otherwise a number that identifies this message. If \a reliability is a type that returns a receipt, on a later call to receive: you will get RNMessageIdentifierSndReceiptAcked or RNMessageIdentifierSndReceiptLoss with bytes 1-4 inclusive containing this number.
+ */
 - (unsigned int)sendData:(nonnull NSData *)data
                 priority:(RNPacketPriority)priority
              reliability:(RNPacketReliability)reliability

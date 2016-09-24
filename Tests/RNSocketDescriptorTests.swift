@@ -30,7 +30,7 @@ class RNSocketDescriptorTests: XCTestCase {
         let blockingSocket = descriptor.blockingSocket
         
         XCTAssertTrue(port == 0)
-        XCTAssertTrue(address == "")
+        XCTAssertTrue(address == nil)
         XCTAssertTrue(socketFamily == .IPV4)
         XCTAssertTrue(blockingSocket == true)
     }
@@ -63,7 +63,7 @@ class RNSocketDescriptorTests: XCTestCase {
         let address = descriptor.address
         
         XCTAssertTrue(port == defaultPort)
-        XCTAssertTrue(address == "")
+        XCTAssertTrue(address == nil)
     }
     
 }

@@ -16,8 +16,12 @@
 @property (nonatomic, readonly) unsigned short port;
 
 - (instancetype)init;
-- (instancetype)initWithAddress:(NSString *)address;
-- (instancetype)initWithAddress:(NSString *)address andPort:(unsigned short)port;
+
+- (instancetype)initWithAddress:(NSString *)address
+NS_SWIFT_NAME(init(address:));
+
+- (instancetype)initWithAddress:(NSString *)address andPort:(unsigned short)port
+NS_SWIFT_NAME(init(address:port:));
 
 - (BOOL)isEqual:(id)object;
 - (NSUInteger)hash;

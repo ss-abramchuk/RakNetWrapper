@@ -25,12 +25,37 @@
 
 @implementation RNBitStream
 
+#pragma mark Properties
+
 - (NSData *)data {
     unsigned char * data = _bitStream->GetData();
     NSUInteger length = _bitStream->GetNumberOfBytesUsed();
     
     return [NSData dataWithBytes:data length:length];
 }
+
+- (NSUInteger)readOffset {
+    BitSize_t offset = _bitStream->GetReadOffset();
+    return BITS_TO_BYTES(offset);
+}
+
+- (void)setReadOffset:(NSUInteger)offset {
+    BitSize_t newOffset = BYTES_TO_BITS(offset);
+    _bitStream->SetReadOffset(newOffset);
+}
+
+- (NSUInteger)writeOffset {
+    BitSize_t offset = _bitStream->GetWriteOffset();
+    return BITS_TO_BYTES(offset);
+}
+
+- (void)setWriteOffset:(NSUInteger)offset {
+    BitSize_t newOffset = BYTES_TO_BITS(offset);
+    _bitStream->SetWriteOffset(newOffset);
+}
+
+
+#pragma mark Initializers
 
 - (instancetype)init
 {
@@ -53,6 +78,9 @@
     return self;
 }
 
+
+#pragma mark Pointers
+
 - (void)reset {
     _bitStream->Reset();
 }
@@ -69,25 +97,8 @@
     _bitStream->ResetWritePointer();
 }
 
-- (NSUInteger)getReadOffset {
-    BitSize_t offset = _bitStream->GetReadOffset();
-    return BITS_TO_BYTES(offset);
-}
 
-- (NSUInteger)getWriteOffset {
-    BitSize_t offset = _bitStream->GetWriteOffset();
-    return BITS_TO_BYTES(offset);
-}
-
-- (void)setReadOffset:(NSUInteger)offset {
-    BitSize_t newOffset = BYTES_TO_BITS(offset);
-    _bitStream->SetReadOffset(newOffset);
-}
-
-- (void)setWriteOffset:(NSUInteger)offset {
-    BitSize_t newOffset = BYTES_TO_BITS(offset);
-    _bitStream->SetWriteOffset(newOffset);
-}
+#pragma mark Read / Write
 
 - (void)writeNumericValue:(nonnull NSNumber *)value ofType:(RNBitStreamType)type {
     switch (type) {

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import iOSRakNetWrapper
+import RakNetWrapper
 
 class RNBitStreamTests: XCTestCase {
     
@@ -21,26 +21,26 @@ class RNBitStreamTests: XCTestCase {
         super.tearDown()
     }
     
-//    func testReadWriteBoolValue() {
-//        let boolValue = true
-//        
-//        let bitStream = RNBitStream()
-//        bitStream.writeNumericValue(NSNumber(bool: boolValue), ofType: .Bool)
-//        
-//        let data = bitStream.data
-//        XCTAssert(data.length == sizeof(boolValue.dynamicType), "Length of data is not equal to size of bool value")
-//        
-//        do {
-//            var result: NSNumber? = nil
-//            try bitStream.readNumericValue(&result, ofType: .Bool)
-//            
-//            XCTAssertNotNil(result, "Result is nil")
-//            XCTAssert(result?.boolValue == boolValue, "Result is not equal to initial bool value")
-//        } catch let error as NSError {
-//            XCTFail("Failed with error: \(error.localizedDescription)")
-//        }
-//    }
-//    
+    func testReadWriteBoolValue() {
+        let boolValue = true
+        
+        let bitStream = RNBitStream()
+        bitStream.writeNumericValue(NSNumber(value: boolValue), of: .bool)
+        
+        let data = bitStream.data
+        XCTAssert(data.count == MemoryLayout<Bool>.size, "Length of data is not equal to size of bool value")
+        
+        do {
+            var result: NSNumber? = nil
+            try bitStream.readNumericValue(&result, of: .bool)
+            
+            XCTAssertNotNil(result, "Result is nil")
+            XCTAssert(result?.boolValue == boolValue, "Result is not equal to initial bool value")
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+    }
+    
 //    func testReadWriteCharValue() {
 //        let charValue: CChar = 12
 //        

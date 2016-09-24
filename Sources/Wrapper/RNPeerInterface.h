@@ -248,7 +248,6 @@ NS_SWIFT_NAME(unban(address:));
 
 #pragma mark Ping
 
-// TODO: Add full description for pingAddress:remotePort:onlyReplyOnAcceptingConnections:
 /**
  Send a ping to the specified unconnected system.
 
@@ -271,11 +270,23 @@ NS_SWIFT_NAME(ping(address:port:replyOnAcceptingConnections:));
 - (void)pingAddress:(nonnull RNSystemAddress *)address
 NS_SWIFT_NAME(ping(address:));
 
-// TODO: Add full description for getLastPingForGUID:
+/**
+ Returns the last ping time read for the specific system or -1 if none read yet.
+
+ @param guid The GUID of the system we are referring to.
+
+ @return The last ping time for this system, or -1.
+ */
 - (int)getLastPingForGUID:(unsigned long long)guid
 NS_SWIFT_NAME(getLastPing(forGUID:));
 
-// TODO: Add full description for getLastPingForAddress:
+/**
+ Returns the last ping time read for the specific system or -1 if none read yet.
+
+ @param address The address of the system we are referring to.
+
+ @return The last ping time for this system, or -1.
+ */
 - (int)getLastPingForAddress:(nonnull RNSystemAddress *)address
 NS_SWIFT_NAME(getLastPing(forAddress:));
 

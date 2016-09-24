@@ -272,10 +272,12 @@ NS_SWIFT_NAME(ping(address:port:replyOnAcceptingConnections:));
 NS_SWIFT_NAME(ping(address:));
 
 // TODO: Add full description for getLastPingForGUID:
-- (int)getLastPingForGUID:(unsigned long long)guid;
+- (int)getLastPingForGUID:(unsigned long long)guid
+NS_SWIFT_NAME(getLastPing(forGUID:));
 
 // TODO: Add full description for getLastPingForAddress:
-- (int)getLastPingForAddress:(nonnull RNSystemAddress *)address;;
+- (int)getLastPingForAddress:(nonnull RNSystemAddress *)address
+NS_SWIFT_NAME(getLastPing(forAddress:));
 
 
 #pragma mark Data

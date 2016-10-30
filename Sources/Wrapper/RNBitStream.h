@@ -81,64 +81,93 @@
 
 #pragma mark Read / Write
 
-/**
- *  <#Description#>
- *
- *  @param value <#value description#>
- *  @param type  <#type description#>
- */
-- (void)writeNumericValue:(nonnull NSNumber *)value ofType:(RNBitStreamType)type
-NS_SWIFT_NAME(write(value:type:));
+- (void)writeBool:(BOOL)value
+NS_SWIFT_NAME(write(value:));
 
-/**
- *  <#Description#>
- *
- *  @param value <#value description#>
- *  @param type  <#type description#>
- *  @param error <#error description#>
- *
- *  @return <#return value description#>
- */
-- (BOOL)readNumericValue:(out NSNumber * __nullable * __nullable)value ofType:(RNBitStreamType)type error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(read(value:type:));
+- (void)writeUInt8:(uint8_t)value
+NS_SWIFT_NAME(write(value:));
 
-/**
- *  <#Description#>
- *
- *  @param value <#value description#>
- */
-- (void)writeStringValue:(nonnull NSString *)value
-NS_SWIFT_NAME(write(string:));
+- (void)writeInt8:(int8_t)value
+NS_SWIFT_NAME(write(value:));
 
-/**
- *  <#Description#>
- *
- *  @param value <#value description#>
- *  @param error <#error description#>
- *
- *  @return <#return value description#>
- */
-- (BOOL)readStringValue:(out NSString * __nullable * __nullable)value error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(read(string:));
+- (void)writeUInt16:(uint16_t)value
+NS_SWIFT_NAME(write(value:));
 
-/**
- *  <#Description#>
- *
- *  @param data <#data description#>
- */
+- (void)writeInt16:(int16_t)value
+NS_SWIFT_NAME(write(value:));
+
+- (void)writeUInt32:(uint32_t)value
+NS_SWIFT_NAME(write(value:));
+
+- (void)writeInt32:(int32_t)value
+NS_SWIFT_NAME(write(value:));
+
+- (void)writeUInt64:(uint64_t)value
+NS_SWIFT_NAME(write(value:));
+
+- (void)writeInt64:(int64_t)value
+NS_SWIFT_NAME(write(value:));
+
+- (void)writeFloat:(float)value
+NS_SWIFT_NAME(write(value:));
+
+- (void)writeDouble:(double)value
+NS_SWIFT_NAME(write(value:));
+
+- (void)writeString:(nonnull NSString *)value
+NS_SWIFT_NAME(write(value:));
+
 - (void)writeData:(nonnull NSData *)data
-NS_SWIFT_NAME(write(data:));
+NS_SWIFT_NAME(write(value:));
 
-/**
- *  <#Description#>
- *
- *  @param data   <#data description#>
- *  @param length <#length description#>
- *  @param error  <#error description#>
- *
- *  @return <#return value description#>
- */
-- (BOOL)readData:(out NSData * __nullable * __nullable)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(read(data:));
+- (BOOL)readBool:(out nonnull BOOL *)value
+           error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readUInt8:(out nonnull uint8_t *)value
+            error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readInt8:(out nonnull int8_t *)value
+                 error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readUInt16:(out nonnull uint16_t *)value
+                 error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readInt16:(out nonnull int16_t *)value
+                error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readUInt32:(out nonnull uint32_t *)value
+                 error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readInt32:(out nonnull int32_t *)value
+                error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readUInt64:(out nonnull uint64_t *)value
+                  error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readInt64:(out nonnull int64_t *)value
+                 error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readFloat:(out nonnull float *)value
+                  error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readDouble:(out nonnull double *)value
+                 error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readString:(out NSString * __nullable * __nonnull)value error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:length:));
 
 @end

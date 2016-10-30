@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RNBitStreamType.h"
 
 // TODO: Add descriptions to methods
 

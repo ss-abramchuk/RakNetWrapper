@@ -17,7 +17,6 @@
 		C99C02A91D60FE1A00DBA190 /* RNMessageIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FC1D40D5D6009EFDA5 /* RNMessageIdentifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02AA1D60FE1A00DBA190 /* RNPacketPriority.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FD1D40D5D6009EFDA5 /* RNPacketPriority.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02AB1D60FE1A00DBA190 /* RNPacketReliability.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FE1D40D5D6009EFDA5 /* RNPacketReliability.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C99C02AC1D60FE1A00DBA190 /* RNBitStreamType.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FF1D40D5D6009EFDA5 /* RNBitStreamType.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02AD1D60FE1A00DBA190 /* RNSocketDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD31001D40D5D6009EFDA5 /* RNSocketDescriptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02AE1D60FE1A00DBA190 /* RNSocketDescriptor+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD31011D40D5D6009EFDA5 /* RNSocketDescriptor+Internal.h */; };
 		C99C02AF1D60FE1A00DBA190 /* RNSocketDescriptor.mm in Sources */ = {isa = PBXBuildFile; fileRef = C9DD31021D40D5D6009EFDA5 /* RNSocketDescriptor.mm */; };
@@ -598,7 +597,6 @@
 		C9DD30FC1D40D5D6009EFDA5 /* RNMessageIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNMessageIdentifier.h; sourceTree = "<group>"; };
 		C9DD30FD1D40D5D6009EFDA5 /* RNPacketPriority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPacketPriority.h; sourceTree = "<group>"; };
 		C9DD30FE1D40D5D6009EFDA5 /* RNPacketReliability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPacketReliability.h; sourceTree = "<group>"; };
-		C9DD30FF1D40D5D6009EFDA5 /* RNBitStreamType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBitStreamType.h; sourceTree = "<group>"; };
 		C9DD31001D40D5D6009EFDA5 /* RNSocketDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSocketDescriptor.h; sourceTree = "<group>"; };
 		C9DD31011D40D5D6009EFDA5 /* RNSocketDescriptor+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNSocketDescriptor+Internal.h"; sourceTree = "<group>"; };
 		C9DD31021D40D5D6009EFDA5 /* RNSocketDescriptor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNSocketDescriptor.mm; sourceTree = "<group>"; };
@@ -997,7 +995,6 @@
 				C9DD30FC1D40D5D6009EFDA5 /* RNMessageIdentifier.h */,
 				C9DD30FD1D40D5D6009EFDA5 /* RNPacketPriority.h */,
 				C9DD30FE1D40D5D6009EFDA5 /* RNPacketReliability.h */,
-				C9DD30FF1D40D5D6009EFDA5 /* RNBitStreamType.h */,
 				C9DD31001D40D5D6009EFDA5 /* RNSocketDescriptor.h */,
 				C9DD31011D40D5D6009EFDA5 /* RNSocketDescriptor+Internal.h */,
 				C9DD31021D40D5D6009EFDA5 /* RNSocketDescriptor.mm */,
@@ -1140,7 +1137,6 @@
 				C99C02D01D60FE7A00DBA190 /* DS_HuffmanEncodingTree.h in Headers */,
 				C99C030B1D60FE7A00DBA190 /* PacketLogger.h in Headers */,
 				C99C03191D60FE7A00DBA190 /* RakNetSmartPtr.h in Headers */,
-				C99C02AC1D60FE1A00DBA190 /* RNBitStreamType.h in Headers */,
 				C99C02B61D60FE3900DBA190 /* RNPeerInterface.h in Headers */,
 				C99C03451D60FE7A00DBA190 /* TransportInterface.h in Headers */,
 				C99C03201D60FE7A00DBA190 /* RakNetVersion.h in Headers */,
@@ -1696,6 +1692,7 @@
 				C907CA971D96CFA200B942FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C99C029C1D60FAE900DBA190 /* Build configuration list for PBXNativeTarget "iOSRakNetWrapper" */ = {
 			isa = XCConfigurationList;

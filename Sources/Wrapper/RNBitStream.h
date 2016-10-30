@@ -87,7 +87,8 @@
  *  @param value <#value description#>
  *  @param type  <#type description#>
  */
-- (void)writeNumericValue:(nonnull NSNumber *)value ofType:(RNBitStreamType)type;
+- (void)writeNumericValue:(nonnull NSNumber *)value ofType:(RNBitStreamType)type
+NS_SWIFT_NAME(write(value:type:));
 
 /**
  *  <#Description#>
@@ -98,14 +99,16 @@
  *
  *  @return <#return value description#>
  */
-- (BOOL)readNumericValue:(out NSNumber * __nullable * __nullable)value ofType:(RNBitStreamType)type error:(out NSError * __nullable * __nullable)error;
+- (BOOL)readNumericValue:(out NSNumber * __nullable * __nullable)value ofType:(RNBitStreamType)type error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(value:type:));
 
 /**
  *  <#Description#>
  *
  *  @param value <#value description#>
  */
-- (void)writeStringValue:(nonnull NSString *)value;
+- (void)writeStringValue:(nonnull NSString *)value
+NS_SWIFT_NAME(write(string:));
 
 /**
  *  <#Description#>
@@ -115,14 +118,16 @@
  *
  *  @return <#return value description#>
  */
-- (BOOL)readStringValue:(out NSString * __nullable * __nullable)value error:(out NSError * __nullable * __nullable)error;
+- (BOOL)readStringValue:(out NSString * __nullable * __nullable)value error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(string:));
 
 /**
  *  <#Description#>
  *
  *  @param data <#data description#>
  */
-- (void)writeData:(nonnull NSData *)data;
+- (void)writeData:(nonnull NSData *)data
+NS_SWIFT_NAME(write(data:));
 
 /**
  *  <#Description#>
@@ -133,6 +138,7 @@
  *
  *  @return <#return value description#>
  */
-- (BOOL)readData:(out NSData * __nullable * __nullable)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error;
+- (BOOL)readData:(out NSData * __nullable * __nullable)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(read(data:));
 
 @end

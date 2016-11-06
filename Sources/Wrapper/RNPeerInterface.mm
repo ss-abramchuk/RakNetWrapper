@@ -35,6 +35,26 @@ using namespace RakNet;
 
 #pragma mark Computed Properties Implementation
 
+- (NSData *)password {
+    int length = 1024;
+    char data[1024] = {};
+    
+    self.peer->GetIncomingPassword((char *)&data, &length);
+    
+    if (length == 0) {
+        return nil;
+    } else {
+        return [NSData dataWithBytes:&data length:length];
+    }
+}
+
+- (void)setPassword:(NSData *)password {
+    unsigned int length = password != nil ? [password length] : 0;
+    const char *data = password != nil ? (const char *)[password bytes] : 0;
+    
+    self.peer->SetIncomingPassword(data, length);
+}
+
 - (BOOL)isActive {
     return self.peer->IsActive();
 }

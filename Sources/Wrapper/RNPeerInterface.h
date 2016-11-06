@@ -21,6 +21,11 @@
 #pragma mark Properties
 
 /**
+ A data block that incoming connections must match. This can be just a password, or can be a stream of data.
+ */
+@property (nullable, nonatomic) NSData *password;
+
+/**
  Returns YES if the network thread is running, otherwise NO.
  */
 @property (readonly, nonatomic) BOOL isActive;
@@ -48,12 +53,12 @@
 /**
  Returns an array of IP addresses this system has internally.
  */
-@property (readonly, nonatomic) NSArray<NSString *> * _Nonnull localAddresses;
+@property (nonnull, readonly, nonatomic) NSArray<NSString *> * localAddresses;
 
 /**
  The array with the RNSystemAddress of all the systems we are connected to.
  */
-@property (readonly, nonatomic) NSArray<RNSystemAddress *> * _Nonnull connectionList;
+@property (nonnull, readonly, nonatomic) NSArray<RNSystemAddress *> * connectionList;
 
 /**
  The data to send along with a LAN server discovery or offline ping reply.

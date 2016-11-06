@@ -18,22 +18,22 @@
 /**
  Return the system address as a string
  */
-@property (nonatomic, readonly) NSString *address;
+@property (nonnull, nonatomic, readonly) NSString *address;
 
 /**
  Returns the system port
  */
 @property (nonatomic, readonly) unsigned short port;
 
-- (instancetype)init;
+- (nonnull instancetype)init;
 
-- (instancetype)initWithAddress:(NSString *)address
+- (nonnull instancetype)initWithAddress:(nonnull NSString *)address
 NS_SWIFT_NAME(init(address:));
 
-- (instancetype)initWithAddress:(NSString *)address andPort:(unsigned short)port
+- (nonnull instancetype)initWithAddress:(nonnull NSString *)address andPort:(unsigned short)port
 NS_SWIFT_NAME(init(address:port:));
 
-- (BOOL)isEqual:(id)object;
+- (BOOL)isEqual:(nullable id)object;
 - (NSUInteger)hash;
 
 @end

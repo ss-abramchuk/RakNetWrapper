@@ -6,6 +6,8 @@
 //
 //
 
+#include <cstring>
+
 #import "RNPublicKey.h"
 #import "RNPublicKey+Internal.h"
 
@@ -87,8 +89,8 @@ using namespace RakNet;
     _serverPublicKeyLength = serverPublicKey != nil ? [serverPublicKey length] : 0;
     
     if (_serverPublicKeyLength > 0) {
-        char *data = (char *)malloc(_serverPublicKeyLength);
-        memcpy(data, [serverPublicKey bytes], _serverPublicKeyLength);
+        char *data = new char[_serverPublicKeyLength];
+        std::memcpy(data, [serverPublicKey bytes], _serverPublicKeyLength);
         
         _publicKey->remoteServerPublicKey = data;
     } else {

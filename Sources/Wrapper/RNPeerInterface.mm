@@ -14,6 +14,7 @@
 #import "RNSystemAddress.h"
 #import "RNSystemAddress+Internal.h"
 #import "RNPacket+Internal.h"
+#import "RNPublicKey+Internal.h"
 
 #import "MessageIdentifiers.h"
 #import "RakPeerInterface.h"
@@ -137,13 +138,12 @@ using namespace RakNet;
 
 #pragma mark Initializers
 
-- (nullable instancetype)init
+- (instancetype)init
 {
     self = [super init];
     
     if (self) {
         self.peer = RakPeerInterface::GetInstance();
-        if (self.peer == nil) { return nil; }
     }
     
     return self;
@@ -152,7 +152,10 @@ using namespace RakNet;
 
 #pragma mark Startup and Shutdown
 
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors error:(out NSError * __nullable * __nullable)error {
+- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections
+                       socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors
+                                   error:(out NSError * __nullable * __nullable)error
+{
     SocketDescriptor *socketDescriptors = new SocketDescriptor[descriptors.count];
     
     for (int i = 0; i < descriptors.count; i++) {
@@ -226,7 +229,10 @@ using namespace RakNet;
 
 #pragma mark Security
 
-- (BOOL)initializeSecurityWithPublicKey:(NSData *)publicKey privateKey:(NSData *)privateKey requireClientKey:(BOOL)requireClientKey {
+- (BOOL)initializeSecurityWithPublicKey:(NSData *)publicKey
+                             privateKey:(NSData *)privateKey
+                       requireClientKey:(BOOL)requireClientKey
+{
     return self.peer->InitializeSecurity((const char *)[publicKey bytes], (const char *)[privateKey bytes], requireClientKey);
 }
 
@@ -249,8 +255,19 @@ using namespace RakNet;
 
 #pragma mark Connection
 
-- (BOOL)connectToHost:(nonnull NSString *)host remotePort:(unsigned short)remotePort error:(out NSError * __nullable * __nullable)error {
-    int result = self.peer->Connect([host UTF8String], remotePort, 0, 0);
+- (BOOL)connectToHost:(nonnull NSString *)host
+           remotePort:(unsigned short)remotePort
+             password:(nullable NSData *)password
+            publicKey:(nullable RNPublicKey *)publicKey
+                error:(out NSError * __nullable * __nullable)error
+{
+    
+    const char *passwordData = password != nil ? (const char *)[password bytes] : 0;
+    int passwordDataLength = password != nil ? [password length] : 0;
+    
+    RakNet::PublicKey *key = publicKey != nil && publicKey.publicKey != NULL ? publicKey.publicKey : NULL;
+    
+    int result = self.peer->Connect([host UTF8String], remotePort, passwordData, passwordDataLength, key);
     
     if (result == CONNECTION_ATTEMPT_STARTED) {
         return YES;

@@ -15,6 +15,7 @@
 @class RNSocketDescriptor;
 @class RNSystemAddress;
 @class RNPacket;
+@class RNPublicKey;
 
 @interface RNPeerInterface : NSObject
 
@@ -70,7 +71,7 @@
 
 #pragma mark Initializers
 
-- (nullable instancetype)init;
+- (nonnull instancetype)init;
 
 
 #pragma mark Startup and Shutdown
@@ -168,8 +169,10 @@ NS_SWIFT_NAME(securityExceptionList(hasAddress:));
  */
 - (BOOL)connectToHost:(nonnull NSString *)host
            remotePort:(unsigned short)remotePort
+             password:(nullable NSData *)password
+            publicKey:(nullable RNPublicKey *)publicKey
                 error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(connect(remoteHost:remotePort:));
+NS_SWIFT_NAME(connect(remoteHost:remotePort:password:publicKey:));
 
 /**
  Close the connection to another host (if we initiated the connection it will disconnect, if they did it will kick them out).

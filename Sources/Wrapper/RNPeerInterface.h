@@ -114,8 +114,8 @@ NS_SWIFT_NAME(shutdown(duration:));
 
  @return YES if security was initialized, NO otherwise.
  */
-- (BOOL)initializeSecurityWithPublicKey:(nonnull NSString *)publicKey
-                             privateKey:(nonnull NSString *)privateKey
+- (BOOL)initializeSecurityWithPublicKey:(nonnull NSData *)publicKey
+                             privateKey:(nonnull NSData *)privateKey
                        requireClientKey:(BOOL)requireClientKey
 NS_SWIFT_NAME(initializeSecurity(publicKey:privateKey:requireClientKey:));
 

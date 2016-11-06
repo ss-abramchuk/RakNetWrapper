@@ -115,7 +115,7 @@ using namespace RakNet;
 }
 
 - (NSData * _Nullable)offlinePingResponse {
-    char *data = 0;
+    char *data = NULL;
     unsigned int length = 0;
     
     self.peer->GetOfflinePingResponse(&data, &length);
@@ -137,15 +137,13 @@ using namespace RakNet;
 
 #pragma mark Initializers
 
-- (instancetype)init
+- (nullable instancetype)init
 {
     self = [super init];
     
     if (self) {
         self.peer = RakPeerInterface::GetInstance();
-        if (self.peer == nil) {
-            return nil;
-        }
+        if (self.peer == nil) { return nil; }
     }
     
     return self;
@@ -228,8 +226,8 @@ using namespace RakNet;
 
 #pragma mark Security
 
-- (BOOL)initializeSecurityWithPublicKey:(NSString *)publicKey privateKey:(NSString *)privateKey requireClientKey:(BOOL)requireClientKey {
-    return self.peer->InitializeSecurity([publicKey UTF8String], [privateKey UTF8String], requireClientKey);
+- (BOOL)initializeSecurityWithPublicKey:(NSData *)publicKey privateKey:(NSData *)privateKey requireClientKey:(BOOL)requireClientKey {
+    return self.peer->InitializeSecurity((const char *)[publicKey bytes], (const char *)[privateKey bytes], requireClientKey);
 }
 
 - (void)disableSecurity {

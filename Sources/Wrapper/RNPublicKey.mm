@@ -81,20 +81,72 @@ using namespace RakNet;
     }
 }
 
-- (void)setServerPublicKey:(NSData *)serverPublicKey {
+- (void)setServerPublicKey:(NSData *)publicKey {
     if (_publicKey->remoteServerPublicKey != NULL) {
         delete _publicKey->remoteServerPublicKey;
     }
     
-    _serverPublicKeyLength = serverPublicKey != nil ? [serverPublicKey length] : 0;
+    _serverPublicKeyLength = publicKey != nil ? [publicKey length] : 0;
     
     if (_serverPublicKeyLength > 0) {
         char *data = new char[_serverPublicKeyLength];
-        std::memcpy(data, [serverPublicKey bytes], _serverPublicKeyLength);
+        std::memcpy(data, [publicKey bytes], _serverPublicKeyLength);
         
         _publicKey->remoteServerPublicKey = data;
     } else {
         _publicKey->remoteServerPublicKey = NULL;
+    }
+}
+
+- (NSData *)ownPublicKey {
+    if (_ownPublicKeyLength > 0) {
+        char *data = _publicKey->myPublicKey;
+        return [NSData dataWithBytes:data length:_ownPublicKeyLength];
+    } else {
+        return nil;
+    }
+}
+
+- (void)setOwnPublicKey:(NSData *)publicKey {
+    if (_publicKey->myPublicKey != NULL) {
+        delete _publicKey->myPublicKey;
+    }
+    
+    _ownPublicKeyLength = publicKey != nil ? [publicKey length] : 0;
+    
+    if (_ownPublicKeyLength > 0) {
+        char *data = new char[_ownPublicKeyLength];
+        std::memcpy(data, [publicKey bytes], _ownPublicKeyLength);
+        
+        _publicKey->myPublicKey = data;
+    } else {
+        _publicKey->myPublicKey = NULL;
+    }
+}
+
+- (NSData *)ownPrivateKey {
+    if (_ownPrivateKeyLength > 0) {
+        char *data = _publicKey->myPrivateKey;
+        return [NSData dataWithBytes:data length:_ownPrivateKeyLength];
+    } else {
+        return nil;
+    }
+}
+
+- (void)setOwnPrivateKey:(NSData *)privateKey {
+    if (_publicKey->myPrivateKey != NULL) {
+        delete _publicKey->myPrivateKey;
+    }
+    
+    _ownPrivateKeyLength = privateKey != nil ? [privateKey length] : 0;
+    
+    if (_ownPrivateKeyLength > 0) {
+        char *data = new char[_ownPrivateKeyLength];
+        std::memcpy(data, [privateKey bytes], _ownPrivateKeyLength);
+        
+        _publicKey->myPrivateKey = data;
+    } else {
+        _publicKey->myPrivateKey = NULL;
     }
 }
 
@@ -115,6 +167,14 @@ using namespace RakNet;
 {
     if (_publicKey->remoteServerPublicKey != NULL) {
         delete _publicKey->remoteServerPublicKey;
+    }
+    
+    if (_publicKey->myPublicKey != NULL) {
+        delete _publicKey->myPublicKey;
+    }
+    
+    if (_publicKey->myPrivateKey != NULL) {
+        delete _publicKey->myPrivateKey;
     }
     
     delete _publicKey;

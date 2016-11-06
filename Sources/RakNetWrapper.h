@@ -24,6 +24,7 @@ FOUNDATION_EXPORT const unsigned char RakNetWrapperVersionString[];
 #import <RakNetWrapper/RNMessageIdentifier.h>
 #import <RakNetWrapper/RNSocketDescriptor.h>
 #import <RakNetWrapper/RNSystemAddress.h>
+#import <RakNetWrapper/RNPublicKey.h>
 #import <RakNetWrapper/RNPacket.h>
 #import <RakNetWrapper/RNPeerInterface.h>
 #import <RakNetWrapper/RNBitStream.h>

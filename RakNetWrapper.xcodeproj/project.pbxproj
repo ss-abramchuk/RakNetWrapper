@@ -12,6 +12,11 @@
 		C907CA921D96CFA200B942FA /* RakNetWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */; };
 		C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */; };
 		C907CA9A1D96D3B700B942FA /* RNBitStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA801D96CC7700B942FA /* RNBitStreamTests.swift */; };
+		C909F58F1DCF28C000472DDD /* RNPublicKey.h in Headers */ = {isa = PBXBuildFile; fileRef = C909F58D1DCF28C000472DDD /* RNPublicKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C909F5901DCF28C000472DDD /* RNPublicKey.mm in Sources */ = {isa = PBXBuildFile; fileRef = C909F58E1DCF28C000472DDD /* RNPublicKey.mm */; };
+		C909F5921DCF2A3000472DDD /* RNPublicKey+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C909F5911DCF2A2300472DDD /* RNPublicKey+Internal.h */; };
+		C909F5931DCF303100472DDD /* RNPeerInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA811D96CC7700B942FA /* RNPeerInterfaceTests.swift */; };
+		C909F5951DCF48F100472DDD /* RNPublicKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C909F5941DCF48F100472DDD /* RNPublicKeyTests.swift */; };
 		C99C02A71D60FE1A00DBA190 /* RNSocketFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FA1D40D5D6009EFDA5 /* RNSocketFamily.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02A81D60FE1A00DBA190 /* RNConnectionState.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FB1D40D5D6009EFDA5 /* RNConnectionState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99C02A91D60FE1A00DBA190 /* RNMessageIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DD30FC1D40D5D6009EFDA5 /* RNMessageIdentifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -318,6 +323,10 @@
 		C907CA851D96CE4000B942FA /* iOS-Tests.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Tests.xcconfig"; sourceTree = "<group>"; };
 		C907CA871D96CEB700B942FA /* Info-Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		C907CA8D1D96CFA200B942FA /* iOSRakNetWrapperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSRakNetWrapperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C909F58D1DCF28C000472DDD /* RNPublicKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPublicKey.h; sourceTree = "<group>"; };
+		C909F58E1DCF28C000472DDD /* RNPublicKey.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNPublicKey.mm; sourceTree = "<group>"; };
+		C909F5911DCF2A2300472DDD /* RNPublicKey+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNPublicKey+Internal.h"; sourceTree = "<group>"; };
+		C909F5941DCF48F100472DDD /* RNPublicKeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNPublicKeyTests.swift; sourceTree = "<group>"; };
 		C99C02911D60F9E800DBA190 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = iOS.xcconfig; sourceTree = "<group>"; };
 		C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RakNetWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99C029F1D60FBF100DBA190 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
@@ -639,6 +648,7 @@
 				C907CA811D96CC7700B942FA /* RNPeerInterfaceTests.swift */,
 				C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */,
 				C907CA831D96CC7700B942FA /* RNSystemAddressTests.swift */,
+				C909F5941DCF48F100472DDD /* RNPublicKeyTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1001,6 +1011,9 @@
 				C9DD31031D40D5D6009EFDA5 /* RNSystemAddress.h */,
 				C9DD31041D40D5D6009EFDA5 /* RNSystemAddress+Internal.h */,
 				C9DD31051D40D5D6009EFDA5 /* RNSystemAddress.mm */,
+				C909F58D1DCF28C000472DDD /* RNPublicKey.h */,
+				C909F5911DCF2A2300472DDD /* RNPublicKey+Internal.h */,
+				C909F58E1DCF28C000472DDD /* RNPublicKey.mm */,
 				C9DD31061D40D5D6009EFDA5 /* RNPacket.h */,
 				C9DD31071D40D5D6009EFDA5 /* RNPacket+Internal.h */,
 				C9DD31081D40D5D6009EFDA5 /* RNPacket.mm */,
@@ -1178,6 +1191,7 @@
 				C99C02DD1D60FE7A00DBA190 /* DS_Table.h in Headers */,
 				C99C03181D60FE7A00DBA190 /* RakNetDefinesOverrides.h in Headers */,
 				C99C032B1D60FE7A00DBA190 /* RelayPlugin.h in Headers */,
+				C909F5921DCF2A3000472DDD /* RNPublicKey+Internal.h in Headers */,
 				C99C03251D60FE7A00DBA190 /* RakThread.h in Headers */,
 				C99C03121D60FE7A00DBA190 /* Rackspace.h in Headers */,
 				C99C03151D60FE7A00DBA190 /* RakMemoryOverride.h in Headers */,
@@ -1193,6 +1207,7 @@
 				C99C02FF1D60FE7A00DBA190 /* NativeFeatureIncludesOverrides.h in Headers */,
 				C99C02D11D60FE7A00DBA190 /* DS_HuffmanEncodingTreeFactory.h in Headers */,
 				C99C02D91D60FE7A00DBA190 /* DS_OrderedList.h in Headers */,
+				C909F58F1DCF28C000472DDD /* RNPublicKey.h in Headers */,
 				C99C02B31D60FE1A00DBA190 /* RNPacket.h in Headers */,
 				C99C03401D60FE7A00DBA190 /* TeamBalancer.h in Headers */,
 				C99C02B01D60FE1A00DBA190 /* RNSystemAddress.h in Headers */,
@@ -1306,7 +1321,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C909F5951DCF48F100472DDD /* RNPublicKeyTests.swift in Sources */,
 				C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */,
+				C909F5931DCF303100472DDD /* RNPeerInterfaceTests.swift in Sources */,
 				C907CA9A1D96D3B700B942FA /* RNBitStreamTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1419,6 +1436,7 @@
 				C99C03701D60FE7A00DBA190 /* GetTime.cpp in Sources */,
 				C99C03B81D60FE7A00DBA190 /* UDPForwarder.cpp in Sources */,
 				C99C03651D60FE7A00DBA190 /* DS_Table.cpp in Sources */,
+				C909F5901DCF28C000472DDD /* RNPublicKey.mm in Sources */,
 				C99C03671D60FE7A00DBA190 /* EmailSender.cpp in Sources */,
 				C99C03B11D60FE7A00DBA190 /* TableSerializer.cpp in Sources */,
 				C99C037D1D60FE7A00DBA190 /* NatTypeDetectionClient.cpp in Sources */,

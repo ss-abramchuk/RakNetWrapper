@@ -10,9 +10,19 @@
 
 #import "RNSocketFamily.h"
 
+/**
+ Network address for a system
+ */
 @interface RNSystemAddress : NSObject
 
+/**
+ Return the system address as a string
+ */
 @property (nonatomic, readonly) NSString *address;
+
+/**
+ Returns the system port
+ */
 @property (nonatomic, readonly) unsigned short port;
 
 - (instancetype)init;

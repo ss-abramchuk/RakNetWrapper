@@ -10,16 +10,30 @@
 
 #import "RNSocketFamily.h"
 
+/**
+ Network address for a system
+ */
 @interface RNSystemAddress : NSObject
 
-@property (nonatomic, readonly) NSString *address;
+/**
+ Return the system address as a string
+ */
+@property (nonnull, nonatomic, readonly) NSString *address;
+
+/**
+ Returns the system port
+ */
 @property (nonatomic, readonly) unsigned short port;
 
-- (instancetype)init;
-- (instancetype)initWithAddress:(NSString *)address;
-- (instancetype)initWithAddress:(NSString *)address andPort:(unsigned short)port;
+- (nonnull instancetype)init;
 
-- (BOOL)isEqual:(id)object;
+- (nonnull instancetype)initWithAddress:(nonnull NSString *)address
+NS_SWIFT_NAME(init(address:));
+
+- (nonnull instancetype)initWithAddress:(nonnull NSString *)address andPort:(unsigned short)port
+NS_SWIFT_NAME(init(address:port:));
+
+- (BOOL)isEqual:(nullable id)object;
 - (NSUInteger)hash;
 
 @end

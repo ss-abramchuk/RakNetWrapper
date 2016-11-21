@@ -25,12 +25,37 @@
 
 @implementation RNBitStream
 
+#pragma mark Properties
+
 - (NSData *)data {
     unsigned char * data = _bitStream->GetData();
     NSUInteger length = _bitStream->GetNumberOfBytesUsed();
     
     return [NSData dataWithBytes:data length:length];
 }
+
+- (NSUInteger)readOffset {
+    BitSize_t offset = _bitStream->GetReadOffset();
+    return BITS_TO_BYTES(offset);
+}
+
+- (void)setReadOffset:(NSUInteger)offset {
+    BitSize_t newOffset = BYTES_TO_BITS(offset);
+    _bitStream->SetReadOffset(newOffset);
+}
+
+- (NSUInteger)writeOffset {
+    BitSize_t offset = _bitStream->GetWriteOffset();
+    return BITS_TO_BYTES(offset);
+}
+
+- (void)setWriteOffset:(NSUInteger)offset {
+    BitSize_t newOffset = BYTES_TO_BITS(offset);
+    _bitStream->SetWriteOffset(newOffset);
+}
+
+
+#pragma mark Initializers
 
 - (instancetype)init
 {
@@ -53,6 +78,9 @@
     return self;
 }
 
+
+#pragma mark Pointers
+
 - (void)reset {
     _bitStream->Reset();
 }
@@ -69,240 +97,211 @@
     _bitStream->ResetWritePointer();
 }
 
-- (NSUInteger)getReadOffset {
-    BitSize_t offset = _bitStream->GetReadOffset();
-    return BITS_TO_BYTES(offset);
+#pragma mark Read / Write
+
+- (void)writeBool:(BOOL)value {
+    _bitStream->Write(value);
 }
 
-- (NSUInteger)getWriteOffset {
-    BitSize_t offset = _bitStream->GetWriteOffset();
-    return BITS_TO_BYTES(offset);
+- (void)writeUInt8:(uint8_t)value {
+    _bitStream->Write(value);
 }
 
-- (void)setReadOffset:(NSUInteger)offset {
-    BitSize_t newOffset = BYTES_TO_BITS(offset);
-    _bitStream->SetReadOffset(newOffset);
+- (void)writeInt8:(int8_t)value {
+    _bitStream->Write(value);
 }
 
-- (void)setWriteOffset:(NSUInteger)offset {
-    BitSize_t newOffset = BYTES_TO_BITS(offset);
-    _bitStream->SetWriteOffset(newOffset);
+- (void)writeUInt16:(uint16_t)value {
+    _bitStream->Write(value);
 }
 
-- (void)writeNumericValue:(nonnull NSNumber *)value ofType:(RNBitStreamType)type {
-    switch (type) {
-        case RNBitStreamTypeBool:
-            _bitStream->Write(value.boolValue);
-            break;
-            
-        case RNBitStreamTypeChar:
-            _bitStream->Write(value.charValue);
-            break;
-            
-        case RNBitStreamTypeUnsignedChar:
-            _bitStream->Write(value.unsignedCharValue);
-            break;
-            
-        case RNBitStreamTypeShort:
-            _bitStream->Write(value.shortValue);
-            break;
-            
-        case RNBitStreamTypeUnsignedShort:
-            _bitStream->Write(value.unsignedShortValue);
-            break;
-            
-        case RNBitStreamTypeInt:
-            _bitStream->Write(value.intValue);
-            break;
-            
-        case RNBitStreamTypeUnsignedInt:
-            _bitStream->Write(value.unsignedIntValue);
-            break;
-            
-        case RNBitStreamTypeLong:
-            _bitStream->Write(value.longValue);
-            break;
-            
-        case RNBitStreamTypeUnsignedLong:
-            _bitStream->Write(value.unsignedLongValue);
-            break;
-            
-        case RNBitStreamTypeLongLong:
-            _bitStream->Write(value.longLongValue);
-            break;
-            
-        case RNBitStreamTypeUnsignedLongLong:
-            _bitStream->Write(value.unsignedLongLongValue);
-            break;
-            
-        case RNBitStreamTypeFloat:
-            _bitStream->Write(value.floatValue);
-            break;
-            
-        case RNBitStreamTypeDouble:
-            _bitStream->Write(value.doubleValue);
-            break;
-    }
+- (void)writeInt16:(int16_t)value {
+    _bitStream->Write(value);
 }
 
-- (BOOL)readNumericValue:(out NSNumber * __nullable * __nullable)value ofType:(RNBitStreamType)type error:(out NSError * __nullable * __nullable)error {
-    NSInteger code = type;
-    NSDictionary *errorDictionary = nil;
-    
-    switch (type) {
-        case RNBitStreamTypeBool: {
-            BOOL result = NO;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithBool:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read BOOL value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeChar: {
-            char result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithChar:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read char value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeUnsignedChar: {
-            unsigned char result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithUnsignedChar:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read unsigned char value" };
-            }
-        } break;
-        
-        case RNBitStreamTypeShort: {
-            short result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithShort:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read short value" };
-            }
-        } break;
-        
-        case RNBitStreamTypeUnsignedShort: {
-            unsigned short result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithUnsignedShort:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read unsigned short value" };
-            }
-        } break;
-        
-        case RNBitStreamTypeInt: {
-            int result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithInt:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read int value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeUnsignedInt: {
-            unsigned int result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithUnsignedInt:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read unsigned int value" };
-            }
-        } break;
-        
-        case RNBitStreamTypeLong: {
-            long result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithLong:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read long value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeUnsignedLong: {
-            unsigned long result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithUnsignedLong:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read unsigned long value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeLongLong: {
-            long long result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithLongLong:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read long long value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeUnsignedLongLong: {
-            unsigned long long result = 0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithUnsignedLongLong:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read unsigned long long value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeFloat: {
-            float result = 0.0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithFloat:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read float value" };
-            }
-        } break;
-            
-        case RNBitStreamTypeDouble: {
-            double result = 0.0;
-            if (_bitStream->Read(result)) {
-                *value = [NSNumber numberWithDouble:result];
-            } else {
-                errorDictionary = @{ NSLocalizedDescriptionKey : @"Couldn't read double value" };
-            }
-        } break;
-    }
-    
-    if (errorDictionary != nil) {
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:code userInfo:errorDictionary];
-        return NO;
-    } else {
-        return YES;
-    }
+- (void)writeUInt32:(uint32_t)value {
+    _bitStream->Write(value);
 }
 
-- (void)writeStringValue:(nonnull NSString *)value {
+- (void)writeInt32:(int32_t)value {
+    _bitStream->Write(value);
+}
+
+- (void)writeUInt64:(uint64_t)value {
+    _bitStream->Write(value);
+}
+
+- (void)writeInt64:(int64_t)value {
+    _bitStream->Write(value);
+}
+
+- (void)writeFloat:(float)value {
+    _bitStream->Write(value);
+}
+
+- (void)writeDouble:(double)value {
+    _bitStream->Write(value);
+}
+
+- (void)writeString:(nonnull NSString *)value {
     RakString rakString(value.UTF8String);
     _bitStream->Write(rakString);
-}
-
-- (BOOL)readStringValue:(out NSString * __nullable * __nullable)value error:(out NSError * __nullable * __nullable)error {
-    RakString rakString;
-    if (_bitStream->Read(rakString)) {
-        *value = [NSString stringWithUTF8String:rakString.C_String()];
-        return YES;
-    } else {
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:1 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read string value" }];
-        return NO;
-    }
 }
 
 - (void)writeData:(NSData *)data {
     _bitStream->Write((const char *)data.bytes, data.length);
 }
 
-- (BOOL)readData:(out NSData * __nullable * __nullable)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
+- (BOOL)readBool:(out nonnull BOOL *)value
+                 error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Bool value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readUInt8:(out nonnull uint8_t *)value
+                 error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read UInt8 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readInt8:(out nonnull int8_t *)value
+                error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Int8 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readUInt16:(out nonnull uint16_t *)value
+                  error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read UInt16 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readInt16:(out nonnull int16_t *)value
+                 error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Int16 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readUInt32:(out nonnull uint32_t *)value
+                  error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read UInt32 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readInt32:(out nonnull int32_t *)value
+                 error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Int32 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readUInt64:(out nonnull uint64_t *)value
+                  error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read UInt64 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readInt64:(out nonnull int64_t *)value
+                 error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Int64 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readFloat:(out nonnull float *)value
+                 error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Float value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readDouble:(out nonnull double *)value
+                  error:(out NSError * __nullable * __nullable)error {
+    if (_bitStream->Read(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                     code:0
+                                 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Double value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readString:(out NSString * __nullable * __nonnull)value error:(out NSError * __nullable * __nullable)error {
+    RakString rakString;
+    if (_bitStream->Read(rakString)) {
+        *value = [NSString stringWithUTF8String:rakString.C_String()];
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read String value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
     char result[length];
     if (_bitStream->Read(result, length)) {
         *data = [NSData dataWithBytes:result length:length];
         return YES;
     } else {
-        *error = [NSError errorWithDomain:RNWrapperErrorDomain code:1 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read data value" }];
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Data value" }];
         return NO;
     }
 }

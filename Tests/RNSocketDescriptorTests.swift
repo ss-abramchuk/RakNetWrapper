@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import iOSRakNetWrapper
+import RakNetWrapper
 
 class RNSocketDescriptorTests: XCTestCase {
     
@@ -30,7 +30,7 @@ class RNSocketDescriptorTests: XCTestCase {
         let blockingSocket = descriptor.blockingSocket
         
         XCTAssertTrue(port == 0)
-        XCTAssertTrue(address == "")
+        XCTAssertTrue(address == nil)
         XCTAssertTrue(socketFamily == .IPV4)
         XCTAssertTrue(blockingSocket == true)
     }
@@ -39,7 +39,7 @@ class RNSocketDescriptorTests: XCTestCase {
         let defaultPort: UInt16 = 19132
         let defaultAddress = "127.0.0.1"
         
-        let descriptor = RNSocketDescriptor(port: defaultPort, andAddress: defaultAddress)
+        let descriptor = RNSocketDescriptor(port: defaultPort, address: defaultAddress)
         descriptor.socketFamily = .IPV6
         descriptor.blockingSocket = false
         
@@ -57,13 +57,13 @@ class RNSocketDescriptorTests: XCTestCase {
     func testSocketDescriptorInitializeWithNilAddress() {
         let defaultPort: UInt16 = 19132
         
-        let descriptor = RNSocketDescriptor(port: defaultPort, andAddress: nil)
+        let descriptor = RNSocketDescriptor(port: defaultPort, address: nil)
         
         let port = descriptor.port
         let address = descriptor.address
         
         XCTAssertTrue(port == defaultPort)
-        XCTAssertTrue(address == "")
+        XCTAssertTrue(address == nil)
     }
     
 }

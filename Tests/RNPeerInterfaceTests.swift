@@ -25,141 +25,141 @@ class RNPeerInterfaceTests: XCTestCase {
     // TODO: Test ban/unban methods
     
     // Test operability of startup and shutdown with multiple sockets
-    func testPeerInterfaceStartupAndShutdownMultipleSockets() {
-        guard let peer = RNPeerInterface() else {
-            XCTFail("Peer Interface == nil")
-            return
-        }
-        
-        do {
-            let socketDescriptors = [
-                RNSocketDescriptor(port: 19132, address: nil),
-                RNSocketDescriptor(port: 19133, address: nil)
-            ]
-            
-            try peer.startup(maxConnections: 2, socketDescriptors: socketDescriptors)
-  
-            let maxPeers = peer.maximumNumberOfPeers
-            XCTAssert(maxPeers == 2, "Incorrect amount of maximum peers: \(maxPeers)")
-            
-            let sturtupStatus = peer.isActive
-            XCTAssert(sturtupStatus, "Network thread is not running")
-            
-            peer.shutdown(duration: 0)
-            
-            let shutdownStatus = peer.isActive
-            XCTAssert(!shutdownStatus, "Network thread is running")
-        } catch let error as NSError {
-            XCTFail("Peer startup or shutdown failed with error: \(error.localizedDescription)")
-        }
-    }
-    
-    func testSettingAndGettingMaximumIncomingConnections() {
-        guard let peer = RNPeerInterface() else {
-            XCTFail("Peer Interface == nil")
-            return
-        }
-        
-        let maxConnections: UInt16 = 123
-        
-        peer.maximumIncomingConnections = maxConnections
-        
-        let returnedValue = peer.maximumIncomingConnections
-        
-        XCTAssert(returnedValue == maxConnections, "returnedValue = \(returnedValue) while maxConnections = \(maxConnections)")
-    }
-    
-    func testConvertingGUIDToAddress() {
-        guard let peer = RNPeerInterface() else {
-            XCTFail("Peer Interface == nil")
-            return
-        }
-        
-        do {
-            try peer.startup(maxConnections: 1, socketDescriptors: [RNSocketDescriptor()])
-        } catch let error as NSError {
-            XCTFail("Peer startup failed with error: \(error.localizedDescription)")
-        }
-        
-        let myGUID = peer.myGUID
-        XCTAssertTrue(myGUID > 0, "Returned incorrect GUID")
-        
-        let address = RNSystemAddress()!
-        
-        let returnedGUID = peer.getGUID(from: address)
-        XCTAssertTrue(myGUID == returnedGUID, "Returned incorrect GUID")
-    }
-    
-//    // Test connection of one RNPeerInterface to another
-//    func testPeerInterfaceConnection() {
-//        guard let server = RNPeerInterface(), client = RNPeerInterface() else {
-//            XCTFail("One of Peer Interfaces == nil")
+//    func testPeerInterfaceStartupAndShutdownMultipleSockets() {
+//        guard let peer = RNPeerInterface() else {
+//            XCTFail("Peer Interface == nil")
 //            return
 //        }
 //        
-//        // Initializing server
 //        do {
-//            let socketDescriptor = RNSocketDescriptor(port: 19132, andAddress: nil)
-//            try server.startupWithMaxConnectionsAllowed(1, socketDescriptor: socketDescriptor)
-//            server.setMaximumIncomingConnections(1)
+//            let socketDescriptors = [
+//                RNSocketDescriptor(port: 19132, address: nil),
+//                RNSocketDescriptor(port: 19133, address: nil)
+//            ]
+//            
+//            try peer.startup(maxConnections: 2, socketDescriptors: socketDescriptors)
+//  
+//            let maxPeers = peer.maximumNumberOfPeers
+//            XCTAssert(maxPeers == 2, "Incorrect amount of maximum peers: \(maxPeers)")
+//            
+//            let sturtupStatus = peer.isActive
+//            XCTAssert(sturtupStatus, "Network thread is not running")
+//            
+//            peer.shutdown(duration: 0)
+//            
+//            let shutdownStatus = peer.isActive
+//            XCTAssert(!shutdownStatus, "Network thread is running")
 //        } catch let error as NSError {
-//            XCTFail("Server startup failed with error: \(error.localizedDescription)")
+//            XCTFail("Peer startup or shutdown failed with error: \(error.localizedDescription)")
 //        }
-//        
-//        // Initializing client and connect to server
-//        let system = RNSystemAddress(address: "127.0.0.1", andPort: 19132)
-//        do {
-//            let socketDescriptor = RNSocketDescriptor()
-//            try client.startupWithMaxConnectionsAllowed(1, socketDescriptor: socketDescriptor)
-//            try client.connectToHost(system.address, remotePort: system.port)
-//        } catch let error as NSError {
-//            XCTFail("Connection to server failed with error: \(error.localizedDescription)")
-//        }
-//        
-//        // Wait a little for connection
-//        usleep(500000)
-//        
-//        // Get GUID of server to check connection state
-//        let serverGUID = server.getMyGUID()
-//        
-//        // Get connection state
-//        let stateWithGUID: RNConnectionState = client.getConnectionStateWithGUID(serverGUID)
-//        let stateWithAddress: RNConnectionState = client.getConnectionStateWithAddress(system)
-//        
-//        XCTAssertTrue(stateWithGUID == .Connected, "State with GUID != Connected")
-//        XCTAssertTrue(stateWithAddress == .Connected, "State with address and port != Connected")
-//        
-//        // Check server GUID
-//        let returnedServerGUID = client.getGuidFromSystemAddress(system)
-//        XCTAssertTrue(serverGUID == returnedServerGUID, "Returned server GUID is incorrect")
-//        
-//        // Get amount of connections
-//        let numberOfConnections = server.numberOfConnections()
-//        XCTAssert(numberOfConnections == 1)
-//        
-//        // Get list of connections
-//        let connectionsList = client.getConnectionListWithNumberOfSystems(UInt16(numberOfConnections))
-//        XCTAssert(connectionsList.count == Int(numberOfConnections))
-//        
-//        guard let connectedAddress = connectionsList[0] as? RNSystemAddress else {
-//            XCTFail("Couldn't get address from list of connections")
-//            return
-//        }
-//        
-//        XCTAssert(connectedAddress.port == system.port && connectedAddress.address == system.address)
-//        
-//        // Close connection
-//        client.closeConnectionWithGUID(serverGUID, sendNotification: true)
-//        
-//        // Wait a little for disconnection
-//        usleep(100000)
-//        
-//        // Get connection state
-//        let disconnectedState: RNConnectionState = client.getConnectionStateWithGUID(serverGUID)
-//        
-//        XCTAssertTrue(disconnectedState == .NotConnected, "State with GUID != NotConnected (\(disconnectedState))")
 //    }
 //    
+//    func testSettingAndGettingMaximumIncomingConnections() {
+//        guard let peer = RNPeerInterface() else {
+//            XCTFail("Peer Interface == nil")
+//            return
+//        }
+//        
+//        let maxConnections: UInt16 = 123
+//        
+//        peer.maximumIncomingConnections = maxConnections
+//        
+//        let returnedValue = peer.maximumIncomingConnections
+//        
+//        XCTAssert(returnedValue == maxConnections, "returnedValue = \(returnedValue) while maxConnections = \(maxConnections)")
+//    }
+//    
+//    func testConvertingGUIDToAddress() {
+//        guard let peer = RNPeerInterface() else {
+//            XCTFail("Peer Interface == nil")
+//            return
+//        }
+//        
+//        do {
+//            try peer.startup(maxConnections: 1, socketDescriptors: [RNSocketDescriptor()])
+//        } catch let error as NSError {
+//            XCTFail("Peer startup failed with error: \(error.localizedDescription)")
+//        }
+//        
+//        let myGUID = peer.myGUID
+//        XCTAssertTrue(myGUID > 0, "Returned incorrect GUID")
+//        
+//        let address = RNSystemAddress()!
+//        
+//        let returnedGUID = peer.getGUID(from: address)
+//        XCTAssertTrue(myGUID == returnedGUID, "Returned incorrect GUID")
+//    }
+    
+    
+    
+    // Test connection of one RNPeerInterface to another
+    func testPeerInterfaceConnection() {
+        let server = RNPeerInterface()
+        let client = RNPeerInterface()
+        
+        // Initializing server
+        do {
+            let socketDescriptor = RNSocketDescriptor(port: 19132, address: nil)
+            try server.startup(maxConnections: 1, socketDescriptors: [socketDescriptor])
+            server.maximumIncomingConnections = 1
+        } catch let error as NSError {
+            XCTFail("Server startup failed with error: \(error.localizedDescription)")
+        }
+        
+        // Initializing client and connect to server
+        let system = RNSystemAddress(address: "127.0.0.1", port: 19132)
+        do {
+            let socketDescriptor = RNSocketDescriptor()
+            try client.startup(maxConnections: 1, socketDescriptors: [socketDescriptor])
+            try client.connect(remoteHost: system.address, remotePort: system.port, password: nil, publicKey: nil)
+        } catch let error as NSError {
+            XCTFail("Connection to server failed with error: \(error.localizedDescription)")
+        }
+        
+        // Wait a little for connection
+        usleep(500000)
+        
+        // Get GUID of server to check connection state
+        let serverGUID = server.myGUID
+        
+        // Get connection state
+        let stateWithGUID: RNConnectionState = client.connectionState(remoteGUID: serverGUID)
+        let stateWithAddress: RNConnectionState = client.connectionState(remoteAddress: system)
+        
+        XCTAssertTrue(stateWithGUID == .connected, "State with GUID != Connected")
+        XCTAssertTrue(stateWithAddress == .connected, "State with address and port != Connected")
+        
+        // Check server GUID
+        let returnedServerGUID = client.getGUID(fromAddress: system)
+        XCTAssertTrue(serverGUID == returnedServerGUID, "Returned server GUID is incorrect")
+        
+        // Get amount of connections
+        let numberOfConnections = server.numberOfConnections
+        XCTAssert(numberOfConnections == 1)
+        
+        // Get list of connections
+        let connectionsList = client.connectionList
+        XCTAssert(connectionsList.count == Int(numberOfConnections))
+        
+        guard let connectedAddress = connectionsList.first else {
+            XCTFail("Couldn't get address from list of connections")
+            return
+        }
+        
+        XCTAssert(connectedAddress.port == system.port && connectedAddress.address == system.address)
+        
+        // Close connection
+        client.disconnect(remoteGUID: serverGUID, notify: true)
+        
+        // Wait a little for disconnection
+        usleep(100000)
+        
+        // Get connection state
+        let disconnectedState: RNConnectionState = client.connectionState(remoteGUID: serverGUID)
+        
+        XCTAssertTrue(disconnectedState == .notConnected, "State with GUID != NotConnected (\(disconnectedState))")
+    }
+    
 //    // Test throwing error during connection to unknown domain.
 //    func testPeerInterfaceFailConnection() {
 //        guard let peer = RNPeerInterface() else {
@@ -327,5 +327,33 @@ class RNPeerInterfaceTests: XCTestCase {
 //        
 //        XCTAssertNil(packet, "Received packet is not equal nil")
 //    }
+    
+    func testSetGetPassword() {
+        let peer = RNPeerInterface()
+        
+        let password = "SuperSecretPassword"
+        
+        peer.password = password.data(using: .utf8)
+        
+        guard
+            let returnedData = peer.password,
+            let returnedPassword = String(data: returnedData, encoding: .utf8)
+        else {
+            XCTFail("Failed to retrieve password")
+            return
+        }
+        
+        XCTAssert(password == returnedPassword)
+    }
+    
+    func testSetGetEmptyPassword() {
+        let peer = RNPeerInterface()
+        
+        peer.password = nil
+        
+        let returnedData = peer.password
+        
+        XCTAssertNil(returnedData)
+    }
     
 }

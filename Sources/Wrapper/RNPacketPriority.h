@@ -11,14 +11,14 @@
 /// These enumerations are used to describe when packets are delivered.
 typedef NS_ENUM (unsigned char, RNPacketPriority) {
     /// The highest possible priority. These message trigger sends immediately, and are generally not buffered or aggregated into a single datagram.
-    RNPacketPriorityImmediatePriority,
-    /// For every 2 RNPacketPriorityImmediatePriority messages, 1 RNPacketPriorityHighPriority will be sent.
+    RNPacketPriorityImmediate,
+    /// For every 2 RNPacketPriorityImmediate messages, 1 RNPacketPriorityHigh will be sent.
     /// Messages at this priority and lower are buffered to be sent in groups at 10 millisecond intervals to reduce UDP overhead and better measure congestion control.
-    RNPacketPriorityHighPriority,
-    /// For every 2 RNPacketPriorityHighPriority messages, 1 RNPacketPriorityMediumPriority will be sent.
+    RNPacketPriorityHigh,
+    /// For every 2 RNPacketPriorityHigh messages, 1 RNPacketPriorityMedium will be sent.
     /// Messages at this priority and lower are buffered to be sent in groups at 10 millisecond intervals to reduce UDP overhead and better measure congestion control.
-    RNPacketPriorityMediumPriority,
-    /// For every 2 RNPacketPriorityMediumPriority messages, 1 RNPacketPriorityLowPriority will be sent.
+    RNPacketPriorityMedium,
+    /// For every 2 RNPacketPriorityMedium messages, 1 RNPacketPriorityLow will be sent.
     /// Messages at this priority and lower are buffered to be sent in groups at 10 millisecond intervals to reduce UDP overhead and better measure congestion control.
-    RNPacketPriorityLowPriority
+    RNPacketPriorityLow
 };

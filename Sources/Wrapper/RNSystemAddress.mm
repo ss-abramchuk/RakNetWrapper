@@ -68,6 +68,10 @@
     return self;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@:%u", self.address, self.port];
+}
+
 - (BOOL)isEqual:(id)other {
     if ([other isKindOfClass:[RNSystemAddress class]] &&
         *((RNSystemAddress *)other).systemAddress == *self.systemAddress) {

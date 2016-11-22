@@ -370,8 +370,8 @@ using namespace RakNet;
 #pragma mark Data
 
 - (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability address:(nonnull RNSystemAddress *)address broadcast:(BOOL)broadcast {
-    unsigned int length =[data length];
-    const char *bytes = (const char *)[data bytes];
+    unsigned int length = data.length;
+    const char *bytes = (const char *)data.bytes;
     PacketPriority packetPriority = [self getPriorityFromValue:priority];
     PacketReliability packetReliability = [self getReliabilityFromValue:reliability];
     
@@ -464,13 +464,13 @@ using namespace RakNet;
 
 - (PacketPriority)getPriorityFromValue:(RNPacketPriority)value {
     switch (value) {
-        case RNPacketPriorityImmediatePriority:
+        case RNPacketPriorityImmediate:
             return IMMEDIATE_PRIORITY;
             
-        case RNPacketPriorityHighPriority:
+        case RNPacketPriorityHigh:
             return HIGH_PRIORITY;
             
-        case RNPacketPriorityMediumPriority:
+        case RNPacketPriorityMedium:
             return MEDIUM_PRIORITY;
             
         default:

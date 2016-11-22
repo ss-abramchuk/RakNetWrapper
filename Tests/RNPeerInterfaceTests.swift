@@ -8,7 +8,8 @@
 
 import XCTest
 import Darwin
-import RakNetWrapper
+
+@testable import RakNetWrapper
 
 class RNPeerInterfaceTests: XCTestCase {
     
@@ -305,11 +306,60 @@ class RNPeerInterfaceTests: XCTestCase {
 //        XCTAssert(returnedValue == pongValue)
 //    }
 //    
-//    func testSendingAndReceiving() {
-//        // TODO: Implement testing send and receiving packets
-//        XCTFail("Testing send and receiving packets is not implemented")
-//    }
-//    
+    func testSendingAndReceiving() {
+        // TODO: Implement testing send and receiving packets
+        let server = RNPeerInterface()
+        let client = RNPeerInterface()
+        
+        // Initializing server
+        do {
+            let socketDescriptor = RNSocketDescriptor(port: 19132, address: nil)
+            try server.startup(maxConnections: 1, socketDescriptors: [socketDescriptor])
+            server.maximumIncomingConnections = 1
+        } catch let error as NSError {
+            XCTFail("Server startup failed with error: \(error.localizedDescription)")
+        }
+        
+        // Initializing client and connect to server
+        let system = RNSystemAddress(address: "127.0.0.1", port: 19132)
+        do {
+            let socketDescriptor = RNSocketDescriptor()
+            try client.startup(maxConnections: 1, socketDescriptors: [socketDescriptor])
+            try client.connect(remoteHost: system.address, remotePort: system.port, password: nil, publicKey: nil)
+        } catch let error as NSError {
+            XCTFail("Connection to server failed with error: \(error.localizedDescription)")
+        }
+        
+        // Wait a little for connection
+        usleep(500000)
+        
+        let stream = RNBitStream()
+        stream.write(value: RNMessageIdentifier.userPacketEnum.rawValue)
+        
+        let messageIdentifier = client.send(data: stream.data, priority: .immediate, reliability: .reliable, address: system, broadcast: false)
+        
+        guard messageIdentifier != 0 else {
+            XCTFail("Bad input of send method")
+            return
+        }
+        
+        let expectation = self.expectation(description: "Recieve Packet Expectation")
+        
+        DispatchQueue(label: "me.ss-abramchuk.recieve-packet-expectation.queue").asyncAfter(deadline: .now() + .milliseconds(500)) {
+            repeat {
+                guard let packet = server.receive() else { continue }
+
+                guard packet.identifier == RNMessageIdentifier.userPacketEnum.rawValue else { continue }
+                
+                expectation.fulfill()
+                
+                break
+            } while true
+        }
+        
+        waitForExpectations(timeout: 2.5, handler: nil)
+    }
+//
 //    func testReceivingNilPacket() {
 //        guard let peer = RNPeerInterface() else {
 //            XCTFail("Peer Interface == nil")

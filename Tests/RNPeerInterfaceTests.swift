@@ -8,7 +8,8 @@
 
 import XCTest
 import Darwin
-import RakNetWrapper
+
+@testable import RakNetWrapper
 
 class RNPeerInterfaceTests: XCTestCase {
     
@@ -332,12 +333,10 @@ class RNPeerInterfaceTests: XCTestCase {
         // Wait a little for connection
         usleep(500000)
         
-        let stringValue = "Test Data"
-        
         let stream = RNBitStream()
-        stream.write(value: stringValue)
+        stream.write(value: RNMessageIdentifier.userPacketEnum.rawValue)
         
-        let messageIdentifier = client.send(data: stream.data, priority: .highPriority, reliability: .reliable, address: system, broadcast: false)
+        let messageIdentifier = client.send(data: stream.data, priority: .immediate, reliability: .reliable, address: system, broadcast: false)
         
         guard messageIdentifier != 0 else {
             XCTFail("Bad input of send method")
@@ -347,19 +346,15 @@ class RNPeerInterfaceTests: XCTestCase {
         let expectation = self.expectation(description: "Recieve Packet Expectation")
         
         DispatchQueue(label: "me.ss-abramchuk.recieve-packet-expectation.queue").asyncAfter(deadline: .now() + .milliseconds(500)) {
-            while let packet = server.receive() {
-                print("Packet identifier: \(String(format:"0x%2.2X", packet.identifier))")
-                
-                guard packet.identifier >= RNMessageIdentifier.userPacketEnum.rawValue else { continue }
-                
-                guard let recievedString = String(data: packet.data, encoding: .utf8) else { break }
-                
-                print("Recieved string: \(recievedString)")
-                
-                XCTAssert(recievedString == stringValue)
+            repeat {
+                guard let packet = server.receive() else { continue }
+
+                guard packet.identifier == RNMessageIdentifier.userPacketEnum.rawValue else { continue }
                 
                 expectation.fulfill()
-            }
+                
+                break
+            } while true
         }
         
         waitForExpectations(timeout: 2.5, handler: nil)

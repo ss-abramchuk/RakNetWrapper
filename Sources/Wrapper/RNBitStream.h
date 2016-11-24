@@ -89,17 +89,26 @@ NS_SWIFT_NAME(write(value:));
 - (void)writeInt8:(int8_t)value
 NS_SWIFT_NAME(write(value:));
 
+- (void)writeVarInt8:(int8_t)value
+NS_SWIFT_NAME(writeVar(value:));
+
 - (void)writeUInt16:(uint16_t)value
 NS_SWIFT_NAME(write(value:));
 
 - (void)writeInt16:(int16_t)value
 NS_SWIFT_NAME(write(value:));
 
+- (void)writeVarInt16:(int16_t)value
+NS_SWIFT_NAME(writeVar(value:));
+
 - (void)writeUInt32:(uint32_t)value
 NS_SWIFT_NAME(write(value:));
 
 - (void)writeInt32:(int32_t)value
 NS_SWIFT_NAME(write(value:));
+
+- (void)writeVarInt32:(int32_t)value
+NS_SWIFT_NAME(writeVar(value:));
 
 - (void)writeUInt64:(uint64_t)value
 NS_SWIFT_NAME(write(value:));
@@ -131,6 +140,10 @@ NS_SWIFT_NAME(read(value:));
                  error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
 
+- (BOOL)readVarInt8:(out nonnull int8_t *)value
+               error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readVar(value:));
+
 - (BOOL)readUInt16:(out nonnull uint16_t *)value
                  error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
@@ -139,6 +152,10 @@ NS_SWIFT_NAME(read(value:));
                 error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
 
+- (BOOL)readVarInt16:(out nonnull int16_t *)value
+               error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readVar(value:));
+
 - (BOOL)readUInt32:(out nonnull uint32_t *)value
                  error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
@@ -146,6 +163,10 @@ NS_SWIFT_NAME(read(value:));
 - (BOOL)readInt32:(out nonnull int32_t *)value
                 error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readVarInt32:(out nonnull int32_t *)value
+            error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readVar(value:));
 
 - (BOOL)readUInt64:(out nonnull uint64_t *)value
                   error:(out NSError * __nullable * __nullable)error

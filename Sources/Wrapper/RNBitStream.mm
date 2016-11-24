@@ -111,12 +111,26 @@
     _bitStream->Write(value);
 }
 
+- (void)writeVarInt8:(int8_t)value {
+    char bytes[sizeof(int8_t)];
+    *reinterpret_cast<int8_t *>(bytes) = value;
+    
+    _bitStream->WriteAlignedVar8(bytes);
+}
+
 - (void)writeUInt16:(uint16_t)value {
     _bitStream->Write(value);
 }
 
 - (void)writeInt16:(int16_t)value {
     _bitStream->Write(value);
+}
+
+- (void)writeVarInt16:(int16_t)value {
+    char bytes[sizeof(int16_t)];
+    *reinterpret_cast<int16_t *>(bytes) = value;
+    
+    _bitStream->WriteAlignedVar16(bytes);
 }
 
 - (void)writeUInt32:(uint32_t)value {
@@ -129,7 +143,7 @@
 
 - (void)writeVarInt32:(int32_t)value {
     char bytes[sizeof(int32_t)];
-    *reinterpret_cast<int*>(bytes) = value;
+    *reinterpret_cast<int32_t *>(bytes) = value;
     
     _bitStream->WriteAlignedVar32(bytes);
 }
@@ -195,6 +209,22 @@
     }
 }
 
+- (BOOL)readVarInt8:(out nonnull int8_t *)value
+               error:(out NSError * __nullable * __nullable)error {
+    int size = sizeof(int8_t);
+    char bytes[size];
+    
+    if (_bitStream->ReadAlignedVar8(bytes)) {
+        *value = *reinterpret_cast<int8_t *>(bytes);
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int8 value" }];
+        return NO;
+    }
+}
+
 - (BOOL)readUInt16:(out nonnull uint16_t *)value
                   error:(out NSError * __nullable * __nullable)error {
     if (_bitStream->Read(*value)) {
@@ -215,6 +245,22 @@
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                      code:0
                                  userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Int16 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readVarInt16:(out nonnull int16_t *)value
+              error:(out NSError * __nullable * __nullable)error {
+    int size = sizeof(int16_t);
+    char bytes[size];
+    
+    if (_bitStream->ReadAlignedVar16(bytes)) {
+        *value = *reinterpret_cast<int16_t *>(bytes);
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int16 value" }];
         return NO;
     }
 }

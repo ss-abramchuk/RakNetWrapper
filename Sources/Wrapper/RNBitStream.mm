@@ -118,6 +118,13 @@
     _bitStream->WriteAlignedVar8(bytes);
 }
 
+- (void)writeVarUInt8:(uint8_t)value {
+    char bytes[sizeof(uint8_t)];
+    *reinterpret_cast<uint8_t *>(bytes) = value;
+    
+    _bitStream->WriteAlignedVar8(bytes);
+}
+
 - (void)writeUInt16:(uint16_t)value {
     _bitStream->Write(value);
 }
@@ -133,6 +140,13 @@
     _bitStream->WriteAlignedVar16(bytes);
 }
 
+- (void)writeVarUInt16:(uint16_t)value {
+    char bytes[sizeof(uint16_t)];
+    *reinterpret_cast<uint16_t *>(bytes) = value;
+    
+    _bitStream->WriteAlignedVar16(bytes);
+}
+
 - (void)writeUInt32:(uint32_t)value {
     _bitStream->Write(value);
 }
@@ -144,6 +158,13 @@
 - (void)writeVarInt32:(int32_t)value {
     char bytes[sizeof(int32_t)];
     *reinterpret_cast<int32_t *>(bytes) = value;
+    
+    _bitStream->WriteAlignedVar32(bytes);
+}
+
+- (void)writeVarUInt32:(uint32_t)value {
+    char bytes[sizeof(uint32_t)];
+    *reinterpret_cast<uint32_t *>(bytes) = value;
     
     _bitStream->WriteAlignedVar32(bytes);
 }
@@ -225,6 +246,22 @@
     }
 }
 
+- (BOOL)readVarUInt8:(out nonnull uint8_t *)value
+              error:(out NSError * __nullable * __nullable)error {
+    int size = sizeof(uint8_t);
+    char bytes[size];
+    
+    if (_bitStream->ReadAlignedVar8(bytes)) {
+        *value = *reinterpret_cast<uint8_t *>(bytes);
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt8 value" }];
+        return NO;
+    }
+}
+
 - (BOOL)readUInt16:(out nonnull uint16_t *)value
                   error:(out NSError * __nullable * __nullable)error {
     if (_bitStream->Read(*value)) {
@@ -265,6 +302,22 @@
     }
 }
 
+- (BOOL)readVarUInt16:(out nonnull uint16_t *)value
+               error:(out NSError * __nullable * __nullable)error {
+    int size = sizeof(uint16_t);
+    char bytes[size];
+    
+    if (_bitStream->ReadAlignedVar16(bytes)) {
+        *value = *reinterpret_cast<uint16_t *>(bytes);
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt16 value" }];
+        return NO;
+    }
+}
+
 - (BOOL)readUInt32:(out nonnull uint32_t *)value
                   error:(out NSError * __nullable * __nullable)error {
     if (_bitStream->Read(*value)) {
@@ -300,7 +353,23 @@
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                                 code:0
-                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int64 value" }];
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int32 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readVarUInt32:(out nonnull uint32_t *)value
+               error:(out NSError * __nullable * __nullable)error {
+    int size = sizeof(uint32_t);
+    char bytes[size];
+    
+    if (_bitStream->ReadAlignedVar32(bytes)) {
+        *value = *reinterpret_cast<uint32_t *>(bytes);
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt32 value" }];
         return NO;
     }
 }

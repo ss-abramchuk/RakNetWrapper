@@ -127,6 +127,13 @@
     _bitStream->Write(value);
 }
 
+- (void)writeVarInt32:(int32_t)value {
+    char bytes[sizeof(int32_t)];
+    *reinterpret_cast<int*>(bytes) = value;
+    
+    _bitStream->WriteAlignedVar32(bytes);
+}
+
 - (void)writeUInt64:(uint64_t)value {
     _bitStream->Write(value);
 }
@@ -232,6 +239,22 @@
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                      code:0
                                  userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Int32 value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readVarInt32:(out nonnull int32_t *)value
+               error:(out NSError * __nullable * __nullable)error {
+    int size = sizeof(int32_t);
+    char bytes[size];
+    
+    if (_bitStream->ReadAlignedVar32(bytes)) {
+        *value = *reinterpret_cast<int32_t *>(bytes);
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int64 value" }];
         return NO;
     }
 }

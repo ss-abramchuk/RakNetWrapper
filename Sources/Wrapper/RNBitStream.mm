@@ -241,7 +241,7 @@
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                                 code:0
-                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int8 value" }];
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read aligned Int8 value" }];
         return NO;
     }
 }
@@ -257,7 +257,7 @@
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                                 code:0
-                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt8 value" }];
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read aligned UInt8 value" }];
         return NO;
     }
 }
@@ -297,7 +297,7 @@
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                                 code:0
-                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int16 value" }];
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read aligned Int16 value" }];
         return NO;
     }
 }
@@ -313,7 +313,7 @@
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                                 code:0
-                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt16 value" }];
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read aligned UInt16 value" }];
         return NO;
     }
 }
@@ -353,7 +353,7 @@
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                                 code:0
-                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int32 value" }];
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read aligned Int32 value" }];
         return NO;
     }
 }
@@ -369,9 +369,63 @@
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                                 code:0
-                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt32 value" }];
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read aligned UInt32 value" }];
         return NO;
     }
+}
+
+- (BOOL)readVarInt32:(out nonnull int32_t *)value
+                error:(out NSError * __nullable * __nullable)error {
+    int32_t result = 0;
+    
+    char bytesMax = 5;
+    char bytesRead = 0;
+    
+    int8_t byte = 0;
+    
+    do {
+        if ((bytesRead > bytesMax) || !_bitStream->Read(byte)) {
+            if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                    code:0
+                                                userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int32 value" }];
+            return NO;
+        }
+        
+        result |= (byte & 0x7F) << bytesRead * 7;
+        
+        bytesRead++;
+    } while (byte & 0x80);
+    
+    *value = result;
+    
+    return YES;
+}
+
+- (BOOL)readVarUInt32:(out nonnull uint32_t *)value
+               error:(out NSError * __nullable * __nullable)error {
+    uint32_t result = 0;
+    
+    char bytesMax = 5;
+    char bytesRead = 0;
+    
+    uint8_t byte = 0;
+    
+    do {
+        if ((bytesRead > bytesMax) || !_bitStream->Read(byte)) {
+            if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                    code:0
+                                                userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt32 value" }];
+            return NO;
+        }
+        
+        result |= (byte & 0x7F) << bytesRead * 7;
+        
+        bytesRead++;
+    } while (byte & 0x80);
+    
+    *value = result;
+    
+    return YES;
 }
 
 - (BOOL)readUInt64:(out nonnull uint64_t *)value

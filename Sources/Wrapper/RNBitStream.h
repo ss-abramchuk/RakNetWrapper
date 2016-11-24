@@ -89,11 +89,11 @@ NS_SWIFT_NAME(write(value:));
 - (void)writeInt8:(int8_t)value
 NS_SWIFT_NAME(write(value:));
 
-- (void)writeVarInt8:(int8_t)value
-NS_SWIFT_NAME(writeVar(value:));
+- (void)writeAlignedInt8:(int8_t)value
+NS_SWIFT_NAME(writeAligned(value:));
 
-- (void)writeVarUInt8:(uint8_t)value
-NS_SWIFT_NAME(writeVar(value:));
+- (void)writeAlignedUInt8:(uint8_t)value
+NS_SWIFT_NAME(writeAligned(value:));
 
 - (void)writeUInt16:(uint16_t)value
 NS_SWIFT_NAME(write(value:));
@@ -101,11 +101,11 @@ NS_SWIFT_NAME(write(value:));
 - (void)writeInt16:(int16_t)value
 NS_SWIFT_NAME(write(value:));
 
-- (void)writeVarInt16:(int16_t)value
-NS_SWIFT_NAME(writeVar(value:));
+- (void)writeAlignedInt16:(int16_t)value
+NS_SWIFT_NAME(writeAligned(value:));
 
-- (void)writeVarUInt16:(uint16_t)value
-NS_SWIFT_NAME(writeVar(value:));
+- (void)writeAlignedUInt16:(uint16_t)value
+NS_SWIFT_NAME(writeAligned(value:));
 
 - (void)writeUInt32:(uint32_t)value
 NS_SWIFT_NAME(write(value:));
@@ -113,11 +113,11 @@ NS_SWIFT_NAME(write(value:));
 - (void)writeInt32:(int32_t)value
 NS_SWIFT_NAME(write(value:));
 
-- (void)writeVarInt32:(int32_t)value
-NS_SWIFT_NAME(writeVar(value:));
+- (void)writeAlignedInt32:(int32_t)value
+NS_SWIFT_NAME(writeAligned(value:));
 
-- (void)writeVarUInt32:(uint32_t)value
-NS_SWIFT_NAME(writeVar(value:));
+- (void)writeAlignedUInt32:(uint32_t)value
+NS_SWIFT_NAME(writeAligned(value:));
 
 - (void)writeUInt64:(uint64_t)value
 NS_SWIFT_NAME(write(value:));
@@ -149,13 +149,13 @@ NS_SWIFT_NAME(read(value:));
                  error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
 
-- (BOOL)readVarInt8:(out nonnull int8_t *)value
+- (BOOL)readAlignedInt8:(out nonnull int8_t *)value
                error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(readVar(value:));
+NS_SWIFT_NAME(readAligned(value:));
 
-- (BOOL)readVarUInt8:(out nonnull uint8_t *)value
+- (BOOL)readAlignedUInt8:(out nonnull uint8_t *)value
               error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(readVar(value:));
+NS_SWIFT_NAME(readAligned(value:));
 
 - (BOOL)readUInt16:(out nonnull uint16_t *)value
                  error:(out NSError * __nullable * __nullable)error
@@ -165,13 +165,13 @@ NS_SWIFT_NAME(read(value:));
                 error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
 
-- (BOOL)readVarInt16:(out nonnull int16_t *)value
+- (BOOL)readAlignedInt16:(out nonnull int16_t *)value
                error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(readVar(value:));
+NS_SWIFT_NAME(readAligned(value:));
 
-- (BOOL)readVarUInt16:(out nonnull uint16_t *)value
+- (BOOL)readAlignedUInt16:(out nonnull uint16_t *)value
                error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(readVar(value:));
+NS_SWIFT_NAME(readAligned(value:));
 
 - (BOOL)readUInt32:(out nonnull uint32_t *)value
                  error:(out NSError * __nullable * __nullable)error
@@ -181,13 +181,13 @@ NS_SWIFT_NAME(read(value:));
                 error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
 
-- (BOOL)readVarInt32:(out nonnull int32_t *)value
+- (BOOL)readAlignedInt32:(out nonnull int32_t *)value
             error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(readVar(value:));
+NS_SWIFT_NAME(readAligned(value:));
 
-- (BOOL)readVarUInt32:(out nonnull uint32_t *)value
+- (BOOL)readAlignedUInt32:(out nonnull uint32_t *)value
                error:(out NSError * __nullable * __nullable)error
-NS_SWIFT_NAME(readVar(value:));
+NS_SWIFT_NAME(readAligned(value:));
 
 - (BOOL)readUInt64:(out nonnull uint64_t *)value
                   error:(out NSError * __nullable * __nullable)error

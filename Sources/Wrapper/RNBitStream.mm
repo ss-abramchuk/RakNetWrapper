@@ -193,7 +193,7 @@
 }
 
 - (void)writeVarUInt64:(uint64_t)value {
-    while (value & 0xFFFFFF80) {
+    while (value & 0xFFFFFFFFFFFFFF80) {
         uint8_t byte = (uint8_t)((value & 0x7F) | 0x80);
         _bitStream->Write(byte);
         

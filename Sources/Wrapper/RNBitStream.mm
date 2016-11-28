@@ -374,6 +374,18 @@
     }
 }
 
+- (BOOL)readCompressedUInt32:(out nonnull uint32_t *)value
+                       error:(out NSError * __nullable * __nullable)error{
+    if (_bitStream->ReadCompressed(*value)) {
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read compressed UInt32 value" }];
+        return NO;
+    }
+}
+
 - (BOOL)readVarInt32:(out nonnull int32_t *)value
                 error:(out NSError * __nullable * __nullable)error {
     int32_t result = 0;

@@ -189,6 +189,10 @@ NS_SWIFT_NAME(readAligned(value:));
                error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(readAligned(value:));
 
+- (BOOL)readCompressedUInt32:(out nonnull uint32_t *)value
+                    error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readCompressed(value:));
+
 - (BOOL)readVarInt32:(out nonnull int32_t *)value
                 error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(readVar(value:));

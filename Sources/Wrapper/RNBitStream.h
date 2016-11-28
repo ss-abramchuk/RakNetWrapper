@@ -113,6 +113,12 @@ NS_SWIFT_NAME(write(value:));
 - (void)writeInt32:(int32_t)value
 NS_SWIFT_NAME(write(value:));
 
+- (void)writeVarUInt32:(uint32_t)value
+NS_SWIFT_NAME(writeVar(value:));
+
+- (void)writeVarInt32:(int32_t)value
+NS_SWIFT_NAME(writeVar(value:));
+
 - (void)writeAlignedInt32:(int32_t)value
 NS_SWIFT_NAME(writeAligned(value:));
 
@@ -124,6 +130,12 @@ NS_SWIFT_NAME(write(value:));
 
 - (void)writeInt64:(int64_t)value
 NS_SWIFT_NAME(write(value:));
+
+- (void)writeVarUInt64:(uint64_t)value
+NS_SWIFT_NAME(writeVar(value:));
+
+- (void)writeVarInt64:(int64_t)value
+NS_SWIFT_NAME(writeVar(value:));
 
 - (void)writeFloat:(float)value
 NS_SWIFT_NAME(write(value:));

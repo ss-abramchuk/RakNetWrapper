@@ -155,6 +155,21 @@
     _bitStream->Write(value);
 }
 
+- (void)writeVarUInt32:(uint32_t)value {
+    while (value & 0xFFFFFF80) {
+        uint8_t byte = (uint8_t)((value & 0x7F) | 0x80);
+        _bitStream->Write(byte);
+        
+        value >>= 7;
+    }
+
+    _bitStream->Write((uint8_t)value);
+}
+
+- (void)writeVarInt32:(int32_t)value {
+    [self writeVarUInt32:(uint32_t)value];
+}
+
 - (void)writeAlignedInt32:(int32_t)value {
     char bytes[sizeof(int32_t)];
     *reinterpret_cast<int32_t *>(bytes) = value;
@@ -175,6 +190,21 @@
 
 - (void)writeInt64:(int64_t)value {
     _bitStream->Write(value);
+}
+
+- (void)writeVarUInt64:(uint64_t)value {
+    while (value & 0xFFFFFF80) {
+        uint8_t byte = (uint8_t)((value & 0x7F) | 0x80);
+        _bitStream->Write(byte);
+        
+        value >>= 7;
+    }
+    
+    _bitStream->Write((uint8_t)value);
+}
+
+- (void)writeVarInt64:(int64_t)value {
+    [self writeVarUInt32:(uint64_t)value];
 }
 
 - (void)writeFloat:(float)value {
@@ -480,7 +510,7 @@
                error:(out NSError * __nullable * __nullable)error {
     int64_t result = 0;
     
-    char bytesMax = 5;
+    char bytesMax = 10;
     char bytesRead = 0;
     
     int8_t byte = 0;
@@ -507,7 +537,7 @@
                error:(out NSError * __nullable * __nullable)error {
     uint64_t result = 0;
     
-    char bytesMax = 5;
+    char bytesMax = 10;
     char bytesRead = 0;
     
     int8_t byte = 0;

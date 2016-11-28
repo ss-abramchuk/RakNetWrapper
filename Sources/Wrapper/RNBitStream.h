@@ -213,6 +213,14 @@ NS_SWIFT_NAME(read(value:));
                  error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
 
+- (BOOL)readVarInt64:(out nonnull int64_t *)value
+               error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readVar(value:));
+
+- (BOOL)readVarUInt64:(out nonnull uint64_t *)value
+                error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readVar(value:));
+
 - (BOOL)readFloat:(out nonnull float *)value
                   error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));

@@ -476,6 +476,60 @@
     }
 }
 
+- (BOOL)readVarInt64:(out nonnull int64_t *)value
+               error:(out NSError * __nullable * __nullable)error {
+    int64_t result = 0;
+    
+    char bytesMax = 5;
+    char bytesRead = 0;
+    
+    int8_t byte = 0;
+    
+    do {
+        if ((bytesRead > bytesMax) || !_bitStream->Read(byte)) {
+            if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                    code:0
+                                                userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int64 value" }];
+            return NO;
+        }
+        
+        result |= (byte & 0x7F) << bytesRead * 7;
+        
+        bytesRead++;
+    } while (byte & 0x80);
+    
+    *value = result;
+    
+    return YES;
+}
+
+- (BOOL)readVarUInt64:(out nonnull uint64_t *)value
+               error:(out NSError * __nullable * __nullable)error {
+    uint64_t result = 0;
+    
+    char bytesMax = 5;
+    char bytesRead = 0;
+    
+    int8_t byte = 0;
+    
+    do {
+        if ((bytesRead > bytesMax) || !_bitStream->Read(byte)) {
+            if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                    code:0
+                                                userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var UInt64 value" }];
+            return NO;
+        }
+        
+        result |= (byte & 0x7F) << bytesRead * 7;
+        
+        bytesRead++;
+    } while (byte & 0x80);
+    
+    *value = result;
+    
+    return YES;
+}
+
 - (BOOL)readFloat:(out nonnull float *)value
                  error:(out NSError * __nullable * __nullable)error {
     if (_bitStream->Read(*value)) {

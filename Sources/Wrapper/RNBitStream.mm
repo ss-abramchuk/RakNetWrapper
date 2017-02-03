@@ -220,6 +220,14 @@
     _bitStream->Write(rakString);
 }
 
+- (void)writeVarString:(NSString *)value {
+    NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
+    uint32_t length = [data length];
+    
+    [self writeVarUInt32:length];
+    [self writeData:data];
+}
+
 - (void)writeData:(NSData *)data {
     _bitStream->Write((const char *)data.bytes, data.length);
 }
@@ -459,8 +467,8 @@
                error:(out NSError * __nullable * __nullable)error {
     uint32_t result = 0;
     
-    char bytesMax = 5;
-    char bytesRead = 0;
+    uint8_t bytesMax = 5;
+    uint8_t bytesRead = 0;
     
     uint8_t byte = 0;
     
@@ -593,6 +601,27 @@
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read String value" }];
         return NO;
     }
+}
+
+- (BOOL)readVarString:(out NSString * __nullable * __nonnull)value error:(out NSError * __nullable * __nullable)error {
+    uint32_t length = 0;
+    NSData *data = nil;
+    
+    if (![self readVarUInt32:&length error:error]) {
+        return NO;
+    }
+    
+    if(![self readData:&data withLength:length error:error]) {
+        return NO;
+    }
+    
+    *value = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if (value == nil) {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read String value" }];
+        return NO;
+    }
+    
+    return YES;
 }
 
 - (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {

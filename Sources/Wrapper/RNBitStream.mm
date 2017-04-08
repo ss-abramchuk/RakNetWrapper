@@ -211,8 +211,22 @@
     _bitStream->Write(value);
 }
 
+- (void)writeSwappedFloat:(float)value {
+    CFSwappedFloat32 swapped = CFConvertFloat32HostToSwapped(value);
+    float reinterpreted = reinterpret_cast<float &>(swapped.v);
+    
+    _bitStream->Write(reinterpreted);
+}
+
 - (void)writeDouble:(double)value {
     _bitStream->Write(value);
+}
+
+- (void)writeSwappedDouble:(double)value {
+    CFSwappedFloat64 swapped = CFConvertFloat64HostToSwapped(value);
+    double reinterpreted = reinterpret_cast<double &>(swapped.v);
+    
+    _bitStream->Write(reinterpreted);
 }
 
 - (void)writeString:(nonnull NSString *)value {
@@ -580,6 +594,26 @@
     }
 }
 
+- (BOOL)readSwappedFloat:(out nonnull float *)value
+                   error:(out NSError * __nullable * __nullable)error {
+    float readValue = 0.0;
+    if (_bitStream->Read(readValue)) {
+        uint32_t reinterpreted = reinterpret_cast<uint32_t &>(readValue);
+
+        CFSwappedFloat32 swapped;
+        swapped.v = reinterpreted;
+        
+        *value = CFConvertFloat32SwappedToHost(swapped);
+        
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read swapped Float value" }];
+        return NO;
+    }
+}
+
 - (BOOL)readDouble:(out nonnull double *)value
                   error:(out NSError * __nullable * __nullable)error {
     if (_bitStream->Read(*value)) {
@@ -588,6 +622,26 @@
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
                                      code:0
                                  userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Double value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readSwappedDouble:(out nonnull double *)value
+                   error:(out NSError * __nullable * __nullable)error {
+    double readValue = 0.0;
+    if (_bitStream->Read(readValue)) {
+        uint64_t reinterpreted = reinterpret_cast<uint64_t &>(readValue);
+        
+        CFSwappedFloat64 swapped;
+        swapped.v = reinterpreted;
+        
+        *value = CFConvertFloat64SwappedToHost(swapped);
+        
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
+                                                code:0
+                                            userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read swapped Float value" }];
         return NO;
     }
 }

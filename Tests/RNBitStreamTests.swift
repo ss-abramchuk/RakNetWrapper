@@ -282,11 +282,34 @@ class RNBitStreamTests: XCTestCase {
             try bitStream.read(value: &readValue)
         } catch {
             XCTFail("Failed with error: \(error.localizedDescription)")
+            return
         }
         
         XCTAssert(floatValue == readValue)
     }
 
+    func testReadWriteSwappedFloat() {
+        let originalValue: Float = 738.974182
+        
+        let bytes: [UInt8] = [ 0x59, 0xbe, 0x38, 0x44 ]
+        let data = Data(bytes: bytes)
+        
+        let bitStream = RNBitStream()
+        bitStream.writeSwapped(value: originalValue)
+        
+        XCTAssert(data.elementsEqual(bitStream.data))
+        
+        var readValue: Float = 0
+        do {
+            try bitStream.readSwapped(value: &readValue)
+        } catch {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+            return
+        }
+        
+        XCTAssert(originalValue == readValue)
+    }
+    
     func testReadWriteDoubleValue() {
         let doubleValue: Double = 5423324.2342342344
         

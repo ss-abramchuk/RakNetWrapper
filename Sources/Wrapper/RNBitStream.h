@@ -140,8 +140,14 @@ NS_SWIFT_NAME(writeVar(value:));
 - (void)writeFloat:(float)value
 NS_SWIFT_NAME(write(value:));
 
+- (void)writeSwappedFloat:(float)value
+NS_SWIFT_NAME(writeSwapped(value:));
+
 - (void)writeDouble:(double)value
 NS_SWIFT_NAME(write(value:));
+
+- (void)writeSwappedDouble:(double)value
+NS_SWIFT_NAME(writeSwapped(value:));
 
 - (void)writeString:(nonnull NSString *)value
 NS_SWIFT_NAME(write(value:));
@@ -240,9 +246,17 @@ NS_SWIFT_NAME(readVar(value:));
                   error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
 
+- (BOOL)readSwappedFloat:(out nonnull float *)value
+            error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readSwapped(value:));
+
 - (BOOL)readDouble:(out nonnull double *)value
                  error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
+
+- (BOOL)readSwappedDouble:(out nonnull double *)value
+                   error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readSwapped(value:));
 
 - (BOOL)readString:(out NSString * __nullable * __nonnull)value error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));

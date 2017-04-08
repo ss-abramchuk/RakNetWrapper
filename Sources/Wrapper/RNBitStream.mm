@@ -167,7 +167,8 @@
 }
 
 - (void)writeVarInt32:(int32_t)value {
-    [self writeVarUInt32:(uint32_t)value];
+    uint32_t unsignedValue = (uint32_t)((value << 1) ^ (value >> (sizeof(int32_t) * 8 - 1)));
+    [self writeVarUInt32:unsignedValue];
 }
 
 - (void)writeAlignedInt32:(int32_t)value {
@@ -204,7 +205,8 @@
 }
 
 - (void)writeVarInt64:(int64_t)value {
-    [self writeVarUInt32:(uint64_t)value];
+    uint64_t unsignedValue = (uint64_t)((value << 1) ^ (value >> (sizeof(int64_t) * 8 - 1)));
+    [self writeVarUInt64:unsignedValue];
 }
 
 - (void)writeFloat:(float)value {
@@ -452,27 +454,13 @@
 
 - (BOOL)readVarInt32:(out nonnull int32_t *)value
                 error:(out NSError * __nullable * __nullable)error {
-    int32_t result = 0;
+    uint32_t unsignedValue = 0;
     
-    char bytesMax = 5;
-    char bytesRead = 0;
+    if (![self readVarUInt32:&unsignedValue error:error]) {
+        return NO;
+    }
     
-    int8_t byte = 0;
-    
-    do {
-        if ((bytesRead > bytesMax) || !_bitStream->Read(byte)) {
-            if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
-                                                    code:0
-                                                userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int32 value" }];
-            return NO;
-        }
-        
-        result |= (byte & 0x7F) << bytesRead * 7;
-        
-        bytesRead++;
-    } while (byte & 0x80);
-    
-    *value = result;
+    *value = (int32_t)(unsignedValue >> 1) ^ -(int32_t)(unsignedValue & 1);
     
     return YES;
 }
@@ -530,27 +518,13 @@
 
 - (BOOL)readVarInt64:(out nonnull int64_t *)value
                error:(out NSError * __nullable * __nullable)error {
-    int64_t result = 0;
+    uint64_t unsignedValue = 0;
     
-    char bytesMax = 10;
-    char bytesRead = 0;
+    if (![self readVarUInt64:&unsignedValue error:error]) {
+        return NO;
+    }
     
-    int8_t byte = 0;
-    
-    do {
-        if ((bytesRead > bytesMax) || !_bitStream->Read(byte)) {
-            if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain
-                                                    code:0
-                                                userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read var Int64 value" }];
-            return NO;
-        }
-        
-        result |= (byte & 0x7F) << bytesRead * 7;
-        
-        bytesRead++;
-    } while (byte & 0x80);
-    
-    *value = result;
+    *value = (int64_t)(unsignedValue >> 1) ^ -(int64_t)(unsignedValue & 1);
     
     return YES;
 }

@@ -482,10 +482,10 @@
             return NO;
         }
         
-        result |= (byte & 0x7F) << bytesRead * 7;
+        result |= (uint32_t)(byte & 0x7F) << bytesRead * 7;
         
         bytesRead++;
-    } while (byte & 0x80);
+    } while ((byte & 0x80) == 0x80);
     
     *value = result;
     
@@ -546,10 +546,10 @@
             return NO;
         }
         
-        result |= (byte & 0x7F) << bytesRead * 7;
+        result |= (uint64_t)(byte & 0x7F) << bytesRead * 7;
         
         bytesRead++;
-    } while (byte & 0x80);
+    } while ((byte & 0x80) == 0x80);
     
     *value = result;
     

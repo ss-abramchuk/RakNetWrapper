@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C907CA861D96CE4000B942FA /* iOS-Tests.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C907CA851D96CE4000B942FA /* iOS-Tests.xcconfig */; };
 		C907CA881D96CEB700B942FA /* Info-Tests.plist in Resources */ = {isa = PBXBuildFile; fileRef = C907CA871D96CEB700B942FA /* Info-Tests.plist */; };
 		C907CA921D96CFA200B942FA /* RakNetWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */; };
 		C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */; };
@@ -1268,7 +1267,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0830;
 				TargetAttributes = {
 					C907CA8C1D96CFA200B942FA = {
 						CreatedOnToolsVersion = 8.0;
@@ -1311,7 +1310,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C907CA881D96CEB700B942FA /* Info-Tests.plist in Resources */,
-				C907CA861D96CE4000B942FA /* iOS-Tests.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

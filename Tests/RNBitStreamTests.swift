@@ -374,7 +374,7 @@ class RNBitStreamTests: XCTestCase {
             XCTFail("Failed with error: \(error.localizedDescription)")
         }
         
-        guard let result = readValue as? String else {
+        guard let result = readValue as String? else {
             XCTFail("Result is nil")
             return
         }
@@ -395,7 +395,7 @@ class RNBitStreamTests: XCTestCase {
             XCTFail("Failed with error: \(error.localizedDescription)")
         }
         
-        guard let result = readValue as? String else {
+        guard let result = readValue as String? else {
             XCTFail("Result is nil")
             return
         }

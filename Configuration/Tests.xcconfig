@@ -1,0 +1,5 @@
+INFOPLIST_FILE = Configuration/Info-Tests.plist
+PRODUCT_NAME = RakNetWrapperTests
+PRODUCT_BUNDLE_IDENTIFIER = me.ss-abramchuk.raknet-wrapper.test
+SWIFT_OPTIMIZATION_LEVEL = -Onone
+ONLY_ACTIVE_ARCH = YES

@@ -153,7 +153,7 @@ class RNBitStreamTests: XCTestCase {
     }
     
     func testReadWriteVarUInt32Value() {
-        let int32Value: UInt32 = 3286443224
+        let int32Value: UInt32 = 2709396983
         
         let bitStream = RNBitStream()
         bitStream.writeVar(value: int32Value)
@@ -166,6 +166,38 @@ class RNBitStreamTests: XCTestCase {
         }
         
         XCTAssert(readValue == int32Value, "Result is not equal to initial UInt32 value")
+    }
+    
+    func testReadWriteVarUnt64Value() {
+        let int64Value: Int64 = -1709396983541
+        
+        let bitStream = RNBitStream()
+        bitStream.writeVar(value: int64Value)
+        
+        var readValue: Int64 = 0
+        do {
+            try bitStream.readVar(value: &readValue)
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+        
+        XCTAssert(readValue == int64Value, "Result is not equal to initial UInt64 value")
+    }
+    
+    func testReadWriteVarUInt64Value() {
+        let int64Value: UInt64 = 1709396983541
+        
+        let bitStream = RNBitStream()
+        bitStream.writeVar(value: int64Value)
+        
+        var readValue: UInt64 = 0
+        do {
+            try bitStream.readVar(value: &readValue)
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+        
+        XCTAssert(readValue == int64Value, "Result is not equal to initial UInt64 value")
     }
     
     func testReadWriteUnsignedIntValue() {

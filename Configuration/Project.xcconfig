@@ -16,8 +16,6 @@ LD_RUNPATH_SEARCH_PATHS[sdk=iphonesimulator*] =  @executable_path/Frameworks @lo
 ENABLE_BITCODE[sdk=iphonesimulator*] = YES
 ENABLE_BITCODE[sdk=iphone*] = YES
 
-BITCODE_GENERATION_MODE = bitcode
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 // macOS-specific settings

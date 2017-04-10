@@ -153,7 +153,7 @@ class RNBitStreamTests: XCTestCase {
     }
     
     func testReadWriteVarUInt32Value() {
-        let int32Value: UInt32 = 3286443224
+        let int32Value: UInt32 = 2709396983
         
         let bitStream = RNBitStream()
         bitStream.writeVar(value: int32Value)
@@ -166,6 +166,38 @@ class RNBitStreamTests: XCTestCase {
         }
         
         XCTAssert(readValue == int32Value, "Result is not equal to initial UInt32 value")
+    }
+    
+    func testReadWriteVarUnt64Value() {
+        let int64Value: Int64 = -1709396983541
+        
+        let bitStream = RNBitStream()
+        bitStream.writeVar(value: int64Value)
+        
+        var readValue: Int64 = 0
+        do {
+            try bitStream.readVar(value: &readValue)
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+        
+        XCTAssert(readValue == int64Value, "Result is not equal to initial UInt64 value")
+    }
+    
+    func testReadWriteVarUInt64Value() {
+        let int64Value: UInt64 = 1709396983541
+        
+        let bitStream = RNBitStream()
+        bitStream.writeVar(value: int64Value)
+        
+        var readValue: UInt64 = 0
+        do {
+            try bitStream.readVar(value: &readValue)
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+        
+        XCTAssert(readValue == int64Value, "Result is not equal to initial UInt64 value")
     }
     
     func testReadWriteUnsignedIntValue() {
@@ -282,11 +314,34 @@ class RNBitStreamTests: XCTestCase {
             try bitStream.read(value: &readValue)
         } catch {
             XCTFail("Failed with error: \(error.localizedDescription)")
+            return
         }
         
         XCTAssert(floatValue == readValue)
     }
 
+    func testReadWriteSwappedFloat() {
+        let originalValue: Float = 738.974182
+        
+        let bytes: [UInt8] = [ 0x59, 0xbe, 0x38, 0x44 ]
+        let data = Data(bytes: bytes)
+        
+        let bitStream = RNBitStream()
+        bitStream.writeSwapped(value: originalValue)
+        
+        XCTAssert(data.elementsEqual(bitStream.data))
+        
+        var readValue: Float = 0
+        do {
+            try bitStream.readSwapped(value: &readValue)
+        } catch {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+            return
+        }
+        
+        XCTAssert(originalValue == readValue)
+    }
+    
     func testReadWriteDoubleValue() {
         let doubleValue: Double = 5423324.2342342344
         
@@ -327,6 +382,27 @@ class RNBitStreamTests: XCTestCase {
         XCTAssert(result == stringValue, "Result is not equal to initial string value")
     }
     
+    func testReadWriteVarStringValue() {
+        let stringValue = "😈 Some Unicode String 😈"
+        
+        let bitStream = RNBitStream()
+        bitStream.writeVar(value: stringValue)
+        
+        var readValue: NSString? = nil
+        do {
+            try bitStream.readVar(value: &readValue)
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+        
+        guard let result = readValue as? String else {
+            XCTFail("Result is nil")
+            return
+        }
+        
+        XCTAssert(result == stringValue, "Result is not equal to initial string value")
+    }
+    
     func testReadWriteBytesArray() {
         let bytes: [UInt8] = [0x12, 0x54, 0x44, 0x64]
         let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
@@ -346,6 +422,7 @@ class RNBitStreamTests: XCTestCase {
     
     func testReadWriteMultipleValues() {
         let doubleValue: Double = 5423324.2342342344
+        let boolValue: Bool = false
         let stringValue = "😈 Some Unicode String 😈"
         let int16Value: Int16 = 6532
         let bytes: [UInt8] = [0x12, 0x54, 0x44, 0x64]
@@ -354,12 +431,14 @@ class RNBitStreamTests: XCTestCase {
         
         let bitStream = RNBitStream()
         bitStream.write(value: doubleValue)
+        bitStream.write(value: boolValue)
         bitStream.write(value: stringValue)
         bitStream.write(value: int16Value)
         bitStream.write(value: dataValue)
         bitStream.write(value: int64Value)
         
         var readDouble: Double = 0
+        var readBoolValue: ObjCBool = true
         var readString: NSString? = nil
         var readInt16: Int16 = 0
         var readData: NSData? = nil
@@ -367,6 +446,7 @@ class RNBitStreamTests: XCTestCase {
         
         do {
             try bitStream.read(value: &readDouble)
+            try bitStream.read(value: &readBoolValue)
             try bitStream.read(value: &readString)
             try bitStream.read(value: &readInt16)
             try bitStream.read(value: &readData, length: bytes.count)

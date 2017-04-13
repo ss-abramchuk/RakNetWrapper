@@ -9,4 +9,4 @@
 #import <Foundation/Foundation.h>
 
 /// RakNet Wrapper Error Domain
-NSString * const RNWrapperErrorDomain = @"RNWrapperErrorDomain";
+extern NSString * __nonnull const RNWrapperErrorDomain;

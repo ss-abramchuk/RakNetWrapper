@@ -11,6 +11,7 @@
 		C907CA921D96CFA200B942FA /* RakNetWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99C02971D60FAE900DBA190 /* RakNetWrapper.framework */; };
 		C907CA991D96D03000B942FA /* RNSocketDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA821D96CC7700B942FA /* RNSocketDescriptorTests.swift */; };
 		C907CA9A1D96D3B700B942FA /* RNBitStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907CA801D96CC7700B942FA /* RNBitStreamTests.swift */; };
+		C90991D31E9FB20400F09753 /* RNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = C90991D21E9FB20400F09753 /* RNConstants.m */; };
 		C909F58F1DCF28C000472DDD /* RNPublicKey.h in Headers */ = {isa = PBXBuildFile; fileRef = C909F58D1DCF28C000472DDD /* RNPublicKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C909F5901DCF28C000472DDD /* RNPublicKey.mm in Sources */ = {isa = PBXBuildFile; fileRef = C909F58E1DCF28C000472DDD /* RNPublicKey.mm */; };
 		C909F5921DCF2A3000472DDD /* RNPublicKey+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = C909F5911DCF2A2300472DDD /* RNPublicKey+Internal.h */; };
@@ -321,6 +322,7 @@
 		C907CA831D96CC7700B942FA /* RNSystemAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNSystemAddressTests.swift; sourceTree = "<group>"; };
 		C907CA871D96CEB700B942FA /* Info-Tests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Info-Tests.plist"; sourceTree = "<group>"; };
 		C907CA8D1D96CFA200B942FA /* RakNetWrapperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RakNetWrapperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C90991D21E9FB20400F09753 /* RNConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNConstants.m; sourceTree = "<group>"; };
 		C909F58D1DCF28C000472DDD /* RNPublicKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPublicKey.h; sourceTree = "<group>"; };
 		C909F58E1DCF28C000472DDD /* RNPublicKey.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNPublicKey.mm; sourceTree = "<group>"; };
 		C909F5911DCF2A2300472DDD /* RNPublicKey+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNPublicKey+Internal.h"; sourceTree = "<group>"; };
@@ -990,6 +992,7 @@
 			isa = PBXGroup;
 			children = (
 				C9DD30F81D40D5CE009EFDA5 /* RNConstants.h */,
+				C90991D21E9FB20400F09753 /* RNConstants.m */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -1369,6 +1372,7 @@
 				C99C03901D60FE7A00DBA190 /* RakNetSocket2_NativeClient.cpp in Sources */,
 				C99C03941D60FE7A00DBA190 /* RakNetSocket2_Windows_Linux_360.cpp in Sources */,
 				C99C039C1D60FE7A00DBA190 /* RakSleep.cpp in Sources */,
+				C90991D31E9FB20400F09753 /* RNConstants.m in Sources */,
 				C99C02AF1D60FE1A00DBA190 /* RNSocketDescriptor.mm in Sources */,
 				C99C03A91D60FE7A00DBA190 /* SendToThread.cpp in Sources */,
 				C99C03631D60FE7A00DBA190 /* DS_ByteQueue.cpp in Sources */,

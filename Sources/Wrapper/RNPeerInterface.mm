@@ -60,25 +60,25 @@ using namespace RakNet;
     return self.peer->IsActive();
 }
 
-- (unsigned int)maximumNumberOfPeers {
+- (uint32_t)maximumNumberOfPeers {
     return self.peer->GetMaximumNumberOfPeers();
 }
 
-- (unsigned short)maximumIncomingConnections {
+- (uint16_t)maximumIncomingConnections {
     return self.peer->GetMaximumIncomingConnections();
 }
 
-- (void)setMaximumIncomingConnections:(unsigned short)numberAllowed {
+- (void)setMaximumIncomingConnections:(uint16_t)numberAllowed {
     self.peer->SetMaximumIncomingConnections(numberAllowed);
 }
 
-- (unsigned short)numberOfConnections {
+- (uint16_t)numberOfConnections {
     return self.peer->NumberOfConnections();
 }
 
-- (unsigned long long)myGUID {
+- (uint64_t)myGUID {
     RakNetGUID guid = self.peer->GetMyGUID();
-    return (unsigned long long)guid.g;
+    return guid.g;
 }
 
 - (NSArray<NSString *> * _Nonnull)localAddresses {
@@ -152,7 +152,7 @@ using namespace RakNet;
 
 #pragma mark Startup and Shutdown
 
-- (BOOL)startupWithMaxConnectionsAllowed:(unsigned int)maxConnections
+- (BOOL)startupWithMaxConnectionsAllowed:(uint32_t)maxConnections
                        socketDescriptors:(nonnull NSArray<RNSocketDescriptor *> *)descriptors
                                    error:(out NSError * __nullable * __nullable)error
 {
@@ -256,7 +256,7 @@ using namespace RakNet;
 #pragma mark Connection
 
 - (BOOL)connectToHost:(nonnull NSString *)host
-           remotePort:(unsigned short)remotePort
+           remotePort:(uint16_t)remotePort
              password:(nullable NSData *)password
             publicKey:(nullable RNPublicKey *)publicKey
                 error:(out NSError * __nullable * __nullable)error
@@ -305,7 +305,7 @@ using namespace RakNet;
     }
 }
 
-- (void)disconnectRemoteGUID:(unsigned long long)guid sendNotification:(BOOL)sendNotification {
+- (void)disconnectRemoteGUID:(uint64_t)guid sendNotification:(BOOL)sendNotification {
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
     self.peer->CloseConnection(rakNetGUID, sendNotification);
 }
@@ -314,7 +314,7 @@ using namespace RakNet;
     self.peer->CloseConnection(*address.systemAddress, sendNotification);
 }
 
-- (RNConnectionState)getConnectionStateWithGUID:(unsigned long long)guid {
+- (RNConnectionState)getConnectionStateWithGUID:(uint64_t)guid {
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
     
     int result = self.peer->GetConnectionState(rakNetGUID);
@@ -349,7 +349,7 @@ using namespace RakNet;
 
 #pragma mark Ping
 
-- (BOOL)pingAddress:(nonnull NSString *)address remotePort:(unsigned short)remotePort onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections {
+- (BOOL)pingAddress:(nonnull NSString *)address remotePort:(uint16_t)remotePort onlyReplyOnAcceptingConnections:(BOOL)onlyReplyOnAcceptingConnections {
     return self.peer->Ping([address UTF8String], remotePort, onlyReplyOnAcceptingConnections);
 }
 
@@ -357,7 +357,7 @@ using namespace RakNet;
     self.peer->Ping(*(address.systemAddress));
 }
 
-- (int)getLastPingForGUID:(unsigned long long)guid {
+- (int)getLastPingForGUID:(uint64_t)guid {
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
     return self.peer->GetLastPing(rakNetGUID);
 }
@@ -406,14 +406,14 @@ using namespace RakNet;
 
 #pragma mark Utils
 
-- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(unsigned long long)guid; {
+- (nonnull RNSystemAddress *)getSystemAddressFromGUID:(uint64_t)guid; {
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
     SystemAddress systemAddress = self.peer->GetSystemAddressFromGuid(rakNetGUID);
     
     return [[RNSystemAddress alloc] initWithSystemAddress:systemAddress];
 }
 
-- (unsigned long long)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address {
+- (uint64_t)getGuidFromSystemAddress:(nonnull RNSystemAddress *)address {
     RakNetGUID result = self.peer->GetGuidFromSystemAddress(*address.systemAddress);
     
     if (result == UNASSIGNED_RAKNET_GUID) {

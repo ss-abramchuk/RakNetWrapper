@@ -14,7 +14,7 @@
 
 @interface RNPacket () {
     RNSystemAddress *_systemAddress;
-    unsigned long long _guid;
+    uint64_t _guid;
     NSData *_data;
 }
 
@@ -40,12 +40,12 @@
     return _systemAddress;
 }
 
-- (unsigned long long)guid {
+- (uint64_t)guid {
     return _guid;
 }
 
-- (unsigned char)identifier {
-    unsigned char *bytes = (unsigned char *)_data.bytes;
+- (uint8_t)identifier {
+    uint8_t *bytes = (uint8_t *)_data.bytes;
     if (bytes[0] == ID_TIMESTAMP) {
         return bytes[sizeof(MessageID) + sizeof(RakNet::Time)];
     } else {
@@ -53,8 +53,8 @@
     }
 }
 
-- (unsigned int)offset {
-    unsigned char *bytes = (unsigned char *)_data.bytes;
+- (uint32_t)offset {
+    uint32_t *bytes = (uint32_t *)_data.bytes;
     if (bytes[0] == ID_TIMESTAMP) {
         return sizeof(MessageID) + sizeof(RakNet::Time);
     } else {

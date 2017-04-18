@@ -310,17 +310,21 @@ NS_SWIFT_NAME(getLastPing(forAddress:));
  @param data        The block of data to send.
  @param priority    Desirable priority level for sending this data.
  @param reliability Desirable reliability for sending this data.
+ @param channel     When using ordered or sequenced messages, what channel to order these on. Messages are only ordered relative to other messages on the same stream
  @param address     Who to send this packet to, or in the case of broadcasting who not to send it to.
  @param broadcast   YES to send this packet to all connected systems. If YES, then address specifies who not to send the packet to.
+ @parapm receipt    If 0, will automatically determine the receipt number to return. If non-zero, will return what you give it.
 
  @return 0 on bad input. Otherwise a number that identifies this message. If \a reliability is a type that returns a receipt, on a later call to receive: you will get RNMessageIdentifierSndReceiptAcked or RNMessageIdentifierSndReceiptLoss with bytes 1-4 inclusive containing this number.
  */
-- (unsigned int)sendData:(nonnull NSData *)data
+- (uint32_t)sendData:(nonnull NSData *)data
                 priority:(RNPacketPriority)priority
              reliability:(RNPacketReliability)reliability
+                 channel:(uint8_t)channel
                  address:(nonnull RNSystemAddress *)address
                broadcast:(BOOL)broadcast
-NS_SWIFT_NAME(send(data:priority:reliability:address:broadcast:));
+                 receipt:(uint32_t)receipt
+NS_SWIFT_NAME(send(data:priority:reliability:channel:address:broadcast:receipt:));
 
 /**
  Sends a block of data to the specified system that you are connected to.
@@ -331,17 +335,21 @@ NS_SWIFT_NAME(send(data:priority:reliability:address:broadcast:));
  @param data        The block of data to send.
  @param priority    Desirable priority level for sending this data.
  @param reliability Desirable reliability for sending this data.
+ @param channel     When using ordered or sequenced messages, what channel to order these on. Messages are only ordered relative to other messages on the same stream
  @param guid        Who to send this packet to, or in the case of broadcasting who not to send it to.
  @param broadcast   YES to send this packet to all connected systems. If YES, then address specifies who not to send the packet to.
+ @parapm receipt    If 0, will automatically determine the receipt number to return. If non-zero, will return what you give it.
  
  @return 0 on bad input. Otherwise a number that identifies this message. If \a reliability is a type that returns a receipt, on a later call to receive: you will get RNMessageIdentifierSndReceiptAcked or RNMessageIdentifierSndReceiptLoss with bytes 1-4 inclusive containing this number.
  */
-- (unsigned int)sendData:(nonnull NSData *)data
+- (uint32_t)sendData:(nonnull NSData *)data
                 priority:(RNPacketPriority)priority
              reliability:(RNPacketReliability)reliability
-                    guid:(unsigned long long)guid
+                 channel:(uint8_t)channel
+                    guid:(uint64_t)guid
                broadcast:(BOOL)broadcast
-NS_SWIFT_NAME(send(data:priority:reliability:guid:broadcast:));
+                 receipt:(uint32_t)receipt
+NS_SWIFT_NAME(send(data:priority:reliability:channel:guid:broadcast:receipt:));
 
 /**
  Gets a message from the incoming message queue.

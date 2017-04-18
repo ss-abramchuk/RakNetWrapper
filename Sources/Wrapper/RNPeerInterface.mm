@@ -369,23 +369,27 @@ using namespace RakNet;
 
 #pragma mark Data
 
-- (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability address:(nonnull RNSystemAddress *)address broadcast:(BOOL)broadcast {
+- (uint32_t)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability
+                 channel:(uint8_t)channel address:(nonnull RNSystemAddress *)address broadcast:(BOOL)broadcast receipt:(uint32_t)receipt
+{
     unsigned int length = data.length;
     const char *bytes = (const char *)data.bytes;
     PacketPriority packetPriority = [self getPriorityFromValue:priority];
     PacketReliability packetReliability = [self getReliabilityFromValue:reliability];
     
-    return self.peer->Send(bytes, length, packetPriority, packetReliability, 0, *address.systemAddress, broadcast);
+    return self.peer->Send(bytes, length, packetPriority, packetReliability, channel, *address.systemAddress, broadcast, receipt);
 }
 
-- (unsigned int)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability guid:(unsigned long long)guid broadcast:(BOOL)broadcast {
+- (uint32_t)sendData:(nonnull NSData *)data priority:(RNPacketPriority)priority reliability:(RNPacketReliability)reliability
+             channel:(uint8_t)channel guid:(uint64_t)guid broadcast:(BOOL)broadcast receipt:(uint32_t)receipt
+{
     unsigned int length = [data length];
     const char *bytes = (const char *)[data bytes];
     PacketPriority packetPriority = [self getPriorityFromValue:priority];
     PacketReliability packetReliability = [self getReliabilityFromValue:reliability];
     RakNetGUID rakNetGUID = [self getRakNetGUIDFromValue:guid];
     
-    return self.peer->Send(bytes, length, packetPriority, packetReliability, 0, rakNetGUID, broadcast);
+    return self.peer->Send(bytes, length, packetPriority, packetReliability, channel, rakNetGUID, broadcast, receipt);
 }
 
 - (nullable RNPacket *)receive {

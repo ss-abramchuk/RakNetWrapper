@@ -336,7 +336,7 @@ class RNPeerInterfaceTests: XCTestCase {
         let stream = RNBitStream()
         stream.write(value: RNMessageIdentifier.userPacketEnum.rawValue)
         
-        let messageIdentifier = client.send(data: stream.data, priority: .immediate, reliability: .reliable, address: system, broadcast: false)
+        let messageIdentifier = client.send(data: stream.data, priority: .immediate, reliability: .reliable, channel: 0, address: system, broadcast: false, receipt: 0)
         
         guard messageIdentifier != 0 else {
             XCTFail("Bad input of send method")

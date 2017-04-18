@@ -307,7 +307,6 @@ class RNPeerInterfaceTests: XCTestCase {
 //    }
 //    
     func testSendingAndReceiving() {
-        // TODO: Implement testing send and receiving packets
         let server = RNPeerInterface()
         let client = RNPeerInterface()
         

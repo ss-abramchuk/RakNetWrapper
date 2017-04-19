@@ -458,9 +458,9 @@ using namespace RakNet;
     }
 }
 
-- (RakNetGUID)getRakNetGUIDFromValue:(unsigned long long)value {
+- (RakNetGUID)getRakNetGUIDFromValue:(uint64_t)value {
     RakNetGUID rakNetGUID;
-    rakNetGUID.g = (uint64_t)value;
+    rakNetGUID.g = value;
     rakNetGUID.systemIndex = (SystemIndex) - 1;
     
     return rakNetGUID;

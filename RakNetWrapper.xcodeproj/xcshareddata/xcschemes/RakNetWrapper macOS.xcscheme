@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C99C02961D60FAE900DBA190"
+               BlueprintIdentifier = "C957C2351EA7871C00EED4C0"
                BuildableName = "RakNetWrapper.framework"
-               BlueprintName = "RakNetWrapper"
+               BlueprintName = "RakNetWrapper macOS"
                ReferencedContainer = "container:RakNetWrapper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C99C02961D60FAE900DBA190"
+            BlueprintIdentifier = "C957C2351EA7871C00EED4C0"
             BuildableName = "RakNetWrapper.framework"
-            BlueprintName = "RakNetWrapper"
+            BlueprintName = "RakNetWrapper macOS"
             ReferencedContainer = "container:RakNetWrapper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C99C02961D60FAE900DBA190"
+            BlueprintIdentifier = "C957C2351EA7871C00EED4C0"
             BuildableName = "RakNetWrapper.framework"
-            BlueprintName = "RakNetWrapper"
+            BlueprintName = "RakNetWrapper macOS"
             ReferencedContainer = "container:RakNetWrapper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

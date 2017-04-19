@@ -40,7 +40,7 @@ using namespace RakNet;
     return self;
 }
 
-- (nonnull instancetype)initWithPort:(unsigned short)port andAddress:(nullable NSString *)address {
+- (nonnull instancetype)initWithPort:(uint16_t)port andAddress:(nullable NSString *)address {
     self = [super init];
     
     if (self) {
@@ -51,11 +51,11 @@ using namespace RakNet;
 }
 
 
-- (unsigned short)port {
+- (uint16_t)port {
     return self.socketDescriptor->port;
 }
 
-- (void)setPort:(unsigned short)port {
+- (void)setPort:(uint16_t)port {
     self.socketDescriptor->port = port;
 }
 

@@ -15,7 +15,7 @@
 #pragma mark Properties
 
 /// The local port to bind to. Pass 0 to have the OS autoassign a port.
-@property unsigned short port;
+@property uint16_t port;
 
 /// The local network card address to bind to, such as "127.0.0.1".
 @property (nullable) NSString * address;
@@ -29,7 +29,7 @@
 #pragma mark Initializers
 
 - (nonnull instancetype)init;
-- (nonnull instancetype)initWithPort:(unsigned short)port andAddress:(nullable NSString *)address
+- (nonnull instancetype)initWithPort:(uint16_t)port andAddress:(nullable NSString *)address
     NS_SWIFT_NAME(init(port:address:));
 
 @end

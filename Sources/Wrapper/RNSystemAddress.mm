@@ -39,7 +39,7 @@
     return [NSString stringWithUTF8String:address];
 }
 
-- (unsigned short)port {
+- (uint16_t)port {
     return self.systemAddress->GetPort();
 }
 
@@ -60,7 +60,7 @@
     return self;
 }
 
-- (instancetype)initWithAddress:(NSString *)address andPort:(unsigned short)port {
+- (instancetype)initWithAddress:(NSString *)address andPort:(uint16_t)port {
     self = [super init];
     if (self) {
         _systemAddress = new SystemAddress([address UTF8String], port);

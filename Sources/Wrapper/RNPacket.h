@@ -17,13 +17,13 @@
 @property (nonatomic, readonly) RNSystemAddress *systemAddress;
 
 /// A unique identifier for the system that sent this packet
-@property (nonatomic, readonly) unsigned long long guid;
+@property (nonatomic, readonly) uint64_t guid;
 
 ///
-@property (nonatomic, readonly) unsigned char identifier;
+@property (nonatomic, readonly) uint8_t identifier;
 
 ///
-@property (nonatomic, readonly) unsigned int offset;
+@property (nonatomic, readonly) uint32_t offset;
 
 /// The data from the sender
 @property (nonatomic, readonly) NSData *data;

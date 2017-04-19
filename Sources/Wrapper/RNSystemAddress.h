@@ -23,14 +23,14 @@
 /**
  Returns the system port
  */
-@property (nonatomic, readonly) unsigned short port;
+@property (nonatomic, readonly) uint16_t port;
 
 - (nonnull instancetype)init;
 
 - (nonnull instancetype)initWithAddress:(nonnull NSString *)address
 NS_SWIFT_NAME(init(address:));
 
-- (nonnull instancetype)initWithAddress:(nonnull NSString *)address andPort:(unsigned short)port
+- (nonnull instancetype)initWithAddress:(nonnull NSString *)address andPort:(uint16_t)port
 NS_SWIFT_NAME(init(address:port:));
 
 - (BOOL)isEqual:(nullable id)object;

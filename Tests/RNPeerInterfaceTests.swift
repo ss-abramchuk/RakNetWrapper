@@ -250,62 +250,60 @@ class RNPeerInterfaceTests: XCTestCase {
 //        // TODO: Implement testing connected ping
 //        XCTFail("Testing connected ping is not implemented")
 //    }
-//    
-//    func testUnconnectedPing() {
-//        guard let server = RNPeerInterface(), client = RNPeerInterface() else {
-//            XCTFail("One of Peer Interfaces == nil")
-//            return
-//        }
-//        
-//        // Initializing server
-//        do {
-//            let socketDescriptor = RNSocketDescriptor(port: 19132, andAddress: nil)
-//            try server.startupWithMaxConnectionsAllowed(1, socketDescriptor: socketDescriptor)
-//            server.setMaximumIncomingConnections(1)
-//        } catch let error as NSError {
-//            XCTFail("Server startup failed with error: \(error.localizedDescription)")
-//        }
-//        
-//        let pongValue = "Hello!"
-//        
-//        let data = pongValue.data(using: String.Encoding.utf8)
-//        server.setOfflinePingResponse(data)
-//        
-//        // Initializing client
-//        do {
-//            let socketDescriptor = RNSocketDescriptor()
-//            try client.startupWithMaxConnectionsAllowed(1, socketDescriptor: socketDescriptor)
-//        } catch let error as NSError {
-//            XCTFail("Client sturtup failed with error: \(error.localizedDescription)")
-//        }
-//        
-//        let system = RNSystemAddress(address: "127.0.0.1", andPort: 19132)
-//        
-//        let pingResult = client.pingAddress(system.address, remotePort: system.port, onlyReplyOnAcceptingConnections: false)
-//        XCTAssert(pingResult, "Unable to ping host \(system.address):\(system.port)")
-//        
-//        // Wait a little for receiving pong
-//        usleep(50000)
-//        
-//        guard let pong = client.receive() else {
-//            XCTFail("Pong wasn't received")
-//            return
-//        }
-//        
-//        guard let identifier = RNMessageIdentifier(rawValue: pong.identifier) else {
-//            XCTFail("Failed to get pong identifier")
-//            return
-//        }
-//        
-//        XCTAssert(identifier == .UnconnectedPong, "Incorrect pong identifier: \(identifier)")
-//        
-//        let offset = Int(pong.offset) + sizeof(UInt8) + sizeof(UInt32)
-//        let returnedData = pong.data.subdataWithRange(NSMakeRange(offset, pong.data.length - offset))
-//        let returnedValue = String(data: returnedData, encoding: String.Encoding.utf8)
-//        
-//        XCTAssert(returnedValue == pongValue)
-//    }
-//    
+    
+    func testUnconnectedPing() {
+        let server = RNPeerInterface()
+        let client = RNPeerInterface()
+
+        // Initializing server
+        do {
+            let socketDescriptor = RNSocketDescriptor(port: 19132, address: nil)
+            try server.startup(maxConnections: 1, socketDescriptors: [socketDescriptor])
+            server.maximumIncomingConnections = 1
+        } catch let error as NSError {
+            XCTFail("Server startup failed with error: \(error.localizedDescription)")
+        }
+        
+        let pongValue = "Hello!"
+        
+        let data = pongValue.data(using: String.Encoding.utf8)
+        server.offlinePingResponse = data
+        
+        // Initializing client
+        do {
+            let socketDescriptor = RNSocketDescriptor()
+            try client.startup(maxConnections: 1, socketDescriptors: [socketDescriptor])
+        } catch let error as NSError {
+            XCTFail("Client sturtup failed with error: \(error.localizedDescription)")
+        }
+        
+        let system = RNSystemAddress(address: "127.0.0.1", port: 19132)
+        
+        let pingResult = client.ping(address: system.address, port: system.port, replyOnAcceptingConnections: false)
+        XCTAssert(pingResult, "Unable to ping host \(system.address):\(system.port)")
+        
+        // Wait a little for receiving pong
+        usleep(50000)
+        
+        guard let pong = client.receive() else {
+            XCTFail("Pong wasn't received")
+            return
+        }
+        
+        guard let identifier = RNMessageIdentifier(rawValue: pong.identifier) else {
+            XCTFail("Failed to get pong identifier")
+            return
+        }
+        
+        XCTAssert(identifier == .unconnectedPong, "Incorrect pong identifier: \(identifier)")
+        
+        let offset = Int(pong.offset) + MemoryLayout<UInt8>.size + MemoryLayout<UInt32>.size
+        let returnedData = pong.data.subdata(in: offset..<(pong.data.count - offset))
+        let returnedValue = String(data: returnedData, encoding: String.Encoding.utf8)
+        
+        XCTAssert(returnedValue == pongValue)
+    }
+    
     func testSendingAndReceiving() {
         let server = RNPeerInterface()
         let client = RNPeerInterface()

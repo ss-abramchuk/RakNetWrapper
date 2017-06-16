@@ -1772,9 +1772,9 @@
 			productReference = C957C3611EA7871C00EED4C0 /* RakNetWrapper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C957C3631EA7892200EED4C0 /* RakNetWrapper iOS Tests copy */ = {
+		C957C3631EA7892200EED4C0 /* RakNetWrapper macOS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C957C36E1EA7892200EED4C0 /* Build configuration list for PBXNativeTarget "RakNetWrapper iOS Tests copy" */;
+			buildConfigurationList = C957C36E1EA7892200EED4C0 /* Build configuration list for PBXNativeTarget "RakNetWrapper macOS Tests" */;
 			buildPhases = (
 				C957C3661EA7892200EED4C0 /* Sources */,
 				C957C36B1EA7892200EED4C0 /* Frameworks */,
@@ -1785,7 +1785,7 @@
 			dependencies = (
 				C957C3741EA7894900EED4C0 /* PBXTargetDependency */,
 			);
-			name = "RakNetWrapper iOS Tests copy";
+			name = "RakNetWrapper macOS Tests";
 			productName = iOSRakNetWrapperTests;
 			productReference = C957C3711EA7892200EED4C0 /* RakNetWrapper macOS Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1846,7 +1846,7 @@
 				C99C02961D60FAE900DBA190 /* RakNetWrapper iOS */,
 				C957C2351EA7871C00EED4C0 /* RakNetWrapper macOS */,
 				C907CA8C1D96CFA200B942FA /* RakNetWrapper iOS Tests */,
-				C957C3631EA7892200EED4C0 /* RakNetWrapper iOS Tests copy */,
+				C957C3631EA7892200EED4C0 /* RakNetWrapper macOS Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -2588,7 +2588,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C957C36E1EA7892200EED4C0 /* Build configuration list for PBXNativeTarget "RakNetWrapper iOS Tests copy" */ = {
+		C957C36E1EA7892200EED4C0 /* Build configuration list for PBXNativeTarget "RakNetWrapper macOS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C957C36F1EA7892200EED4C0 /* Debug */,

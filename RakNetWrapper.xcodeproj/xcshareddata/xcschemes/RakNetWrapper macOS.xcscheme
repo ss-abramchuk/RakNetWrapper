@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C957C3631EA7892200EED4C0"
+               BuildableName = "RakNetWrapper macOS Tests.xctest"
+               BlueprintName = "RakNetWrapper macOS Tests"
+               ReferencedContainer = "container:RakNetWrapper.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C957C2351EA7871C00EED4C0"
+            BuildableName = "RakNetWrapper.framework"
+            BlueprintName = "RakNetWrapper macOS"
+            ReferencedContainer = "container:RakNetWrapper.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

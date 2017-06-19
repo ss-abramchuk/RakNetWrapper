@@ -248,6 +248,10 @@
     _bitStream->Write((const char *)data.bytes, data.length);
 }
 
+- (void)writeAlignedData:(nonnull NSData *)data {
+    _bitStream->WriteAlignedBytes((const unsigned char *)data.bytes, data.length);
+}
+
 - (BOOL)readBool:(out nonnull BOOL *)value
                  error:(out NSError * __nullable * __nullable)error {
     if (_bitStream->Read(*value)) {
@@ -655,6 +659,17 @@
 - (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
     char result[length];
     if (_bitStream->Read(result, length)) {
+        *data = [NSData dataWithBytes:result length:length];
+        return YES;
+    } else {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Data value" }];
+        return NO;
+    }
+}
+
+- (BOOL)readAlignedData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
+    unsigned char result[length];
+    if (_bitStream->ReadAlignedBytes(result, length)) {
         *data = [NSData dataWithBytes:result length:length];
         return YES;
     } else {

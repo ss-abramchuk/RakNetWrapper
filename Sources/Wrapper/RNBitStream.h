@@ -158,6 +158,9 @@ NS_SWIFT_NAME(writeVar(value:));
 - (void)writeData:(nonnull NSData *)data
 NS_SWIFT_NAME(write(value:));
 
+- (void)writeAlignedData:(nonnull NSData *)data
+NS_SWIFT_NAME(writeAligned(value:));
+
 - (BOOL)readBool:(out nonnull BOOL *)value
            error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:));
@@ -266,5 +269,8 @@ NS_SWIFT_NAME(readVar(value:));
 
 - (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error
 NS_SWIFT_NAME(read(value:length:));
+
+- (BOOL)readAlignedData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error
+NS_SWIFT_NAME(readAligned(value:length:));
 
 @end

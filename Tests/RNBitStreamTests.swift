@@ -420,6 +420,23 @@ class RNBitStreamTests: XCTestCase {
         XCTAssert(readData as! Data == data)
     }
     
+    func testreadWriteAlignedBytesArray() {
+        let bytes: [UInt8] = [0x12, 0x54, 0x44, 0x64]
+        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
+        
+        let bitStream = RNBitStream()
+        bitStream.writeAligned(value: data)
+        
+        var readData: NSData? = nil
+        do {
+            try bitStream.readAligned(value: &readData, length: bytes.count)
+        } catch let error as NSError {
+            XCTFail("Failed with error: \(error.localizedDescription)")
+        }
+        
+        XCTAssert(readData as! Data == data)
+    }
+    
     func testReadWriteMultipleValues() {
         let doubleValue: Double = 5423324.2342342344
         let boolValue: Bool = false

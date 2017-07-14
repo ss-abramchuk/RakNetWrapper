@@ -16,7 +16,7 @@ STATIC_FACTORY_DEFINITIONS(Lobby2MessageFactory_PGSQL,Lobby2MessageFactory_PGSQL
 
 unsigned int RakNet::GetUserRowFromHandle(RakNet::RakString& userName, PostgreSQLInterface *pgsql)
 {
-	PGresult *result = pgsql->QueryVariadic("SELECT userId_pk,handle from lobby2.users WHERE handleLower=lower(%s)", userName.C_String());
+	PGresult *result = pgsql->QueryVariadic("SELECT userId_pk,handle from lobby2.users WHERE handle=%s", userName.C_String());
 	if (result)
 	{
 		unsigned int primaryKey;
@@ -2568,7 +2568,7 @@ bool RakNet::Ranking_SubmitMatch_PGSQL::ServerDBImpl( Lobby2ServerCommand *comma
 	for (i=0; i < submittedMatch.matchParticipants.Size(); i++)
 	{
 		result = pgsql->QueryVariadic("INSERT INTO lobby2.matchParticipants (matchId_fk, userId_fk, score) VALUES "
-			"(%i, (SELECT userId_pk FROM lobby2.users WHERE handleLower=lower(%s)), %f);",
+			"(%i, (SELECT userId_pk FROM lobby2.users WHERE handle=%s), %f);",
 			submittedMatch.matchID, submittedMatch.matchParticipants[i].handle.C_String(), submittedMatch.matchParticipants[i].score);
 		// May fail if a user is deleted at the same time this is running
 		if (result)

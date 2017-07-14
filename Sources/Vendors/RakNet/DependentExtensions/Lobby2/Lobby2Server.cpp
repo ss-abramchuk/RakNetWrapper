@@ -471,13 +471,12 @@ void Lobby2Server::OnLogin(Lobby2ServerCommand *command, bool calledFromThread)
 	}
 	else
 	{
-		// Allow multiple logins from same GUID/Address with different usernames.
-		return;/*
 		// Different username, from the same IP address or RakNet instance
 		unsigned int idx2 = GetUserIndexByGUID(command->callerGuids[0]);
 		unsigned int idx3 = GetUserIndexBySystemAddress(command->callerSystemAddresses[0]);
 		if (idx2!=(unsigned int) -1)
 		{
+			return;/*
 			User * user = users[idx2];
 			if (user->allowMultipleLogins==true)
 				return;
@@ -488,9 +487,10 @@ void Lobby2Server::OnLogin(Lobby2ServerCommand *command, bool calledFromThread)
 			users.RemoveAtIndex(idx2);
 
 			insertionIndex = users.GetIndexFromKey(command->callingUserName, &objectExists);
-		}
+		*/}
 		else if (idx3!=(unsigned int) -1)
 		{
+			return;/*
 			User * user = users[idx3];
 			if (user->allowMultipleLogins==true)
 				return;
@@ -501,7 +501,7 @@ void Lobby2Server::OnLogin(Lobby2ServerCommand *command, bool calledFromThread)
 			users.RemoveAtIndex(idx3);
 
 			insertionIndex = users.GetIndexFromKey(command->callingUserName, &objectExists);
-		}*/
+		*/}
 	}
 
 

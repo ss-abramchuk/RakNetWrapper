@@ -528,7 +528,6 @@ CREATE TABLE lobby2.users
 (
   userid_pk serial NOT NULL PRIMARY KEY,
   handle character varying(64) NOT NULL,
-  handleLower character varying(64) NOT NULL UNIQUE DEFAULT 'UNDEFINED',
   firstname character varying(64) NOT NULL,
   middlename character varying(64),
   lastname character varying(64) NOT NULL,

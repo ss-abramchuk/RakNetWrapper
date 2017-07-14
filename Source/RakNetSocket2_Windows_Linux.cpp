@@ -57,7 +57,9 @@ void GetMyIP_Windows_Linux_IPV4And6( SystemAddress addresses[MAXIMUM_NUMBER_OF_I
 
 	}
 
-	freeaddrinfo(servinfo); // free the linked-list
+	if (servinfo) {
+		freeaddrinfo(servinfo); // free the linked-list
+	}
 	
 	while (idx < MAXIMUM_NUMBER_OF_INTERNAL_IDS)
 	{

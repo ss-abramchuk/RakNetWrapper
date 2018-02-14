@@ -658,6 +658,11 @@
 
 - (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
     char result[length];
+    if (length > _bitStream->GetNumberOfBytesUsed()) {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Length argument is greater than length of the data" }];
+        return NO;
+    }
+    
     if (_bitStream->Read(result, length)) {
         *data = [NSData dataWithBytes:result length:length];
         return YES;

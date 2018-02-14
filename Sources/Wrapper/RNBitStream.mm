@@ -34,22 +34,22 @@
     return [NSData dataWithBytes:data length:length];
 }
 
-- (NSUInteger)readOffset {
+- (NSInteger)readOffset {
     BitSize_t offset = _bitStream->GetReadOffset();
     return BITS_TO_BYTES(offset);
 }
 
-- (void)setReadOffset:(NSUInteger)offset {
+- (void)setReadOffset:(NSInteger)offset {
     BitSize_t newOffset = BYTES_TO_BITS(offset);
     _bitStream->SetReadOffset(newOffset);
 }
 
-- (NSUInteger)writeOffset {
+- (NSInteger)writeOffset {
     BitSize_t offset = _bitStream->GetWriteOffset();
     return BITS_TO_BYTES(offset);
 }
 
-- (void)setWriteOffset:(NSUInteger)offset {
+- (void)setWriteOffset:(NSInteger)offset {
     BitSize_t newOffset = BYTES_TO_BITS(offset);
     _bitStream->SetWriteOffset(newOffset);
 }
@@ -85,7 +85,7 @@
     _bitStream->Reset();
 }
 
-- (void)ignoreBytes:(NSUInteger)numberOfBytes {
+- (void)ignoreBytes:(NSInteger)numberOfBytes {
     _bitStream->IgnoreBytes(numberOfBytes);
 }
 
@@ -658,6 +658,11 @@
 
 - (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
     char result[length];
+    if (length > _bitStream->GetNumberOfBytesUsed()) {
+        if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Length argument is greater than length of the data" }];
+        return NO;
+    }
+    
     if (_bitStream->Read(result, length)) {
         *data = [NSData dataWithBytes:result length:length];
         return YES;

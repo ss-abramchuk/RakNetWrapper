@@ -25,12 +25,12 @@
 /**
  The number of bytes into the stream that we have read.
  */
-@property (nonatomic) NSUInteger readOffset;
+@property (nonatomic) NSInteger readOffset;
 
 /**
  The number of bytes into the stream that we have written.
  */
-@property (nonatomic) NSUInteger writeOffset;
+@property (nonatomic) NSInteger writeOffset;
 
 
 #pragma mark Initializers
@@ -65,7 +65,8 @@
  
  @param numberOfBytes The number of bytes to ignore.
  */
-- (void)ignoreBytes:(NSUInteger)numberOfBytes;
+- (void)ignoreBytes:(NSInteger)numberOfBytes
+NS_SWIFT_NAME(ignore(bytes:));
 
 /**
  Sets the read pointer back to the beginning of your data.

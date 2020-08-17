@@ -19,15 +19,19 @@
 #import "MessageIdentifiers.h"
 #import "RakPeerInterface.h"
 #import "RakNetTypes.h"
+#import "PacketLogger.h"
 
 #import <sys/socket.h>
 
 using namespace RakNet;
 
 
-@interface RNPeerInterface ()
+@interface RNPeerInterface () {
+    BOOL _packetLoggerEnabled;
+}
 
 @property (nonatomic, assign, readwrite) RakPeerInterface *peer;
+@property (nonatomic, assign, readwrite) PacketLogger *logger;
 
 @end
 
@@ -135,6 +139,22 @@ using namespace RakNet;
     self.peer->SetOfflinePingResponse(bytes, length);
 }
 
+- (BOOL)packetLoggerEnabled {
+    return _packetLoggerEnabled;
+}
+
+- (void)setPacketLoggerEnabled:(BOOL)packetLoggerEnabled {
+    if (packetLoggerEnabled && !self.logger) {
+        self.logger = new PacketLogger();
+        self.peer->AttachPlugin(self.logger);
+    } else if (!packetLoggerEnabled && self.logger) {
+        self.peer->DetachPlugin(self.logger);
+        delete self.logger;
+        self.logger = NULL;
+    }
+    
+    _packetLoggerEnabled = packetLoggerEnabled;
+}
 
 #pragma mark Initializers
 
@@ -144,6 +164,7 @@ using namespace RakNet;
     
     if (self) {
         self.peer = RakPeerInterface::GetInstance();
+        self.logger = NULL;
     }
     
     return self;
@@ -511,6 +532,11 @@ using namespace RakNet;
 }
 
 - (void)dealloc {
+    if (self.logger) {
+        self.peer->DetachPlugin(self.logger);
+        delete self.logger;
+    }
+    
     RakPeerInterface::DestroyInstance(self.peer);
 }
 

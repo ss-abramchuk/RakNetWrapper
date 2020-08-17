@@ -68,6 +68,10 @@
  */
 @property NSData * _Nullable offlinePingResponse;
 
+/**
+ Enable/Disable packet logger.
+*/
+@property (nonatomic) BOOL packetLoggerEnabled;
 
 #pragma mark Initializers
 

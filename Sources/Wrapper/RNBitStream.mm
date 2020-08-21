@@ -657,28 +657,38 @@
 }
 
 - (BOOL)readData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
-    char result[length];
     if (length > _bitStream->GetNumberOfBytesUsed()) {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Length argument is greater than length of the data" }];
         return NO;
     }
     
+    char *result = new char[length];
+    
     if (_bitStream->Read(result, length)) {
         *data = [NSData dataWithBytes:result length:length];
+        
+        delete[] result;
         return YES;
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Data value" }];
+        
+        delete[] result;
         return NO;
     }
 }
 
 - (BOOL)readAlignedData:(out NSData * __nullable * __nonnull)data withLength:(NSInteger)length error:(out NSError * __nullable * __nullable)error {
-    unsigned char result[length];
+    unsigned char *result = new unsigned char[length];
+    
     if (_bitStream->ReadAlignedBytes(result, length)) {
         *data = [NSData dataWithBytes:result length:length];
+        
+        delete[] result;
         return YES;
     } else {
         if (error) *error = [NSError errorWithDomain:RNWrapperErrorDomain code:0 userInfo:@{ NSLocalizedDescriptionKey : @"Couldn't read Data value" }];
+        
+        delete[] result;
         return NO;
     }
 }
